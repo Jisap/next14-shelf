@@ -17,7 +17,7 @@ export const Logo = () => {
       {/* Icon Container */}
       <div className={`bg-sky-500 flex items-center justify-center p-[6px] rounded-md`}>
         {/* Icon */}
-        <div className="w-[26px] h-[26px] ic justify-center flex">
+        <div className="w-[26px] h-[26px] items-center justify-center flex">
           <SiReact className="text-white text-[22px" />
         </div>
       </div>
