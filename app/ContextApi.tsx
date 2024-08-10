@@ -5,7 +5,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import CategoryIcon from '@mui/icons-material/Category';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-interface MenuItem {  //  Define la estructura de un elemento del menú. 
+interface MenuItem {        //  Define la estructura de un elemento del menú. 
   id: number;
   name: string;
   icon: ReactNode;
@@ -26,14 +26,13 @@ const defaultState: AppContextType = {
   },
 };
 
-const AppContext = createContext<AppContextType>(defaultState);     // Creación del contexto
+const AppContext = createContext<AppContextType>(defaultState);                     // Creación del contexto
 
-export const AppProvider: React.FC<{ children: ReactNode }> = ({                // AppProvider: Es un componente que sirve como proveedor del contexto AppContext.
-  children,
-}) => {
-  const [menuItems, setMenuItems] = useState<MenuItem[]>([                      // Estado para menuItems -> menuItems[]  
+export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {   // AppProvider: Es un componente que sirve como proveedor del contexto AppContext.
+  
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([                          // Estado para menuItems -> menuItems[]  
 
-    {id:1, name: "Home", icon: <HomeIcon />, isSelected: true},                 // 3 menuItems "Home", "Projects" y "favorites"
+    {id:1, name: "Home", icon: <HomeIcon />, isSelected: true},                     // 3 menuItems "Home", "Projects" y "favorites"
     {id:2, name: "Projects", icon: <CategoryIcon />, isSelected: false},
     {id:3, name: "Favorites", icon: <FavoriteIcon />, isSelected: false},
 
@@ -41,7 +40,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({                
 
   return (
     <AppContext.Provider value={{menuItemsObject: { menuItems, setMenuItems }}}>
-
+      {children}
     </AppContext.Provider>
   )
 }
