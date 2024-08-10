@@ -49,27 +49,55 @@ export async function POST(req: Request) {                                      
 
   const { id } = evt.data;                                                          // Extraer información relevante del evento
   const eventType = evt.type;
+  console.log(`Processing webhook: ${eventType}`);
+
 
   if (eventType === "user.created") {                                               // Manejar el evento de creación de usuario
     const { id, email_addresses } = evt.data
+    console.log(`New user created with ID: ${id}`); 
+
+    if (!email_addresses || email_addresses.length === 0) {
+      console.error("No email addresses provided for the user");
+      return new Response("Error: No email address available", { status: 400 });
+    }
 
     const newUser = {                                                               // Preparar datos del nuevo usuario
       clerkUserId: id,
-      EmailAddress: email_addresses[0].email_address,
+      emailAddress: email_addresses[0].email_address,
     };
+
+    console.log("Attempting to create user:", JSON.stringify(newUser))
 
     try {
       await connect();                                                              // Conectar a la base de datos y crear el nuevo usuario
-      await User.create(newUser)
-      console.log("user created");
+      console.log("Database connected successfully");
+      
+      const createdUser = await User.create(newUser)
+      console.log("User created in database:", JSON.stringify(createdUser));
+      
+      const foundUser = await User.findOne({ clerkUserId: id });
+      if (foundUser) {
+        console.log("User verified in database:", JSON.stringify(foundUser));
+      } else {
+        console.error("User not found in database after creation");
+      }
+      
     } catch (error) {
-      console.error("Error creating user:", error);
+      console.error("Error creating user in database:", error);
+      if (error instanceof Error) {
+        return new Response(`Error creating user: ${error.message}`, { status: 500 });
+      }
+      return new Response("Unknown error occurred while creating user", { status: 500 });
     }
+  }else{
+    console.log(`Unhandled event type: ${eventType}`);
   }
       
-  console.log(`Webhook with and ID of ${id} and type of ${eventType}`);             // Registrar información sobre el webhook procesado
-  console.log("Webhook body:", body);
+  // console.log(`Webhook with and ID of ${id} and type of ${eventType}`);             // Registrar información sobre el webhook procesado
+  // console.log("Webhook body:", body);
 
-  return new Response("", { status: 200 })                                          // Responder con éxito
+  console.log(`Webhook processed successfully for ID: ${id} and type: ${eventType}`);
+
+  return new Response("Webhook processed", { status: 200 })                                       // Responder con éxito
     
 }

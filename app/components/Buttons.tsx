@@ -17,7 +17,7 @@ export const Buttons = () => {
             </button>
           </Link>
 
-          <Link href="/sing-up">
+          <Link href="/sign-up">
             <button className={`max-sm:w-full text-sm border border-sky-500 text-sky-500 hover:bg-sky-500 hover:text-white p-[8px] px-6 rounded-md`}>
               Sing Up
             </button>
