@@ -8,6 +8,7 @@ import {
   SignedOut,
   UserButton
 } from '@clerk/nextjs'
+import { AppProvider } from "./ContextApi";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,9 +31,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <ClerkProvider>
-        <body className={poppins.className}>
-          {children}
-        </body>
+        <AppProvider>
+          <body className={poppins.className}>
+            {children}
+          </body>
+        </AppProvider>
       </ClerkProvider>
     </html>
   );

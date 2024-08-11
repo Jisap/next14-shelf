@@ -1,25 +1,36 @@
+"use client"
+
 import React from 'react'
-import HomeIcon from '@mui/icons-material/Home';
-import CategoryIcon from '@mui/icons-material/Category';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import { useAppContext } from '../ContextApi';
+import { MenuItem, useAppContext } from '../ContextApi'
+
 
 const Links = () => {
 
-  const { menuItemsObject: { menuItems }} = useAppContext()
+  const { menuItemsObject: { menuItems, setMenuItems }} = useAppContext();
+
+  const handleLinkClick = (clickedItem: MenuItem) => {  // Recibe el item clickado
+    setMenuItems(prevMenuItems =>                       // Se recibe el estado anterior de MenuItems[]
+      prevMenuItems.map(item =>                         // Se mapea
+        item.id === clickedItem.id                      // Si el item iterado === al clickeado
+          ? { ...item, isSelected: true }               // se establece como isSelected=true
+          : { ...item, isSelected: false }              // sino como false
+      )
+    );
+  };
 
   return (
     <div className='mt-44 ml-3 flex flex-col gap-2 text-[15px]'>
-      
+
       {menuItems.map((item, index) => (
         <div
           key={index}
-          className={`${item.isSelected ? "bg-sky-500 text-white" : "text-slate-400 hover:text-sky-500"} p-[7px] select-none cursor-pointer rounded-lg flex items-center gap-2 w-[75%]`}
+          onClick={() => handleLinkClick(item)}
+          className={`${item.isSelected ? "bg-sky-500 text-white" : "text-slate-400 hover:text-sky-500"} p-[7px] select-none cursor-pointer rounded-lg flex items-center gap-2 w-[65%]`}
         >
           {item.icon}
           <span className='mt-0.5'>{item.name}</span>
         </div>
-      ))}
+      ))} 
 
     </div>
   )

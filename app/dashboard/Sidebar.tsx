@@ -3,6 +3,7 @@ import RoundedArrowIcon from '../components/RoundedArrowIcon'
 import { Logo } from '../components/Logo'
 import LogoSidebar from '../components/LogoSidebar'
 import Links from '../components/Links'
+import LogoutButton from '../components/LogoutButton'
 
 const Sidebar = () => {
   return (
@@ -10,6 +11,7 @@ const Sidebar = () => {
       <RoundedArrowIcon />
       <LogoSidebar />
       <Links />
+      <LogoutButton />
     </div>
   )
 }
