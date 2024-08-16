@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import HomeIcon from '@mui/icons-material/Home';
 import CategoryIcon from '@mui/icons-material/Category';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -47,7 +47,14 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
   ]);
 
-  const [openSideBar, setOpenSideBar] = useState(true)
+  const [openSideBar, setOpenSideBar] = useState(() => {                            // El valor por defecto del openSideBar será
+    const storedValue = localStorage.getItem("openedSideBar");                              
+    return storedValue !== null ? JSON.parse(storedValue) : true;                   // El valor almacenado en localStorage, y si no hay será true
+  });
+
+  useEffect(() => {
+    localStorage.setItem("openedSideBar", JSON.stringify(openSideBar))              // Cada vez que openSideBar cambie se cambiará también el localStorage  
+  },[openSideBar])
 
   return (
     <AppContext.Provider 
