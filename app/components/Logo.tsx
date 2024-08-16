@@ -1,7 +1,14 @@
+
+
 import { SiReact } from "react-icons/si"
 
+
 export const Logo = () => {
+
+
+
   return (
+    
     <div className="flex gap-2 items-center">
       {/* Icon Container */}
       <div className={`bg-sky-500 flex items-center justify-center p-[6px] rounded-md`}>
@@ -12,14 +19,17 @@ export const Logo = () => {
       </div>
 
       {/* App Name */}
-      <div className="flex gap-1 text-[22px]">
-        <span className={`font-bold text-sky-500`}>
-          React
-        </span>
-        <span className="text-slate-600">
-          Shelf
-        </span>
-      </div>
+    
+          <div className="flex gap-1 text-[22px]">
+            <span className={`font-bold text-sky-500`}>
+              React
+            </span>
+            <span className="text-slate-600">
+              Shelf
+            </span>
+          </div>
+ 
+    
     </div>
   )
 }
