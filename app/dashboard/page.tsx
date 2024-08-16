@@ -4,11 +4,11 @@ import Sidebar from './Sidebar'
 
 const dashboard = () => {
   return (
-    <div className='flex p-10'>
-      <div className='flex flex-col gap-2'>
+    <div className='flex'>
+      <div className='flex flex-col gap-2 bg-slate-50'>
         <Sidebar />
-        <UserButton />
-        <a href="/" className='text-sky-500 hover:underline'>Regresar</a>
+        {/* <UserButton /> */}
+        {/* <a href="/" className='text-sky-500 hover:underline'>Regresar</a> */}
       </div>
     </div>
   )
