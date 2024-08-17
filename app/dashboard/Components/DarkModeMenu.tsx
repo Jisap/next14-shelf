@@ -2,6 +2,7 @@
 
 
 import { useAppContext } from '@/app/ContextApi';
+import { useEffect, useRef } from 'react';
 
 
 
@@ -12,6 +13,8 @@ const DarkModeMenu = () => {        // Cuando en <DarkMode /> se cambia el openD
     darkModeMenuObject: { darkModeMenu, setDarkModeMenu },
   } = useAppContext();
 
+  const menuRef = useRef<HTMLDivElement>(null)
+
   const changeSelection = (menuItem: any) => {                          // Esta función se activa cuando se clickea un theme u otro
     setDarkModeMenu((prevMenuItems) => 
       prevMenuItems.map((prevMenuItem) => 
@@ -21,9 +24,31 @@ const DarkModeMenu = () => {        // Cuando en <DarkMode /> se cambia el openD
       )
     )
   }
+
+  useEffect(() => {
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) { // Si el elemento clickeado no está dentro del menú
+        setOpenDarkModeMenu(false)                                              // Se cierra
+      }
+    }
+
+    if(openDarkModeMenu) {                                                      // Si el menu esta abierto
+      document.addEventListener("mousedown", handleClickOutside);               // se agrega un event listener al documento para detectar cualquier clic (mousedown) fuera del menú
+    }else{
+      document.removeEventListener("mousedown", handleClickOutside)             // Si el menu está cerrado se elimina el event listener.
+    }
+
+    return () => {                                                              // el useEffect limpia cualquier event listener existente 
+      document.removeEventListener("mousedown", handleClickOutside)             // cuando el componente se desmonta o el estado cambia.         
+    }
+  }, [openDarkModeMenu, setOpenDarkModeMenu])
   
   return (
-    <div className={`${ openDarkModeMenu ? "absolute" : "hidden" } p-3 border border-slate-50 select-none pr-10 bg-white rounded-md absolute right-[13px] top-8 flex flex-col py-4 gap-[18px] shadow-md`}>
+    <div 
+      ref={menuRef}
+      className={`${ openDarkModeMenu ? "absolute" : "hidden" } p-3 border border-slate-50 select-none pr-10 bg-white rounded-md absolute right-[13px] top-8 flex flex-col py-4 gap-[18px] shadow-md`}
+    >
       {darkModeMenu.map((item) => (
         <div 
           key={item.id}
