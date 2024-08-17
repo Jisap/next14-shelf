@@ -41,6 +41,11 @@ interface AppContextType {    // Define la estructura del contexto que será com
     openDarkModeMenu: boolean;
     setOpenDarkModeMenu: React.Dispatch<React.SetStateAction<boolean>>
   }
+
+  showSearchBarObject: {
+    showSearchBar: boolean;
+    setShowSearchBar: React.Dispatch<React.SetStateAction<boolean>>
+  }
 }
 
 const defaultState: AppContextType = {
@@ -59,6 +64,10 @@ const defaultState: AppContextType = {
   darkModeMenuObject: {
     darkModeMenu: [],
     setDarkModeMenu: () => {}
+  },
+  showSearchBarObject: {
+    showSearchBar: false,
+    setShowSearchBar: () => {}
   }
 };
 
@@ -105,7 +114,9 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         isSelected: isDarkMode,
       },
     ]
-  })
+  });
+
+  const [showSearchBar, setShowSearchBar] = useState(false)
 
   useEffect(() => {
     const isDarkMode = darkModeMenu[1].isSelected;
@@ -118,7 +129,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         menuItemsObject: { menuItems, setMenuItems },
         openSideBarObject: { openSideBar, setOpenSideBar }, 
         openDarkModeMenuObject: { openDarkModeMenu, setOpenDarkModeMenu },
-        darkModeMenuObject: { darkModeMenu, setDarkModeMenu} 
+        darkModeMenuObject: { darkModeMenu, setDarkModeMenu },
+        showSearchBarObject: { showSearchBar, setShowSearchBar }, 
       }}
     >
       {children}
