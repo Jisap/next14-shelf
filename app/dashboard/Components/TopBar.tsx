@@ -3,7 +3,7 @@ import DashboardText from './DashboardText'
 import SearchBar from './SearchBar'
 import ProfileAccount from './ProfileAccount'
 import DarkMode from './DarkMode'
-import DarkModeMenu from './DarkModeMenu'
+
 
 const TopBar = () => {
   return (
@@ -11,7 +11,7 @@ const TopBar = () => {
       <DashboardText />
       <SearchBar />
       <div className='flex gap-4 items-center'>
-        <DarkModeMenu />
+        <DarkMode />
         <ProfileAccount />
       </div>
     </div>
