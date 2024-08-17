@@ -83,21 +83,34 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     localStorage.setItem("openedSideBar", JSON.stringify(openSideBar))              // Cada vez que openSideBar cambie se cambiará también el localStorage  
   },[openSideBar])
 
-  const [openDarkModeMenu, setOpenDarkModeMenu] = useState(false)
-  const [darkModeMenu, setDarkModeMenu] = useState<DarkModeMenu[]>([
-    {
-      id: "1",
-      name: "Light",
-      icon: <LightModeIcon fontSize='small' />,
-      isSelected: true,
-    },
-    {
-      id: "2",
-      name: "Dark",
-      icon: <DarkModeIcon fontSize='small' />,
-      isSelected: false
-    }
-  ])
+ 
+
+  const [openDarkModeMenu, setOpenDarkModeMenu] = useState(false)                   // Estado del boolean
+  const [darkModeMenu, setDarkModeMenu] = useState<DarkModeMenu[]>(() => {          // Estado del DarkModeMenu[]  
+    
+    const savedDarkMode = localStorage.getItem("isDarkMode");                       // 1º se intenta obtener de ls
+    const isDarkMode = savedDarkMode ? JSON.parse(savedDarkMode) : false;           // si existe se aplica, sino = false
+    
+    return [
+      {
+        id: "1",
+        name: "Light",
+        icon: <LightModeIcon fontSize='small' />,
+        isSelected: !isDarkMode,
+      },
+      {
+        id: "2",
+        name: "Dark",
+        icon: <DarkModeIcon fontSize='small' />,
+        isSelected: isDarkMode,
+      },
+    ]
+  })
+
+  useEffect(() => {
+    const isDarkMode = darkModeMenu[1].isSelected;
+    localStorage.setItem("isDarkMode", JSON.stringify(isDarkMode))  // Valor en ls cambia cuando se modifique darkModeMenu
+  }, [darkModeMenu])
 
   return (
     <AppContext.Provider 
