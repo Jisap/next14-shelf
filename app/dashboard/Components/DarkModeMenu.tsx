@@ -1,25 +1,23 @@
 "use client"
 
-import LightModeIcon from '@mui/icons-material/LightMode';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
-import { useState } from "react"
+
 import { useAppContext } from '@/app/ContextApi';
 
 
 
-const DarkModeMenu = () => {  // Cuando en <DarkMode /> se cambia el openDarkModeMenu aquí se activa este componente
+const DarkModeMenu = () => {        // Cuando en <DarkMode /> se cambia el openDarkModeMenu aquí se activa este componente
   
   const {
     openDarkModeMenuObject: { openDarkModeMenu, setOpenDarkModeMenu },  // Aquí se recibirá el estado del open y el dark
     darkModeMenuObject: { darkModeMenu, setDarkModeMenu },
   } = useAppContext();
 
-  const changeSelection = (menuItem: any) => {  // Esta función se activa cuando se clickea un theme u otro
+  const changeSelection = (menuItem: any) => {                          // Esta función se activa cuando se clickea un theme u otro
     setDarkModeMenu((prevMenuItems) => 
       prevMenuItems.map((prevMenuItem) => 
         prevMenuItem.id === menuItem.id
-          ? { ...prevMenuItem, isSelected: true }   // y cambia el estado de isSelected para mostrar uno u otro icon
-          : { ...prevMenuItem, isSelected: false }
+          ? { ...prevMenuItem, isSelected: true }                       // y cambia el estado de isSelected para cambiar su color y 
+          : { ...prevMenuItem, isSelected: false }                      // en <DarkMode /> renderizar uno u otro.
       )
     )
   }
@@ -30,7 +28,7 @@ const DarkModeMenu = () => {  // Cuando en <DarkMode /> se cambia el openDarkMod
         <div 
           key={item.id}
           onClick={() => changeSelection(item)}
-          className={`${ item.isSelected ? "text-sky-500" : "text-slate-400" } flex gap-2 items-center cursor-pointer hover: text-sky-500`}
+          className={`${ item.isSelected ? "text-sky-500" : "text-slate-400" } flex gap-2 items-center cursor-pointer hover:text-sky-500`}
         >
           {item.icon}
           <span className='text-[12px] font-light'>{item.name}</span>
