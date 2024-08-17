@@ -4,8 +4,17 @@ import { createContext, ReactNode, useContext, useEffect, useState } from "react
 import HomeIcon from '@mui/icons-material/Home';
 import CategoryIcon from '@mui/icons-material/Category';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 
 export interface MenuItem {   //  Define la estructura de un elemento del menú. 
+  id: string;
+  name: string;
+  icon: ReactNode;
+  isSelected: boolean;
+}
+
+export interface DarkModeMenu {
   id: string;
   name: string;
   icon: ReactNode;
@@ -20,7 +29,17 @@ interface AppContextType {    // Define la estructura del contexto que será com
 
   openSideBarObject:{
     openSideBar: boolean;
-    setOpenSideBar: React.Dispatch<React.SetStateAction<boolean>>
+    setOpenSideBar: React.Dispatch<React.SetStateAction<boolean>> // Define si se abrió o no la ventana de cambio del theme
+  }
+
+  darkModeMenuObject: {
+    darkModeMenu: DarkModeMenu[];
+    setDarkModeMenu: React.Dispatch<React.SetStateAction<DarkModeMenu[]>> // Define el tipo de theme seleccionado
+  }
+
+  openDarkModeMenuObject: {
+    openDarkModeMenu: boolean;
+    setOpenDarkModeMenu: React.Dispatch<React.SetStateAction<boolean>>
   }
 }
 
@@ -33,6 +52,14 @@ const defaultState: AppContextType = {
     openSideBar: true,
     setOpenSideBar: () => {},
   },
+  openDarkModeMenuObject: {
+    openDarkModeMenu: false,
+    setOpenDarkModeMenu: () => {}
+  },
+  darkModeMenuObject: {
+    darkModeMenu: [],
+    setDarkModeMenu: () => {}
+  }
 };
 
 export const AppContext = createContext<AppContextType>(defaultState);              // Creación del contexto
@@ -56,11 +83,29 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     localStorage.setItem("openedSideBar", JSON.stringify(openSideBar))              // Cada vez que openSideBar cambie se cambiará también el localStorage  
   },[openSideBar])
 
+  const [openDarkModeMenu, setOpenDarkModeMenu] = useState(false)
+  const [darkModeMenu, setDarkModeMenu] = useState<DarkModeMenu[]>([
+    {
+      id: "1",
+      name: "Light",
+      icon: <LightModeIcon fontSize='small' />,
+      isSelected: true,
+    },
+    {
+      id: "2",
+      name: "Dark",
+      icon: <DarkModeIcon fontSize='small' />,
+      isSelected: false
+    }
+  ])
+
   return (
     <AppContext.Provider 
       value={{
         menuItemsObject: { menuItems, setMenuItems },
-        openSideBarObject: { openSideBar, setOpenSideBar },  
+        openSideBarObject: { openSideBar, setOpenSideBar }, 
+        openDarkModeMenuObject: { openDarkModeMenu, setOpenDarkModeMenu },
+        darkModeMenuObject: { darkModeMenu, setDarkModeMenu} 
       }}
     >
       {children}
