@@ -7,18 +7,18 @@ import { useAppContext } from '@/app/ContextApi';
 
 
 
-const DarkModeMenu = () => {
+const DarkModeMenu = () => {  // Cuando en <DarkMode /> se cambia el openDarkModeMenu aquí se activa este componente
   
   const {
-    openDarkModeMenuObject: { openDarkModeMenu, setOpenDarkModeMenu },
+    openDarkModeMenuObject: { openDarkModeMenu, setOpenDarkModeMenu },  // Aquí se recibirá el estado del open y el dark
     darkModeMenuObject: { darkModeMenu, setDarkModeMenu },
   } = useAppContext();
 
-  const changeSelection = (menuItem: any) => {
+  const changeSelection = (menuItem: any) => {  // Esta función se activa cuando se clickea un theme u otro
     setDarkModeMenu((prevMenuItems) => 
       prevMenuItems.map((prevMenuItem) => 
         prevMenuItem.id === menuItem.id
-          ? { ...prevMenuItem, isSelected: true }
+          ? { ...prevMenuItem, isSelected: true }   // y cambia el estado de isSelected para mostrar uno u otro icon
           : { ...prevMenuItem, isSelected: false }
       )
     )
