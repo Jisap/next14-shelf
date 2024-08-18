@@ -46,6 +46,16 @@ interface AppContextType {    // Define la estructura del contexto que será com
     showSearchBar: boolean;
     setShowSearchBar: React.Dispatch<React.SetStateAction<boolean>>
   }
+
+  isMobileViewObject: {
+    isMobileView: boolean,
+    setIsMobileView: React.Dispatch<React.SetStateAction<boolean>>
+  }
+
+  showSideBarObject: {
+    showSideBar: boolean,
+    setShowSideBar: React.Dispatch<React.SetStateAction<boolean>>
+  }
 }
 
 const defaultState: AppContextType = {
@@ -68,7 +78,17 @@ const defaultState: AppContextType = {
   showSearchBarObject: {
     showSearchBar: false,
     setShowSearchBar: () => {}
-  }
+  },
+
+  isMobileViewObject: {
+    isMobileView: false,
+    setIsMobileView: () => {}
+  },
+
+  showSideBarObject: {
+    showSideBar: true,
+    setShowSideBar: () => {}
+  },
 };
 
 export const AppContext = createContext<AppContextType>(defaultState);              // Creación del contexto
@@ -116,7 +136,10 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     ]
   });
 
-  const [showSearchBar, setShowSearchBar] = useState(false)
+  const [showSearchBar, setShowSearchBar] = useState(false);
+
+  const [isMobileView, setIsMobileView] = useState(false);
+  const [showSideBar, setShowSideBar] = useState(true);
 
   useEffect(() => {
     const isDarkMode = darkModeMenu[1].isSelected;
@@ -131,6 +154,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         openDarkModeMenuObject: { openDarkModeMenu, setOpenDarkModeMenu },
         darkModeMenuObject: { darkModeMenu, setDarkModeMenu },
         showSearchBarObject: { showSearchBar, setShowSearchBar }, 
+        isMobileViewObject: { isMobileView, setIsMobileView },
+        showSideBarObject: { showSideBar, setShowSideBar }
       }}
     >
       {children}
