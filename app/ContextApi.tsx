@@ -144,7 +144,21 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   useEffect(() => {
     const isDarkMode = darkModeMenu[1].isSelected;
     localStorage.setItem("isDarkMode", JSON.stringify(isDarkMode))  // Valor en ls cambia cuando se modifique darkModeMenu
-  }, [darkModeMenu])
+  }, [darkModeMenu]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobileView(window.innerWidth <= 640)
+    }
+
+    handleResize()
+
+    window.addEventListener("resize", handleResize)
+
+    return () => {
+      window.removeEventListener("resize", handleResize)
+    }
+  })
 
   return (
     <AppContext.Provider 

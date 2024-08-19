@@ -1,3 +1,5 @@
+"use client"
+
 import React from 'react'
 import TopBar from './Components/TopBar'
 import { useAppContext } from '../ContextApi'
