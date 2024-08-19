@@ -10,12 +10,12 @@ const DashboardText = () => {
   const { user } = useUser();
   const { showSideBarObject: { setShowSideBar } }= useAppContext();
   
-
+  //max-sm:hidden -> "se aplica en pantallas pequeñas o más pequeñas."
   return (
     <div className='flex flex-col'>
       <div
         onClick={() => setShowSideBar(true)}
-        className='hiddend max-sm:block'
+        className='hidden max-sm:block'
       >
         <MenuIcon className='text-slate-500 cursor-pointer' />
       </div>
