@@ -10,8 +10,6 @@ const dashboard = () => {
       <div className='flex  gap-2'>
         <Sidebar />
         <ContentArea />
-        {/* <UserButton /> */}
-        {/* <a href="/" className='text-sky-500 hover:underline'>Regresar</a> */}
       </div>
     </div>
   )
