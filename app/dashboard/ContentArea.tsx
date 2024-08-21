@@ -5,6 +5,7 @@ import TopBar from './Components/TopBar'
 import { useAppContext } from '../ContextApi'
 import SoftLayer from './Components/SoftLayer'
 import StatsBar from './Components/StatsBar'
+import AllProjects from './Components/AllProjects'
 
 const ContentArea = () => {
 
@@ -20,6 +21,7 @@ const ContentArea = () => {
     <div className='w-full h-screen bg-slate-50 p-4'>
       <TopBar />
       <StatsBar />
+      <AllProjects />
       {isMobileView && showSideBar && <SoftLayer />}
     </div>
   )
