@@ -19,7 +19,7 @@ const AllProjects = () => {
       </span>
 
       {/* Showing the projects */}
-      <div className='flex flex-wrap gap-4 mt-7 mb-2 max-sm:grid max-sm:grid-cols-1'>
+      <div className='flex justify-center flex-wrap gap-4 mt-7 mb-2 max-sm:grid max-sm:grid-cols-1 max-sm:justify-items-center max-sm:mx-auto'>
         <SingleProject />
         <SingleProject />
         <SingleProject />
