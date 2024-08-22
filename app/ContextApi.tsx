@@ -6,6 +6,7 @@ import CategoryIcon from '@mui/icons-material/Category';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
+import { allProjectsData, Project } from "./allData";
 
 export interface MenuItem {   //  Define la estructura de un elemento del menú. 
   id: string;
@@ -56,6 +57,11 @@ interface AppContextType {    // Define la estructura del contexto que será com
     showSideBar: boolean,
     setShowSideBar: React.Dispatch<React.SetStateAction<boolean>>
   }
+
+  allProjectsObject: {
+    allProjects: Project[];
+    setAllProjects: React.Dispatch<React.SetStateAction<Project[]>>
+  }
 }
 
 const defaultState: AppContextType = {
@@ -89,6 +95,10 @@ const defaultState: AppContextType = {
     showSideBar: true,
     setShowSideBar: () => {}
   },
+  allProjectsObject: {
+    allProjects: [],
+    setAllProjects: () => {}
+  }
 };
 
 export const AppContext = createContext<AppContextType>(defaultState);              // Creación del contexto
@@ -137,15 +147,17 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   });
 
   const [showSearchBar, setShowSearchBar] = useState(false);
-
   const [isMobileView, setIsMobileView] = useState(false);
   const [showSideBar, setShowSideBar] = useState(true);
+  const [allProjects, setAllProjects] = useState<Project[]>([])
 
+  // Darkmode
   useEffect(() => {
     const isDarkMode = darkModeMenu[1].isSelected;
     localStorage.setItem("isDarkMode", JSON.stringify(isDarkMode))  // Valor en ls cambia cuando se modifique darkModeMenu
   }, [darkModeMenu]);
 
+  // Update the window size
   useEffect(() => {
     const handleResize = () => {
       setIsMobileView(window.innerWidth <= 640)
@@ -158,7 +170,19 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     return () => {
       window.removeEventListener("resize", handleResize)
     }
-  })
+  });
+
+  // Simulate the fetch using setTimeout
+  useEffect(() => {
+    const fetchAllProjects = () => {
+      setTimeout(() => {
+        setAllProjects(allProjectsData)
+      }, 2000);
+    }
+    fetchAllProjects();
+  },[]);
+
+  console.log("allProjects", allProjects);
 
   return (
     <AppContext.Provider 
@@ -169,7 +193,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         darkModeMenuObject: { darkModeMenu, setDarkModeMenu },
         showSearchBarObject: { showSearchBar, setShowSearchBar }, 
         isMobileViewObject: { isMobileView, setIsMobileView },
-        showSideBarObject: { showSideBar, setShowSideBar }
+        showSideBarObject: { showSideBar, setShowSideBar },
+        allProjectsObject: { allProjects, setAllProjects },
       }}
     >
       {children}
