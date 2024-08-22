@@ -2,7 +2,13 @@ import { AddOutlined } from '@mui/icons-material'
 import React from 'react'
 import SingleProject from './SingleProject'
 
+import { useAppContext } from '@/app/ContextApi';
+
 const AllProjects = () => {
+
+  const { allProjectsObject: { allProjects }} = useAppContext()
+
+
   return (
     <div className='bg-white w-full p-8 rounded-lg mt-4'>
       {/* header */}
@@ -20,10 +26,13 @@ const AllProjects = () => {
 
       {/* Showing the projects */}
       <div className='flex justify-center flex-wrap gap-4 mt-7 mb-2 max-sm:grid max-sm:grid-cols-1 max-sm:justify-items-center max-sm:mx-auto'>
-        <SingleProject />
-        <SingleProject />
-        <SingleProject />
-        <SingleProject />
+        {
+          allProjects?.map((project, index) => (
+            <div key={index}>
+              <SingleProject singleProject={project} />
+            </div>
+          ))
+        }
       </div>
     </div>
   )

@@ -23,7 +23,7 @@ export const allProjectsData: Project[] = [
     _id: uuidv4(),
     clerkUserId: "",
     name: "Forms",
-    icon: "categoryIcon",
+    icon: "CategoryIcon",
     createdAt: "2022-01-01T00:00:00.000Z",
     components: [
       {
