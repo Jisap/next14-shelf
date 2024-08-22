@@ -6,6 +6,7 @@ import { useAppContext } from '../ContextApi'
 import SoftLayer from './Components/SoftLayer'
 import StatsBar from './Components/StatsBar'
 import AllProjects from './Components/AllProjects'
+import FavoriteComponents from './Components/FavoriteComponents'
 
 const ContentArea = () => {
 
@@ -22,6 +23,7 @@ const ContentArea = () => {
       <TopBar />
       <StatsBar />
       <AllProjects />
+      <FavoriteComponents />
       {isMobileView && showSideBar && <SoftLayer />}
     </div>
   )
