@@ -7,6 +7,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { allProjectsData, Component, Project } from "./allData";
+import FavoriteComponents from './dashboard/Components/FavoriteComponents';
 
 export interface MenuItem {   //  Define la estructura de un elemento del menú. 
   id: string;
@@ -198,12 +199,22 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   useEffect(() => {
     const fetchAllProjects = () => {
       setTimeout(() => {
-        setAllProjects(allProjectsData);
+        setAllProjects(allProjectsData); 
         setIsLoading(false);
-      }, 2000);
+      }, 3000);
     }
     fetchAllProjects();
   },[]);
+
+  // Update favorite components when allProjects change
+  useEffect(() => {
+    if(allProjects.length > 0){
+      const favoriteComponents = allProjects.flatMap((project) =>       // map con condición
+        project.components.filter((component) => component.isFavorite)  // Se crea un array según condición: component tenga isFavorite = true
+      );
+      setAllFavoriteComponents(favoriteComponents)
+    }
+  },[allProjects])
 
   console.log("isLoading", isLoading);
 

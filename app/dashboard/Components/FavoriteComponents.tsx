@@ -1,8 +1,12 @@
 import React from 'react'
 import SingleFavoriteComponent from './SingleFavoriteComponent'
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { useAppContext } from '@/app/ContextApi';
 
 const FavoriteComponents = () => {
+
+  const { allFavoriteComponentsObject: { allFavoriteComponents }} = useAppContext();
+
   return (
 
     <div className='bg-white w-full p-8 rounded-lg mt-4'>
@@ -28,9 +32,11 @@ const FavoriteComponents = () => {
 
       {/* Components */}
       <div className='px-4 flex flex-col gap-1 mt-1'>
-        <SingleFavoriteComponent />
-        <SingleFavoriteComponent />
-        <SingleFavoriteComponent />
+        {allFavoriteComponents.map((component, index) => (
+          <div key={index}>
+            <SingleFavoriteComponent component={component} />
+          </div>
+        ))}
       </div>
     
     </div>

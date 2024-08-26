@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-export interface Components {
+export interface Component {
   _id:          string;
   name:         string;
   projectName:  string;
@@ -15,7 +15,7 @@ export interface Project {
   name:         string;
   icon:         string;
   createdAt:    string;
-  components:   Components[];
+  components:   Component[];
 }
 
 export const allProjectsData: Project[] = [
