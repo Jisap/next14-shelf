@@ -44,7 +44,7 @@ const AllProjects = () => {
       {!isLoading && allProjects.length === 0 ? (
         <EmptyProjectsPlaceHolder />
       ) : (
-        <div className='flex justify-center flex-wrap gap-4 mt-7 mb-2 max-sm:grid max-sm:grid-cols-1 max-sm:justify-items-center max-sm:mx-auto'>
+        <div className='flex justify-center flex-wrap gap-4 mt-7 mb-2 max-sm:grid max-sm:grid-cols-1'>
           {allProjects?.map((project, index) => (
             <div key={index}>
               <SingleProject singleProject={project} />
