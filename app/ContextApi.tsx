@@ -6,7 +6,7 @@ import CategoryIcon from '@mui/icons-material/Category';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
-import { allProjectsData, Project } from "./allData";
+import { allProjectsData, Component, Project } from "./allData";
 
 export interface MenuItem {   //  Define la estructura de un elemento del menú. 
   id: string;
@@ -67,6 +67,11 @@ interface AppContextType {    // Define la estructura del contexto que será com
     isLoading: boolean,
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
   }
+
+  allFavoriteComponentsObject: {
+    allFavoriteComponents: Component[],
+    setAllFavoriteComponents: React.Dispatch<React.SetStateAction<Component[]>>
+  }
 }
 
 const defaultState: AppContextType = {
@@ -108,6 +113,11 @@ const defaultState: AppContextType = {
   isLoadingObject: {
     isLoading: true,
     setIsLoading: () => {}
+  },
+
+  allFavoriteComponentsObject: {
+    allFavoriteComponents: [],
+    setAllFavoriteComponents: () => {}
   }
 };
 
@@ -161,6 +171,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [showSideBar, setShowSideBar] = useState(true);
   const [allProjects, setAllProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [allFavoriteComponents, setAllFavoriteComponents] = useState<Component[]>([])
 
   // Darkmode
   useEffect(() => {
@@ -208,6 +219,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         showSideBarObject: { showSideBar, setShowSideBar },
         allProjectsObject: { allProjects, setAllProjects },
         isLoadingObject: { isLoading, setIsLoading },
+        allFavoriteComponentsObject: {allFavoriteComponents, setAllFavoriteComponents}
       }}
     >
       {children}
