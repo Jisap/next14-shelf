@@ -62,6 +62,11 @@ interface AppContextType {    // Define la estructura del contexto que será com
     allProjects: Project[];
     setAllProjects: React.Dispatch<React.SetStateAction<Project[]>>
   }
+
+  isLoadingObject: {
+    isLoading: boolean,
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+  }
 }
 
 const defaultState: AppContextType = {
@@ -98,6 +103,11 @@ const defaultState: AppContextType = {
   allProjectsObject: {
     allProjects: [],
     setAllProjects: () => {}
+  },
+
+  isLoadingObject: {
+    isLoading: true,
+    setIsLoading: () => {}
   }
 };
 
@@ -149,7 +159,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
   const [showSideBar, setShowSideBar] = useState(true);
-  const [allProjects, setAllProjects] = useState<Project[]>([])
+  const [allProjects, setAllProjects] = useState<Project[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Darkmode
   useEffect(() => {
@@ -176,13 +187,14 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   useEffect(() => {
     const fetchAllProjects = () => {
       setTimeout(() => {
-        setAllProjects(allProjectsData)
+        setAllProjects(allProjectsData);
+        setIsLoading(false);
       }, 2000);
     }
     fetchAllProjects();
   },[]);
 
-  console.log("allProjects", allProjects);
+  console.log("isLoading", isLoading);
 
   return (
     <AppContext.Provider 
@@ -195,6 +207,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         isMobileViewObject: { isMobileView, setIsMobileView },
         showSideBarObject: { showSideBar, setShowSideBar },
         allProjectsObject: { allProjects, setAllProjects },
+        isLoadingObject: { isLoading, setIsLoading },
       }}
     >
       {children}
