@@ -2,10 +2,14 @@ import React from 'react'
 import SingleFavoriteComponent from './SingleFavoriteComponent'
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useAppContext } from '@/app/ContextApi';
+import { CircularProgress } from '@mui/material';
 
 const FavoriteComponents = () => {
 
-  const { allFavoriteComponentsObject: { allFavoriteComponents }} = useAppContext();
+  const { 
+    allFavoriteComponentsObject: { allFavoriteComponents },
+    isLoadingObject: { isLoading, setIsLoading}
+  } = useAppContext();
 
   return (
 
@@ -31,13 +35,28 @@ const FavoriteComponents = () => {
       </div>
 
       {/* Components */}
-      <div className='px-4 flex flex-col gap-1 mt-1'>
-        {allFavoriteComponents.map((component, index) => (
-          <div key={index}>
-            <SingleFavoriteComponent component={component} />
-          </div>
-        ))}
-      </div>
+
+      {isLoading && (
+        <div className='flex flex-col gap-3 justify-center items-center w-full mt-[70px] mb-7'>
+          <CircularProgress value={100} />
+          <span className='text-slate text-sm'>Loading...</span>
+        </div>
+      )}
+
+      {!isLoading && allFavoriteComponents.length === 0 ? (
+        <div className='flex justify-center items-center mt-[70px] mb-8 text-slate-400 text-sm'>
+          No favorite components set yet...
+        </div>
+      ) : (
+        <div className='px-4 flex flex-col gap-1 mt-1'>
+          {allFavoriteComponents.slice(0, 5).map((component, index) => (
+            <div key={index}>
+              <SingleFavoriteComponent component={component} />
+            </div>
+          ))}
+        </div>
+      )}
+
     
     </div>
   )
