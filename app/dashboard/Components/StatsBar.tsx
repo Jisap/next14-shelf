@@ -5,6 +5,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import CategoriesCard from "./CategoriesCard";
 
 
+
 export interface StatisticCard {
   id: number;
   name: string;
