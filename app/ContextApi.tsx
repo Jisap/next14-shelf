@@ -73,6 +73,11 @@ interface AppContextType {    // Define la estructura del contexto que será com
     allFavoriteComponents: Component[],
     setAllFavoriteComponents: React.Dispatch<React.SetStateAction<Component[]>>
   }
+
+  openProjectWindowObject: {
+    openProjectWindow: boolean,
+    setOpenProjectWindow: React.Dispatch<React.SetStateAction<boolean>>
+  }
 }
 
 const defaultState: AppContextType = {
@@ -119,6 +124,11 @@ const defaultState: AppContextType = {
   allFavoriteComponentsObject: {
     allFavoriteComponents: [],
     setAllFavoriteComponents: () => {}
+  },
+
+  openProjectWindowObject: {
+    openProjectWindow: false,
+    setOpenProjectWindow: () => {}
   }
 };
 
@@ -167,6 +177,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     ]
   });
 
+  const [openProjectWindow, setOpenProjectWindow] = useState(true);
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
   const [showSideBar, setShowSideBar] = useState(true);
@@ -230,7 +241,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         showSideBarObject: { showSideBar, setShowSideBar },
         allProjectsObject: { allProjects, setAllProjects },
         isLoadingObject: { isLoading, setIsLoading },
-        allFavoriteComponentsObject: {allFavoriteComponents, setAllFavoriteComponents}
+        allFavoriteComponentsObject: {allFavoriteComponents, setAllFavoriteComponents},
+        openProjectWindowObject: { openProjectWindow, setOpenProjectWindow },
       }}
     >
       {children}

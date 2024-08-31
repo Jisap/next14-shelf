@@ -11,6 +11,7 @@ const AllProjects = () => {
   const { 
     allProjectsObject: { allProjects },
     isLoadingObject: { isLoading },
+    openProjectWindowObject: { openProjectWindow, setOpenProjectWindow }
   } = useAppContext()
 
 
@@ -25,7 +26,10 @@ const AllProjects = () => {
 
         {/* New Project button */}
         {!isLoading && allProjects.length > 0 && (
-          <button className='bg-sky-500 text-white text-[12px] px-3 py-[2px] rounded-md'>
+          <button 
+            className='bg-sky-500 text-white text-[12px] px-3 py-[2px] rounded-md' 
+            onClick={() => setOpenProjectWindow(true)}
+          >
             <AddOutlined fontSize="small" />
             <span className='text-[13px]'>New Project</span>
           </button>
