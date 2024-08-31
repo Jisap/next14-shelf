@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from 'react'
 import CategoryIcon from '@mui/icons-material/Category';
 import CloseIcon from '@mui/icons-material/Close';
-import IceSkatingOutlinedIcon from '@mui/icons-material/IceSkatingOutlined';
+import CodeOutlinedIcon from '@mui/icons-material/CodeOutlined';
 import { useAppContext } from '@/app/ContextApi';
 
 const AddProjectWindow = () => {
@@ -11,6 +11,7 @@ const AddProjectWindow = () => {
   const {
     isMobileViewObject: { isMobileView },
     openProjectWindowObject: { openProjectWindow, setOpenProjectWindow },
+    openIconWindowObject: { setOpenIconWindow }
   } = useAppContext();
 
   const inputRef = useRef<HTMLInputElement>(null)
@@ -57,7 +58,8 @@ const AddProjectWindow = () => {
           />
           {/* icon */}
           <div className='w-12 h-10 text-white flex items-center justify-center bg-sky-500 rounded-lg cursor-pointer'>
-            <IceSkatingOutlinedIcon 
+            <CodeOutlinedIcon
+              onClick={() => setOpenIconWindow(true)} 
               sx={{ fontSize: 18}}
               className='text-[18px]'
             />

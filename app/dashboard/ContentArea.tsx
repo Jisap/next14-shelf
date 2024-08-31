@@ -13,6 +13,7 @@ const ContentArea = () => {
   const {
     showSideBarObject: { showSideBar },
     isMobileViewObject: { isMobileView },
+    openProjectWindowObject: { openProjectWindow },
   } = useAppContext()
 
   console.log("isMobileView", isMobileView);

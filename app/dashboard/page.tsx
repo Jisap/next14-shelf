@@ -1,13 +1,12 @@
 "use client"
 
 import React from 'react'
-import { UserButton } from '@clerk/nextjs'
 import Sidebar from './Sidebar'
-import TopBar from './Components/TopBar'
 import ContentArea from './ContentArea'
 import { useAppContext } from '../ContextApi'
 import AddProjectWindow from './Components/AddProjectWindow'
 import SoftLayer from './Components/SoftLayer'
+import IconWindow from './Components/IconWindow'
 
 const dashboard = () => {
 
@@ -23,6 +22,7 @@ const dashboard = () => {
 
     <div className='flex poppins relative'>
       <AddProjectWindow />
+      <IconWindow />
       {openProjectWindow && <SoftLayer />}
       <Sidebar />
       <ContentArea />

@@ -8,6 +8,7 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { allProjectsData, Component, Project } from "./allData";
 import FavoriteComponents from './dashboard/Components/FavoriteComponents';
+import { IconData } from "@/AllIconsData";
 
 export interface MenuItem {   //  Define la estructura de un elemento del menú. 
   id: string;
@@ -78,6 +79,11 @@ interface AppContextType {    // Define la estructura del contexto que será com
     openProjectWindow: boolean,
     setOpenProjectWindow: React.Dispatch<React.SetStateAction<boolean>>
   }
+
+  openIconWindowObject: {
+    openIconWindow: boolean,
+    setOpenIconWindow: React.Dispatch<React.SetStateAction<boolean>>
+  }
 }
 
 const defaultState: AppContextType = {
@@ -129,6 +135,11 @@ const defaultState: AppContextType = {
   openProjectWindowObject: {
     openProjectWindow: false,
     setOpenProjectWindow: () => {}
+  },
+
+  openIconWindowObject: {
+    openIconWindow: false,
+    setOpenIconWindow: () => {}
   }
 };
 
@@ -184,6 +195,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [allProjects, setAllProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [allFavoriteComponents, setAllFavoriteComponents] = useState<Component[]>([])
+  const [openIconWindow, setOpenIconWindow] = useState(false);
 
   // Darkmode
   useEffect(() => {
@@ -227,8 +239,6 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     }
   },[allProjects])
 
-  console.log("isLoading", isLoading);
-
   return (
     <AppContext.Provider 
       value={{
@@ -243,6 +253,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         isLoadingObject: { isLoading, setIsLoading },
         allFavoriteComponentsObject: {allFavoriteComponents, setAllFavoriteComponents},
         openProjectWindowObject: { openProjectWindow, setOpenProjectWindow },
+        openIconWindowObject: { openIconWindow, setOpenIconWindow }
       }}
     >
       {children}
