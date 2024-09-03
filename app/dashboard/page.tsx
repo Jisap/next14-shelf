@@ -10,6 +10,7 @@ import IconWindow from './Components/IconWindow'
 import { allIconsArray } from '@/AllIconsData'
 import { IconData } from '@/AllIconsData'
 import CodeOutlinedIcon from '@mui/icons-material/CodeOutlined';
+import { Toaster } from 'react-hot-toast'
 
 interface SelectedIcon {
   icon: React.ReactNode;
@@ -36,6 +37,7 @@ const dashboard = () => {
    
 
     <div className='flex poppins relative'>
+      <Toaster />
       <AddProjectWindow  
         selectedIcon={selectedIcon}
       />

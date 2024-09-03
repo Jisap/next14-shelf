@@ -4,7 +4,7 @@ import LandslideIcon from '@mui/icons-material/Landslide';
 
 const SingleProject = ({ singleProject }: { singleProject: Project }) => {
   return (
-    <div className='w-[200px] border border-slate-100 rounded-md p-5 flex gap-2 justify-center flex-col items-centermax-sm:w-full'>
+    <div className='w-[200px] border border-slate-100 rounded-md p-5 flex gap-2 justify-center flex-col items-center max-sm:w-full'>
       {/* Icon */}
       <div className='w-[70px] h-[70px] bg-sky-100 rounded-full flex items-center justify-center'>
         { TextToIcon({ text: singleProject.icon, size: "medium" })}

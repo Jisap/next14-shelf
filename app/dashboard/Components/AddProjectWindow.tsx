@@ -6,6 +6,10 @@ import CloseIcon from '@mui/icons-material/Close';
 import CodeOutlinedIcon from '@mui/icons-material/CodeOutlined';
 import { useAppContext } from '@/app/ContextApi';
 import { ErrorOutline } from '@mui/icons-material';
+import { v4 as uuidv4 } from 'uuid';
+import { Project } from '@/app/allData';
+import { useUser } from '@clerk/nextjs';
+import toast from 'react-hot-toast';
 
 const AddProjectWindow = ({
   selectedIcon } : {
@@ -18,17 +22,19 @@ const AddProjectWindow = ({
     isMobileViewObject: { isMobileView },
     openProjectWindowObject: { openProjectWindow, setOpenProjectWindow },
     openIconWindowObject: { setOpenIconWindow },
-    allProjectsObject: { allProjects }
+    allProjectsObject: { allProjects, setAllProjects }
   } = useAppContext();
 
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [projectName, setProjectName] = useState<string>("");
+  const { user } = useUser();
 
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {                 // Cada vez que se abre la ventana de añadir proyecto
     inputRef.current?.focus();      // se establece el foco en el input correspondiente permitiendo escribir directamente
-    setErrorMessage("")
+    setProjectName("");
+    setErrorMessage("");
   },[openProjectWindow]);
 
   const handleInputUpdate = ( e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,7 +56,26 @@ const AddProjectWindow = ({
         inputRef.current?.focus();
         return;
       }
+
+      const newProject: Project = {
+        _id: uuidv4(),
+        clerkUserId: user?.id as string,
+        name: projectName,
+        icon: selectedIcon.name,
+        createdAt: new Date().toISOString(),
+        components: []
+      }
+
+      try {
+        setAllProjects([...allProjects, newProject]);
+        toast.success("project added successfuly");
+        setOpenProjectWindow(false);
+      } catch (error) {
+        toast.error("Failed to add project");
+      }
   }
+
+  console.log(allProjects);
 
   return (
     <div 
@@ -111,7 +136,7 @@ const AddProjectWindow = ({
       </div>
 
       {/* footer */}
-      <div className='w-full mt-11 flex gap-3 justify-end px-7 items-center'>
+      <div className='w-full mt-12 mb-10 flex gap-3 justify-end px-7 items-center'>
         {/* cancel button */}
         <button
           onClick={() => setOpenProjectWindow(false)} 
