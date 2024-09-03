@@ -7,8 +7,9 @@ import { useAppContext } from '../ContextApi'
 import AddProjectWindow from './Components/AddProjectWindow'
 import SoftLayer from './Components/SoftLayer'
 import IconWindow from './Components/IconWindow'
-import CodeOutlinedIcon from '@mui/icons-material/CodeOutlined';
+import { allIconsArray } from '@/AllIconsData'
 import { IconData } from '@/AllIconsData'
+import CodeOutlinedIcon from '@mui/icons-material/CodeOutlined';
 
 interface SelectedIcon {
   icon: React.ReactNode;

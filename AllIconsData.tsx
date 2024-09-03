@@ -1,5 +1,4 @@
-import { DeveloperMode } from "@mui/icons-material";
-import CategoryIcon from "@mui/icons-material/Category";
+
 import CodeOutlinedIcon from '@mui/icons-material/CodeOutlined';
 import DeveloperModeOutlinedIcon from '@mui/icons-material/DeveloperModeOutlined';
 import WebOutlinedIcon from '@mui/icons-material/WebOutlined';

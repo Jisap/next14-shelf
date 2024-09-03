@@ -1,10 +1,11 @@
 "use client"
 
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import CategoryIcon from '@mui/icons-material/Category';
 import CloseIcon from '@mui/icons-material/Close';
 import CodeOutlinedIcon from '@mui/icons-material/CodeOutlined';
 import { useAppContext } from '@/app/ContextApi';
+import { ErrorOutline } from '@mui/icons-material';
 
 const AddProjectWindow = ({
   selectedIcon } : {
@@ -16,14 +17,40 @@ const AddProjectWindow = ({
   const {
     isMobileViewObject: { isMobileView },
     openProjectWindowObject: { openProjectWindow, setOpenProjectWindow },
-    openIconWindowObject: { setOpenIconWindow }
+    openIconWindowObject: { setOpenIconWindow },
+    allProjectsObject: { allProjects }
   } = useAppContext();
+
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [projectName, setProjectName] = useState<string>("");
 
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {                 // Cada vez que se abre la ventana de añadir proyecto
     inputRef.current?.focus();      // se establece el foco en el input correspondiente permitiendo escribir directamente
-  },[openProjectWindow])
+    setErrorMessage("")
+  },[openProjectWindow]);
+
+  const handleInputUpdate = ( e: React.ChangeEvent<HTMLInputElement>) => {
+    setErrorMessage("");
+    setProjectName(e.target.value);
+  }
+
+  const AddNewProject = () => {
+
+    if(projectName.trim() === ""){
+      setErrorMessage("Project name cannot be empty");
+      inputRef.current?.focus();
+      return;
+    }
+
+    if(allProjects.find(
+      (project) => project.name.toLocaleLowerCase() === projectName.toLocaleLowerCase())){
+        setErrorMessage("Project name already exits");
+        inputRef.current?.focus();
+        return;
+      }
+  }
 
   return (
     <div 
@@ -58,9 +85,21 @@ const AddProjectWindow = ({
           {/* Input */}
           <input 
             ref={inputRef}
-            placeholder="Enter Category Name..."
+            value={projectName}
+            onChange={handleInputUpdate}
+            placeholder="Enter Project Name..."
             className='p-[10px] text-[12px] w-full rounded-md border outline-none'
           />
+          {/* error message */}
+          <div className={`flex items-center gap-2 mt-2 ${errorMessage ? "" : "hidden"}`}>
+            <ErrorOutline 
+              sx={{ fontSize: 14 }}
+              className='text-red-500'
+            />
+            <span className='text-[12px] text-red-500 mt-[2px]'>
+              {errorMessage}
+            </span>
+          </div>
           {/* icon */}
           <div 
             className='w-12 h-10 text-white flex items-center justify-center bg-sky-500 rounded-lg cursor-pointer'
@@ -81,7 +120,10 @@ const AddProjectWindow = ({
           Cancel
         </button>
 
-        <button className='bg-sky-500 hover:bg-sky-600 text-white text-[12px] p-2 px-3 rounded-md transition-all'>
+        <button
+          onClick={AddNewProject}
+          className='bg-sky-500 hover:bg-sky-600 text-white text-[12px] p-2 px-3 rounded-md transition-all'
+        >
           Add Project
         </button>
       </div>
