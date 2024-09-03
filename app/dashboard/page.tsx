@@ -7,22 +7,40 @@ import { useAppContext } from '../ContextApi'
 import AddProjectWindow from './Components/AddProjectWindow'
 import SoftLayer from './Components/SoftLayer'
 import IconWindow from './Components/IconWindow'
+import CodeOutlinedIcon from '@mui/icons-material/CodeOutlined';
+import { IconData } from '@/AllIconsData'
+
+interface SelectedIcon {
+  icon: React.ReactNode;
+  name: string;
+}
 
 const dashboard = () => {
 
   const { openProjectWindowObject: { openProjectWindow }} = useAppContext()
 
+  const [selectedIcon, setSelectedIcon] = React.useState<SelectedIcon>({ // Estado de selectedIcon
+    icon: <CodeOutlinedIcon />,
+    name: "CodeIcon"
+  });
+
+  const getTheIconSelected =(icon: IconData) => { // Actualiza el estado de selectedIcon con el icon recibido
+    setSelectedIcon({
+      icon: icon.icon,
+      name: icon.name
+    })
+  }
+
   return (
-    // <div className='flex flex-col'>
-    //   <div className='flex  gap-2'>
-    //     <Sidebar />
-    //     <ContentArea />
-    //   </div>
-    // </div>
+   
 
     <div className='flex poppins relative'>
-      <AddProjectWindow />
-      <IconWindow />
+      <AddProjectWindow  
+        selectedIcon={selectedIcon}
+      />
+      <IconWindow 
+        onUpdateIconSelected={getTheIconSelected}
+      />
       {openProjectWindow && <SoftLayer />}
       <Sidebar />
       <ContentArea />

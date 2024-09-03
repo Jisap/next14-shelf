@@ -28,7 +28,7 @@ const AllProjects = () => {
         {!isLoading && allProjects.length > 0 && (
           <button 
             className='bg-sky-500 text-white text-[12px] px-3 py-[2px] rounded-md' 
-            onClick={() => setOpenProjectWindow(true)}
+            onClick={() => setOpenProjectWindow(true)} // <AddProjectWindow /> -> <IconWindow /> -> <AllIcons /> -> setAllIconsState -> icon.isSelected=true
           >
             <AddOutlined fontSize="small" />
             <span className='text-[13px]'>New Project</span>

@@ -7,7 +7,10 @@ import { useAppContext } from "@/app/ContextApi"
 import AppsIcon from '@mui/icons-material/Apps';
 import CloseIcon from '@mui/icons-material/Close';
 
-const IconWindow = () => {
+
+
+
+const IconWindow = ({ onUpdateIconSelected}: { onUpdateIconSelected: (icon:IconData) => void }) => { // Se recibe la función que actualiza el estado de selectedIcon
 
   const {
     isMobileViewObject: { isMobileView },
@@ -65,6 +68,14 @@ const IconWindow = () => {
           className="px-4 py-2 text-slate-500 border border-slate-200 rounded-md hover:bg-slate-200"
         >
           Cancel
+        </button>
+        <button
+          onClick={() =>  {
+            onUpdateIconSelected(allIconsState.filter((icon) => icon.isSelected)[0]);
+            setOpenIconWindow(false)
+          }}
+        >
+          Save
         </button>
       </div>
     </div>

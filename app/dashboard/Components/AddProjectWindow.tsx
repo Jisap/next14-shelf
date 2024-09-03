@@ -6,7 +6,12 @@ import CloseIcon from '@mui/icons-material/Close';
 import CodeOutlinedIcon from '@mui/icons-material/CodeOutlined';
 import { useAppContext } from '@/app/ContextApi';
 
-const AddProjectWindow = () => {
+const AddProjectWindow = ({
+  selectedIcon } : {
+    selectedIcon: {
+      icon:React.ReactNode;
+      name: string;
+    }}) => {
 
   const {
     isMobileViewObject: { isMobileView },
@@ -57,12 +62,11 @@ const AddProjectWindow = () => {
             className='p-[10px] text-[12px] w-full rounded-md border outline-none'
           />
           {/* icon */}
-          <div className='w-12 h-10 text-white flex items-center justify-center bg-sky-500 rounded-lg cursor-pointer'>
-            <CodeOutlinedIcon
-              onClick={() => setOpenIconWindow(true)} 
-              sx={{ fontSize: 18}}
-              className='text-[18px]'
-            />
+          <div 
+            className='w-12 h-10 text-white flex items-center justify-center bg-sky-500 rounded-lg cursor-pointer'
+            onClick={() => setOpenIconWindow(true)} 
+          >
+            {selectedIcon?.icon}
           </div>
         </div>
       </div>
