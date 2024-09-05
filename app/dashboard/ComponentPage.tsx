@@ -1,19 +1,21 @@
 import React from 'react'
 import { useAppContext } from '../ContextApi'
+import TopBar from './Components/ComponentsPage/TopBar'
+import SoftLayer from './Components/SoftLayer'
+
 
 const ComponentPage = () => {
 
-  const{ showComponentPageObject: { setShowComponentPage }} = useAppContext()
+  const{ 
+    showSearchBarObject: { showSearchBar},
+    isMobileViewObject: { isMobileView },
+    showComponentPageObject: { showComponentPage },
+  } = useAppContext()
 
   return (
-    <div className='flex gap-4 w-full h-screen bg-slate-50'>
-      <span>Component Page</span>
-      <span
-        className='cursor-pointer'
-        onClick={() => setShowComponentPage(false)}
-      >
-        Back
-      </span>
+    <div className='w-full h-screen p-3 px-4 pt-5 bg-slate-50'>
+      {showSearchBar && isMobileView && showComponentPage && <SoftLayer />}
+      <TopBar />
     </div>
   )
 }
