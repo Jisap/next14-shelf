@@ -43,10 +43,10 @@ const TopBar = () => {
           className="bg-slate-100 outline-none font-light text-[12px] w-full"
         />
         {/* close icon */}
-        <div className="absolute right-2 top-[10px] cursor-pointer w-5 h-5 flex justify-center items-center bg-slate-300">
+        <div className="absolute rounded-full right-2 top-[10px] cursor-pointer w-5 h-5 flex justify-center items-center bg-slate-300">
           <CloseIcon 
             sx={{ fonstSize: 14}}
-            className="text-slate-400 text-[14px]"
+            className="text-slate-400 text-[14px] p-1"
           />
         </div>
       </div>
