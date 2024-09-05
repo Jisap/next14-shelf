@@ -84,6 +84,11 @@ interface AppContextType {    // Define la estructura del contexto que será com
     openIconWindow: boolean,
     setOpenIconWindow: React.Dispatch<React.SetStateAction<boolean>>
   }
+
+  showComponentPageObject: {
+    showComponentPage: boolean,
+    setShowComponentPage: React.Dispatch<React.SetStateAction<boolean>>
+  }
 }
 
 const defaultState: AppContextType = {
@@ -140,6 +145,11 @@ const defaultState: AppContextType = {
   openIconWindowObject: {
     openIconWindow: false,
     setOpenIconWindow: () => {}
+  },
+
+  showComponentPageObject: {
+    showComponentPage: false,
+    setShowComponentPage: () => {}
   }
 };
 
@@ -196,6 +206,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [isLoading, setIsLoading] = useState(true);
   const [allFavoriteComponents, setAllFavoriteComponents] = useState<Component[]>([])
   const [openIconWindow, setOpenIconWindow] = useState(false);
+  const [showComponentPage, setShowComponentPage] = useState(false)
 
   // Darkmode
   useEffect(() => {
@@ -253,7 +264,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         isLoadingObject: { isLoading, setIsLoading },
         allFavoriteComponentsObject: {allFavoriteComponents, setAllFavoriteComponents},
         openProjectWindowObject: { openProjectWindow, setOpenProjectWindow },
-        openIconWindowObject: { openIconWindow, setOpenIconWindow }
+        openIconWindowObject: { openIconWindow, setOpenIconWindow },
+        showComponentPageObject: { showComponentPage, setShowComponentPage }
       }}
     >
       {children}

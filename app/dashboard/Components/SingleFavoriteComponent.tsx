@@ -4,7 +4,7 @@ import { Component } from '@/app/allData';
 import { formatDate } from '../../../utils/formatDate';
 
 const SingleFavoriteComponent = ({ component }: { component:Component }) => {
-  console.log(component.createdAt);
+  
   return (
     <div className='grid grid-cols-4 gap-4 text-sm items-center rounded-lg p-2 max-sm:grid-cols-2'>
       

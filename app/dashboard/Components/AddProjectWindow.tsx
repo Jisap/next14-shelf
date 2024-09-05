@@ -111,7 +111,7 @@ const AddProjectWindow = ({
           <input 
             ref={inputRef}
             value={projectName}
-            onChange={handleInputUpdate}
+            onChange={handleInputUpdate} //Establece el projectName
             placeholder="Enter Project Name..."
             className='p-[10px] text-[12px] w-full rounded-md border outline-none'
           />
