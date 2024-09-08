@@ -27,98 +27,231 @@ import ViewColumnIcon from '@mui/icons-material/ViewColumn';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import GridOnIcon from '@mui/icons-material/GridOn';
 
-export const TextToIcon = ({ text, size }: { text:string; size?:"small" | "medium" | "large" }) => {
+export const TextToIcon = ({ 
+  text,
+  size,
+  fontSize,
+  className
+}:{
+  text:string;
+  size?:"small" | "medium" | "large";
+  fontSize?:number;
+  className?:string;
+}) => {
   
   switch (text) {
     case "CategoryIcon":
-      return <CategoryIcon fontSize={size} className="text-sky-400" />
+      return (
+        <CategoryIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size} 
+          className={`text-sky-400 ${className}`}
+        />
+      )
     
     case "RectangleIcon":
-      return <RectangleIcon fontSize={size} className='text-sky-400' />
+      return (
+        <RectangleIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size} 
+          className={`text-sky-400 ${className}`}
+        />
+      )
     
     case "CodeIcon":
-      return <CodeOutlinedIcon fontSize={size} className='text-sky-400' />
+      return (
+        <CodeOutlinedIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size}
+          className={`text-sky-400 ${className}`} />)
 
     case "DeveloperIcon":
-      return <DeveloperModeOutlinedIcon fontSize={size} className='text-sky-400' />
+      return (
+        <DeveloperModeOutlinedIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size}
+          className={`text-sky-400 ${className}`} />)
 
     case "WebIcon":
-      return <WebOutlinedIcon fontSize={size} className='text-sky-400' />
+      return (
+        <WebOutlinedIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size}
+          className={`text-sky-400 ${className}`} />)
 
     case "DesktopIcon":
-      return <DesktopWindowsIcon fontSize={size} className='text-sky-400' />
+      return (
+        <DesktopWindowsIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size}
+          className={`text-sky-400 ${className}`} />)
 
     case "PhoneIcon":
-      return <PhoneIphoneIcon fontSize={size} className='text-sky-400' />
+      return (
+        <PhoneIphoneIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size}
+          className={`text-sky-400 ${className}`} />)
 
     case "TabletIcon":
-      return <TabletIcon fontSize={size} className='text-sky-400' />
+      return (
+        <TabletIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size}
+          className={`text-sky-400 ${className}`} />)
 
     case "LaptopIcon":
-      return <LaptopIcon fontSize={size} className='text-sky-400' />
+      return (
+        <LaptopIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size}
+          className={`text-sky-400 ${className}`} />)
 
     case "StorageIcon":
-      return <StorageIcon fontSize={size} className='text-sky-400' />
+      return (
+        <StorageIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size}
+          className={`text-sky-400 ${className}`} />)
 
     case "CloudupIcon":
-      return <CloudUploadIcon fontSize={size} className='text-sky-400' />
+      return (<CloudUploadIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size}
+          className={`text-sky-400 ${className}`} />)
 
     case "CloudDownIcon":
-      return <CloudDownloadIcon fontSize={size} className='text-sky-400' />
+      return (
+        <CloudDownloadIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size}
+          className={`text-sky-400 ${className}`} />)
     
     case "FolderIcon":
-      return <FolderIcon fontSize={size} className='text-sky-400' />
+      return (
+        <FolderIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size}
+          className={`text-sky-400 ${className}`} />)
 
     case "FolderOpenIcon":
-      return <FolderOpenIcon fontSize={size} className='text-sky-400'/>
+      return (
+        <FolderOpenIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size}
+          className={`text-sky-400 ${className}`}/>)
 
     case "InserDriveIcon":
-      return <InsertDriveFileIcon fontSize={size} className='text-sky-400' />
+      return (
+        <InsertDriveFileIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size}
+          className={`text-sky-400 ${className}`} />)
 
     case "BuildIcon":
-      return <BuildIcon fontSize={size} className='text-sky-400' />
+      return (
+        <BuildIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size}
+          className={`text-sky-400 ${className}`} />)
 
     case "BugReportIcon":
-      return <BugReportIcon fontSize={size} className='text-sky-400' />
+      return (
+        <BugReportIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size}
+          className={`text-sky-400 ${className}`} />)
 
     case "BugReportIcon":
-      return <BugReportIcon fontSize={size} className='text-sky-400' />
+      return (
+        <BugReportIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size}
+          className={`text-sky-400 ${className}`} />)
 
     case "SpeedIcon":
-      return <SpeedIcon fontSize={size} className='text-sky-400' />
+      return (
+        <SpeedIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size}
+          className={`text-sky-400 ${className}`} />)
 
     case "TimeLineIcon":
-      return <TimelineIcon fontSize={size} className='text-sky-400' />
+      return (
+        <TimelineIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size}
+          className={`text-sky-400 ${className}`} />)
 
     case "TuneIcon":
-      return <TuneIcon fontSize={size} className='text-sky-400' />
+      return (
+        <TuneIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size}
+          className={`text-sky-400 ${className}`} />)
 
     case "SettingAppsIcons":
-      return <SettingsApplicationsIcon fontSize={size} className='text-sky-400' />
+      return (
+        <SettingsApplicationsIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size}
+          className={`text-sky-400 ${className}`} />)
 
     case "ExtensionIcon":
-      return <ExtensionIcon fontSize={size} className='text-sky-400' />
+      return (
+        <ExtensionIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size}
+          className={`text-sky-400 ${className}`} />)
 
     case "ViewModulueIcon":
-      return <ViewModuleIcon fontSize={size} className='text-sky-400' />
+      return (
+        <ViewModuleIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size}
+          className={`text-sky-400 ${className}`} />)
 
     case "ViewArrayIcon":
-      return <ViewArrayIcon fontSize={size} className='text-sky-400' />
+      return (
+        <ViewArrayIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size}
+          className={`text-sky-400 ${className}`} />)
 
     case "ViewCarosuelIcon":
-      return <ViewCarouselIcon fontSize={size} className='text-sky-400' />
+      return (
+        <ViewCarouselIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size}
+          className={`text-sky-400 ${className}`} />)
 
     case "ViewColumnIcon":
-      return <ViewColumnIcon fontSize={size} className='text-sky-400' />
+      return (
+        <ViewColumnIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size}
+          className={`text-sky-400 ${className}`} />)
 
     case "ViewListIcon":
-      return <ViewListIcon fontSize={size} className='text-sky-400' />
+      return (
+        <ViewListIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size}
+          className={`text-sky-400 ${className}`} />)
 
     case "GridOnIcon":
-      return <GridOnIcon fontSize={size} className='text-sky-400' />
+      return (
+        <GridOnIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size}
+          className={`text-sky-400 ${className}`} />)
 
     default:
-      return <CategoryIcon fontSize={size} className='text-sky-400' />
+      return (
+        <CategoryIcon 
+          sx={{ fontSize: fontSize }}
+          fontSize={size}
+          className={`text-sky-400 ${className}`} />)
     
   }
 }

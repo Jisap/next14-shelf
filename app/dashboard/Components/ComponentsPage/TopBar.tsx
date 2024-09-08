@@ -11,6 +11,7 @@ const TopBar = () => {
   const {
     showComponentPageObject : { setShowComponentPage },
     showSideBarObject: { setShowSideBar, showSideBar },
+    selectedProjectObject: { selectedProject, setSelectedProject },
   } = useAppContext();
 
   return (
@@ -19,7 +20,10 @@ const TopBar = () => {
         
         {/* Back Button */}
         <div 
-          onClick={() => setShowComponentPage(false)}
+          onClick={() => {
+            setShowComponentPage(false);
+            setSelectedProject(null);
+          }}
           className="border mt-[2px] p-[2px] text-slate-400 flex h-7 gap-1 px-2 items-center justify-center rounded-md"
         >
           <ArrowBackIcon sx={{ fontsize: 11}} className="text-[11px]"/>
@@ -29,8 +33,8 @@ const TopBar = () => {
         {/* Category title and icon */}
         <div className="flex gap-2 items-center">
           <div className="flex flex-col">
-            <span className="font-bold text-xl">Buttons</span>
-            <span className="text-slate-400 text-[11px]">10 Components</span>
+            <span className="font-bold text-xl">{selectedProject?.name}</span>
+            <span className="text-slate-400 text-[11px]">{selectedProject?.components.length} Components</span>
           </div>
         </div>
       </div>

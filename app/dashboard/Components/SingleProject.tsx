@@ -5,10 +5,14 @@ import { TextToIcon } from '@/utils/textToIcon';
 
 const SingleProject = ({ singleProject }: { singleProject: Project }) => {
 
-  const { showComponentPageObject: {showComponentPage, setShowComponentPage } } = useAppContext()
+  const { 
+    showComponentPageObject: {showComponentPage, setShowComponentPage },
+    selectedProjectObject: { selectedProject, setSelectedProject },
+  } = useAppContext()
 
   const projectClicked = () => {
-    setShowComponentPage(true)
+    setShowComponentPage(true);
+    setSelectedProject(singleProject);
   }
 
   return (

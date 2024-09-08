@@ -8,16 +8,12 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { LiveError, LivePreview, LiveProvider } from "react-live";
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { atelierSulphurpoolLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { Component } from "@/app/allData";
 
 
-const SingleComponent = () => {
+const SingleComponent = ({ component }: { component: Component}) => {
 
-  const[code, setCode] = useState(`
-    <div className="p-4 bg-blue-100 rounded-lg">
-      <h1 className="text-2xl font-bold text-blue-700">Hello, Tailwind!</h1>
-      <p className="mt-2 text-gray-600">Edit this code.</p>
-    </div>  
-  `)
+  const[code, setCode] = useState(``)
 
   const [theme, setTheme] = useState('github')
   const [tabMenu, setTabMenu] = useState([
@@ -51,7 +47,7 @@ const SingleComponent = () => {
       <div className="flex justify-between items-center">
         <div className="flex gap-2 items-center">
           <span className="font-bold text-[19px]">
-            Outline Buttons
+            {component.name}
           </span>
           <IconButton>
             <FavoriteBorderIcon className="text-slate-400 text-[20px]" />
@@ -84,7 +80,7 @@ const SingleComponent = () => {
       {tabMenu[0].isSelected ? (
         <div className="w-full border rounded-md border-slate-200 mt-6">
           <LiveProvider 
-            code={code}
+            code={component.code}
             noInline={false}
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -101,7 +97,7 @@ const SingleComponent = () => {
             wrapLines={true}
             wrapLongLines={true}
           >
-            {code}
+            {component.code}
           </SyntaxHighlighter>
         </div>
       )}

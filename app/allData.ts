@@ -30,7 +30,12 @@ export const allProjectsData: Project[] = [
         _id: uuidv4(),
         name: "Forms 1",
         projectName: "Forms",
-        code: "",
+        code: `
+          <div className="p-4 bg-blue-100 rounded-lg">
+            <h1 className="text-2xl font-bold text-blue-700">Hello, Tailwind!</h1>
+            <p className="mt-2 text-gray-600">Edit this code.</p>
+          </div>  
+          `,
         isFavorite: false,
         createdAt: "2022-01-01T00:00:00.000Z"
       },
@@ -38,7 +43,12 @@ export const allProjectsData: Project[] = [
         _id: uuidv4(),
         name: "Forms 2",
         projectName: "Forms",
-        code: "",
+        code: `
+          <div className="p-4 bg-blue-100 rounded-lg">
+            <h1 className="text-2xl font-bold text-blue-700">Hello, Tailwind!</h1>
+            <p className="mt-2 text-gray-600">Edit this code.</p>
+          </div>  
+        `,
         isFavorite: true,
         createdAt: "2022-02-01T00:00:00.000Z"
       },
@@ -46,7 +56,12 @@ export const allProjectsData: Project[] = [
         _id: uuidv4(),
         name: "Forms 3",
         projectName: "Forms",
-        code: "",
+        code: `
+          <div className="p-4 bg-blue-100 rounded-lg">
+            <h1 className="text-2xl font-bold text-blue-700">Hello, Tailwind!</h1>
+            <p className="mt-2 text-gray-600">Edit this code.</p>
+          </div>  
+        `,
         isFavorite: true,
         createdAt: "2022-02-01T00:00:00.000Z"
       }
@@ -62,16 +77,22 @@ export const allProjectsData: Project[] = [
       {
         _id: uuidv4(),
         name: "Button 1",
-        projectName: "Button2",
-        code: "",
+        projectName: "Button red",
+        code: `
+          <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+            Click me
+          </button>`,
         isFavorite: false,
         createdAt: "2022-01-01T00:00:00.000Z"
       },
       {
         _id: uuidv4(),
         name: "Button 2",
-        projectName: "Button2",
-        code: "",
+        projectName: "Button blue",
+        code: `
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Click me
+          </button>`,
         isFavorite: true,
         createdAt: "2022-02-01T00:00:00.000Z"
       },
@@ -79,7 +100,10 @@ export const allProjectsData: Project[] = [
         _id: uuidv4(),
         name: "Button 3",
         projectName: "Button3",
-        code: "",
+        code: `
+          <button class="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded">
+            Click me
+          </button>`,
         isFavorite: true,
         createdAt: "2022-02-01T00:00:00.000Z"
       }

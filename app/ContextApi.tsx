@@ -89,6 +89,11 @@ interface AppContextType {    // Define la estructura del contexto que será com
     showComponentPage: boolean,
     setShowComponentPage: React.Dispatch<React.SetStateAction<boolean>>
   }
+
+  selectedProjectObject: {
+    selectedProject: Project | null,
+    setSelectedProject: React.Dispatch<React.SetStateAction<Project | null>>
+  }
 }
 
 const defaultState: AppContextType = {
@@ -150,8 +155,13 @@ const defaultState: AppContextType = {
   showComponentPageObject: {
     showComponentPage: false,
     setShowComponentPage: () => {}
+  },
+
+  selectedProjectObject: {
+    selectedProject: null,
+    setSelectedProject: () => {}
   }
-};
+}
 
 export const AppContext = createContext<AppContextType>(defaultState);              // Creación del contexto
 
@@ -207,6 +217,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [allFavoriteComponents, setAllFavoriteComponents] = useState<Component[]>([])
   const [openIconWindow, setOpenIconWindow] = useState(false);
   const [showComponentPage, setShowComponentPage] = useState(false)
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null) 
 
   // Darkmode
   useEffect(() => {
@@ -265,7 +276,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         allFavoriteComponentsObject: {allFavoriteComponents, setAllFavoriteComponents},
         openProjectWindowObject: { openProjectWindow, setOpenProjectWindow },
         openIconWindowObject: { openIconWindow, setOpenIconWindow },
-        showComponentPageObject: { showComponentPage, setShowComponentPage }
+        showComponentPageObject: { showComponentPage, setShowComponentPage },
+        selectedProjectObject: { selectedProject, setSelectedProject }
       }}
     >
       {children}
