@@ -57,13 +57,16 @@ const TopBar = () => {
 
       {/* Add Component Button */}
       <div className="flex gap-2 items-center">
-        <button className="bg-sky-500 text-[12px] h-[33px] text-white px-3 rounded-md">
-          <AddOutlinedIcon 
-            sx={{ fontSize: 16 }}
-            className=""
-          />
-          <span className="max-sm:hidden">Component</span>
-        </button>
+        {selectedProject !== undefined && selectedProject !== null && selectedProject.components?.length > 0 && (
+          <button className="bg-sky-500 text-[12px] h-[33px] text-white px-3 rounded-md">
+            <AddOutlinedIcon 
+              sx={{ fontSize: 16 }}
+              className=""
+            />
+            <span className="max-sm:hidden">Component</span>
+          </button>
+        )}
+        
         <div className="hidden max-sm:block">
           <MenuIcon 
             onClick={() => setShowSideBar(true)}
