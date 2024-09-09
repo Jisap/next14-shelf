@@ -16,8 +16,8 @@ const ContentArea = () => {
     openProjectWindowObject: { openProjectWindow },
   } = useAppContext()
 
-  console.log("isMobileView", isMobileView);
-  console.log("showSearchBar", showSideBar);
+  // console.log("isMobileView", isMobileView);
+  // console.log("showSearchBar", showSideBar);
 
   return (
     <div className='w-full h-screen bg-slate-50 p-4'>

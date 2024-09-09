@@ -79,7 +79,7 @@ export const allProjectsData: Project[] = [
         name: "Button 1",
         projectName: "Button red",
         code: `
-          <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+          <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
             Click me
           </button>`,
         isFavorite: false,
@@ -90,7 +90,7 @@ export const allProjectsData: Project[] = [
         name: "Button 2",
         projectName: "Button blue",
         code: `
-          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Click me
           </button>`,
         isFavorite: true,
@@ -101,7 +101,7 @@ export const allProjectsData: Project[] = [
         name: "Button 3",
         projectName: "Button3",
         code: `
-          <button class="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded">
+          <button className="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded">
             Click me
           </button>`,
         isFavorite: true,

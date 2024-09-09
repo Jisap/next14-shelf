@@ -1,4 +1,4 @@
-import { More, Preview } from "@mui/icons-material"
+import Checkbox from '@mui/material/Checkbox';
 import { useState } from "react"
 import PreviewIcon from '@mui/icons-material/Preview';
 import CodeIcon from '@mui/icons-material/Code';
@@ -8,10 +8,18 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { LiveError, LivePreview, LiveProvider } from "react-live";
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { atelierSulphurpoolLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import { Component } from "@/app/allData";
+import { Component, Project } from "@/app/allData";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useAppContext } from "@/app/ContextApi";
+
 
 
 const SingleComponent = ({ component }: { component: Component}) => {
+
+  const { 
+    allProjectsObject: { allProjects, setAllProjects },
+    selectedProjectObject: { selectedProject, setSelectedProject },
+  } = useAppContext();
 
   const[code, setCode] = useState(``)
 
@@ -37,8 +45,46 @@ const SingleComponent = ({ component }: { component: Component}) => {
         return i === index
           ? { ...singleItem, isSelected: true }
           : { ...singleItem, isSelected: false }
-      })
-    })
+      });
+    });
+  }
+
+  const [isFavorite, setFavorite] = useState(component.isFavorite);
+
+  const updateFavoriteState = () => {
+    const newAllProjects = allProjects.map((project: Project) => {              // Mapeamos (creamos copia) allProjects y para cada proyecto
+
+      // Actualización de componentes dentro de cada proyecto:
+      const updatedComponents = project.components.map((comp: Component) => {   // Mapeamos los componentes del proyecto
+        if (comp._id === component._id) {                                       // Si el componente es el actual seleccionado
+          return {
+            ...comp,
+            isFavorite: !comp.isFavorite                                         // Cambiamos el estado de isFavorite
+          }
+        }
+        return comp;                                                            // Si no es el componente actual, no hacemos nada                       
+      });
+      
+      // Condicional para verificar si los componentes han cambiado:
+      if(updatedComponents !== project.components) {                            // Si el estado de isFavorite cambió,   
+        return { ...project, components: updatedComponents }                    // retorna una copia del proyecto, pero actualizando su propiedad components con updatedComponents.
+      }
+      return project;                                                           // Si no cambió, no hacemos nada
+    });
+    
+    // Actualización del proyecto seleccionado 
+    if(selectedProject) {                                                       // Si el proyecto seleccionado existe
+      const updatedSelectedProject = newAllProjects.find(                       // busca el proyecto actualizado dentro de newAllProjects usando el método .find(), comparando los IDs del proyecto actual con el del seleccionado. 
+        (project: Project) => project._id === selectedProject._id               
+      );
+
+      if(updatedSelectedProject){                                              // Si el proyecto actualizado existe
+        setSelectedProject(updatedSelectedProject);                            // Actualizamos el proyecto seleccionado con los nuevos datos
+        console.log("updatedSelectedProject", updatedSelectedProject);
+      }
+    }
+    setFavorite(!isFavorite);
+    setAllProjects(newAllProjects);                                             // Actualizamos allProjects con los nuevos datos
   }
 
   return (
@@ -49,9 +95,12 @@ const SingleComponent = ({ component }: { component: Component}) => {
           <span className="font-bold text-[19px]">
             {component.name}
           </span>
-          <IconButton>
-            <FavoriteBorderIcon className="text-slate-400 text-[20px]" />
-          </IconButton>
+          <Checkbox
+            checked={isFavorite}
+            onChange={updateFavoriteState}
+            icon={<FavoriteBorderIcon className="text-slate-400 text-[20px]" />}
+            checkedIcon={<FavoriteIcon className="text-red-500 text-[20px]" />}
+          />  
         </div>
         <IconButton>
           <MoreVertIcon className="text-slate-400 text-[20px]" />

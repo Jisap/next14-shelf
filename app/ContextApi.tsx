@@ -7,8 +7,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { allProjectsData, Component, Project } from "./allData";
-import FavoriteComponents from './dashboard/Components/FavoriteComponents';
-import { IconData } from "@/AllIconsData";
+
 
 export interface MenuItem {   //  Define la estructura de un elemento del menú. 
   id: string;
