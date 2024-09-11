@@ -23,6 +23,11 @@ export interface DarkModeMenu {
   isSelected: boolean;
 }
 
+export interface DropDownPosition { // Define la estructura del objeto dropDownPositions
+  left: number;
+  top: number;
+}
+
 interface AppContextType {    // Define la estructura del contexto que será compartido.
   menuItemsObject: {
     menuItems: MenuItem[];
@@ -93,6 +98,16 @@ interface AppContextType {    // Define la estructura del contexto que será com
     selectedProject: Project | null,
     setSelectedProject: React.Dispatch<React.SetStateAction<Project | null>>
   }
+
+  dropDownPositionsObject:{
+    dropDownPositions: DropDownPosition,
+    setDropDownPositions: React.Dispatch<React.SetStateAction<DropDownPosition>>
+  }
+
+  openDropDownObject: {
+    openDropDown: boolean,
+    setOpenDropDown: React.Dispatch<React.SetStateAction<boolean>>
+  }
 }
 
 const defaultState: AppContextType = {
@@ -159,6 +174,16 @@ const defaultState: AppContextType = {
   selectedProjectObject: {
     selectedProject: null,
     setSelectedProject: () => {}
+  },
+
+  dropDownPositionsObject: {
+    dropDownPositions: { left: 0, top: 0 },
+    setDropDownPositions: () => {}
+  },
+
+  openDropDownObject: {
+    openDropDown: false,
+    setOpenDropDown: () => {}
   }
 }
 
@@ -217,6 +242,12 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [openIconWindow, setOpenIconWindow] = useState(false);
   const [showComponentPage, setShowComponentPage] = useState(false)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null) 
+  const [dropDownPositions, setDropDownPositions] = useState({
+    left: 0,
+    top: 0,
+  });
+
+  const [openDropDown, setOpenDropDown] = useState(false);
 
   // Darkmode
   useEffect(() => {
@@ -276,7 +307,9 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         openProjectWindowObject: { openProjectWindow, setOpenProjectWindow },
         openIconWindowObject: { openIconWindow, setOpenIconWindow },
         showComponentPageObject: { showComponentPage, setShowComponentPage },
-        selectedProjectObject: { selectedProject, setSelectedProject }
+        selectedProjectObject: { selectedProject, setSelectedProject },
+        dropDownPositionsObject: { dropDownPositions, setDropDownPositions },
+        openDropDownObject: { openDropDown, setOpenDropDown }
       }}
     >
       {children}

@@ -4,6 +4,7 @@ import TopBar from './Components/ComponentsPage/TopBar'
 import SoftLayer from './Components/SoftLayer'
 import { AllComponents } from './Components/ComponentsPage/AllComponents'
 import EmptyProjectsPlaceHolder from './Components/ComponentsPage/EmptyProjectsPlaceHolder'
+import DropDown from './Components/DropDown'
 
 
 
@@ -14,6 +15,7 @@ const ComponentPage = () => {
     isMobileViewObject: { isMobileView },
     showComponentPageObject: { showComponentPage },
     selectedProjectObject: { selectedProject },
+    openDropDownObject: { openDropDown }
   } = useAppContext()
 
   return (
@@ -22,6 +24,7 @@ const ComponentPage = () => {
       <TopBar />
       {selectedProject?.components.length === 0 && <EmptyProjectsPlaceHolder /> }
       <AllComponents />
+      {openDropDown && <DropDown />}
     </div>
   )
 }

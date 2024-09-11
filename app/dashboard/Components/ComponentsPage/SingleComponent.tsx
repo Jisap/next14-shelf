@@ -1,5 +1,5 @@
 import Checkbox from '@mui/material/Checkbox';
-import { useState } from "react"
+import { useRef, useState } from "react"
 import PreviewIcon from '@mui/icons-material/Preview';
 import CodeIcon from '@mui/icons-material/Code';
 import { IconButton } from "@mui/material";
@@ -19,7 +19,11 @@ const SingleComponent = ({ component }: { component: Component}) => {
   const { 
     allProjectsObject: { allProjects, setAllProjects },
     selectedProjectObject: { selectedProject, setSelectedProject },
+    openDropDownObject: { openDropDown, setOpenDropDown },
+    dropDownPositionsObject: { dropDownPositions, setDropDownPositions },
   } = useAppContext();
+
+  const iconRef = useRef<HTMLDivElement>(null);
 
   const[code, setCode] = useState(``)
 
@@ -87,6 +91,24 @@ const SingleComponent = ({ component }: { component: Component}) => {
     setAllProjects(newAllProjects);                                             // Actualizamos allProjects con los nuevos datos
   }
 
+  const openTheDropDown = (event:React.MouseEvent) => {
+    event.stopPropagation();
+    if(iconRef.current){
+      const rect = iconRef.current.getBoundingClientRect(); // Obtenemos el rectángulo del elemento como coordenadas
+      const top = rect.top;
+      const left = rect.left;
+
+      //Open the drop down
+      setOpenDropDown(true);
+      //Update the drop down positions
+      setDropDownPositions({
+        top: top,
+        left: left,
+      });
+    }
+    //Get the top and the left position of the icon
+  }
+
   return (
     <div className="bg-white w-full rounded-lg p-8 pt-8 pb-10 mb-3">
       {/* Compponent title */}
@@ -102,9 +124,14 @@ const SingleComponent = ({ component }: { component: Component}) => {
             checkedIcon={<FavoriteIcon className="text-red-500 text-[20px]" />}
           />  
         </div>
-        <IconButton>
-          <MoreVertIcon className="text-slate-400 text-[20px]" />
-        </IconButton>
+        <div
+          ref={iconRef}
+          onClick={openTheDropDown}
+        >
+          <IconButton>
+            <MoreVertIcon className="text-slate-400 text-[20px]" />
+          </IconButton>
+        </div>
       </div>
     
       {/* Component Preview and Code Buttons */}
