@@ -9,6 +9,7 @@ const DropDown = () => {
   const {
     dropDownPositionsObject: { dropDownPositions, setDropDownPositions },
     openDropDownObject: { openDropDown, setOpenDropDown },
+    openDeleteWindowObject: { openDeleteWindow, setOpenDeleteWindow },
   } = useAppContext();
   
   const dropDownRef = useRef<HTMLDivElement>(null);
@@ -39,7 +40,12 @@ const DropDown = () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('wheel', handleWheel);
     }
-  },[setOpenDropDown])
+  },[setOpenDropDown]);
+
+  const deleteComponentFunction = () => {
+    setOpenDeleteWindow(true);
+    setOpenDropDown(false);
+  }
 
   return (
     <div
@@ -73,7 +79,10 @@ const DropDown = () => {
       <hr className='border-t border-slate-200' />
 
       {/* Remove Icon */}
-      <div className='flex gap-1 items-center text-slate-600 cursor-pointer hover:text-red-500'>
+      <div 
+        onClick={deleteComponentFunction}
+        className='flex gap-1 items-center text-slate-600 cursor-pointer hover:text-red-500'
+      >
         <DeleteOutlineOutlinedIcon 
           sx={{ fontSize: 21 }}
           className='text-[21px]'

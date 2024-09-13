@@ -93,10 +93,10 @@ const SingleComponent = ({ component }: { component: Component}) => {
 
   const openTheDropDown = (event:React.MouseEvent) => {
     event.stopPropagation();
-    if(iconRef.current){
+    if(iconRef.current){                                    // Si el elemento referenciado tiene un valor (porque se ha pulsado en el icono)
       const rect = iconRef.current.getBoundingClientRect(); // Obtenemos el rectángulo del elemento como coordenadas
-      const top = rect.top;
-      const left = rect.left;
+      const top = rect.top;                                 // Obtenemos la posición vertical del elemento
+      const left = rect.left;                               // Obtenemos la posición horizontal del elemento
 
       //Open the drop down
       setOpenDropDown(true);
@@ -111,7 +111,7 @@ const SingleComponent = ({ component }: { component: Component}) => {
 
   return (
     <div className="bg-white w-full rounded-lg p-8 pt-8 pb-10 mb-3">
-      {/* Compponent title */}
+      {/* Compponent title  and checkbox to favorite*/}
       <div className="flex justify-between items-center">
         <div className="flex gap-2 items-center">
           <span className="font-bold text-[19px]">
@@ -124,6 +124,7 @@ const SingleComponent = ({ component }: { component: Component}) => {
             checkedIcon={<FavoriteIcon className="text-red-500 text-[20px]" />}
           />  
         </div>
+        {/* Icon to open the dropdown */}
         <div
           ref={iconRef}
           onClick={openTheDropDown}
