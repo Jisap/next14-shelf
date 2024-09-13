@@ -9,7 +9,7 @@ const ConfirmationDeleteWindow = () => {
   return (
     <div
       style={{ visibility: openDeleteWindow ? 'visible' : 'hidden' }}
-      className='w-[40%] max-sm:w-[90%] absolute p-8 px-9 border border-slate-100 bg-white shadow-md lef-1/2 top-1/2 translate-x-1/2 -translate-y-1/2'
+      className='w-[40%] max-sm:w-[90%] absolute p-8 px-9 border border-slate-100 bg-white shadow-md top-1/2 left-1/2  -translate-x-1/2 -translate-y-1/2'
     >
       {/* Header Icon */}
       <div className='flex justify-between items-start'>

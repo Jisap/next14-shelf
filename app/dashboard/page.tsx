@@ -26,6 +26,7 @@ const dashboard = () => {
     openProjectWindowObject: { openProjectWindow },
     showComponentPageObject: { showComponentPage },
     openDeleteWindowObject: { openDeleteWindow },
+    openDropDownObject: { openDropDown }
   } = useAppContext()
 
   const [selectedIcon, setSelectedIcon] = React.useState<SelectedIcon>({ // Estado de selectedIcon
@@ -62,8 +63,8 @@ const dashboard = () => {
       {/*  */}
       {!showComponentPage ? <ContentArea /> : <ComponentPage /> }
 
-      {/* <DropDown />
-      <ConfirmationDeleteWindow /> */}
+      {openDropDown && <DropDown />}
+      <ConfirmationDeleteWindow />
     </div>
   )
 }

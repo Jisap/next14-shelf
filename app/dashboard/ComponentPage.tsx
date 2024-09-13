@@ -16,8 +16,7 @@ const ComponentPage = () => {
     isMobileViewObject: { isMobileView },
     showComponentPageObject: { showComponentPage },
     selectedProjectObject: { selectedProject },
-    openDropDownObject: { openDropDown },
-    openDeleteWindowObject: { openDeleteWindow }
+    
   } = useAppContext()
 
   return (
@@ -26,8 +25,6 @@ const ComponentPage = () => {
       <TopBar />
       {selectedProject?.components.length === 0 && <EmptyProjectsPlaceHolder /> }
       <AllComponents />
-      {openDropDown && <DropDown />}
-      {openDeleteWindow && <ConfirmationDeleteWindow />}
     </div>
   )
 }
