@@ -5,6 +5,7 @@ import SoftLayer from './Components/SoftLayer'
 import { AllComponents } from './Components/ComponentsPage/AllComponents'
 import EmptyProjectsPlaceHolder from './Components/ComponentsPage/EmptyProjectsPlaceHolder'
 import DropDown from './Components/DropDown'
+import ConfirmationDeleteWindow from './Components/ComponentsPage/DeleteWindow'
 
 
 
@@ -15,7 +16,8 @@ const ComponentPage = () => {
     isMobileViewObject: { isMobileView },
     showComponentPageObject: { showComponentPage },
     selectedProjectObject: { selectedProject },
-    openDropDownObject: { openDropDown }
+    openDropDownObject: { openDropDown },
+    openDeleteWindowObject: { openDeleteWindow }
   } = useAppContext()
 
   return (
@@ -25,6 +27,7 @@ const ComponentPage = () => {
       {selectedProject?.components.length === 0 && <EmptyProjectsPlaceHolder /> }
       <AllComponents />
       {openDropDown && <DropDown />}
+      {openDeleteWindow && <ConfirmationDeleteWindow />}
     </div>
   )
 }

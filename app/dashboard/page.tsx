@@ -12,6 +12,8 @@ import { IconData } from '@/AllIconsData'
 import CodeOutlinedIcon from '@mui/icons-material/CodeOutlined';
 import { Toaster } from 'react-hot-toast'
 import ComponentPage from './ComponentPage'
+import DropDown from './Components/DropDown'
+import ConfirmationDeleteWindow from './Components/ComponentsPage/DeleteWindow'
 
 interface SelectedIcon {
   icon: React.ReactNode;
@@ -22,7 +24,8 @@ const dashboard = () => {
 
   const {
     openProjectWindowObject: { openProjectWindow },
-    showComponentPageObject: { showComponentPage }  
+    showComponentPageObject: { showComponentPage },
+    openDeleteWindowObject: { openDeleteWindow },
   } = useAppContext()
 
   const [selectedIcon, setSelectedIcon] = React.useState<SelectedIcon>({ // Estado de selectedIcon
@@ -52,12 +55,15 @@ const dashboard = () => {
       />
 
       {/* Si se establece openProjectWindow=true se muestra el softlayer y encima el <AddProjectWindow /> */}
-      {openProjectWindow && <SoftLayer />}
+      {openProjectWindow  || openDeleteWindow && <SoftLayer />}
 
       <Sidebar />
 
       {/*  */}
       {!showComponentPage ? <ContentArea /> : <ComponentPage /> }
+
+      {/* <DropDown />
+      <ConfirmationDeleteWindow /> */}
     </div>
   )
 }
