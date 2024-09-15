@@ -21,6 +21,7 @@ const SingleComponent = ({ component }: { component: Component}) => {
     selectedProjectObject: { selectedProject, setSelectedProject },
     openDropDownObject: { openDropDown, setOpenDropDown },
     dropDownPositionsObject: { dropDownPositions, setDropDownPositions },
+    selectedComponentObject: { selectedComponent, setSelectedComponent },
   } = useAppContext();
 
   const iconRef = useRef<HTMLDivElement>(null);
@@ -105,6 +106,7 @@ const SingleComponent = ({ component }: { component: Component}) => {
         top: top,
         left: left,
       });
+      setSelectedComponent(component);
     }
     //Get the top and the left position of the icon
   }

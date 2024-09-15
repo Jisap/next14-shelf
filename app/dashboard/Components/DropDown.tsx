@@ -10,24 +10,32 @@ const DropDown = () => {
     dropDownPositionsObject: { dropDownPositions, setDropDownPositions },
     openDropDownObject: { openDropDown, setOpenDropDown },
     openDeleteWindowObject: { openDeleteWindow, setOpenDeleteWindow },
+    selectedComponentObject: { selectedComponent, setSelectedComponent },
   } = useAppContext();
   
   const dropDownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropDownRef.current && !dropDownRef.current.contains(event.target as Node)) {
+      if (
+        dropDownRef.current &&
+        !dropDownRef.current.contains(event.target as Node) && 
+        openDeleteWindow
+      ) {
         setOpenDropDown(false);
+        setSelectedComponent(null);
       }
     }
 
     const handleScroll = () => {
       setOpenDropDown(false);
+      setSelectedComponent(null);
     }
 
     const handleWheel = (event: WheelEvent) => {
       if(event.deltaY !== 0){
         setOpenDropDown(false);
+        setSelectedComponent(null);
       }
     }
 

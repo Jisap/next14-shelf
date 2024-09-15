@@ -113,6 +113,11 @@ interface AppContextType {    // Define la estructura del contexto que será com
     openDeleteWindow: boolean,
     setOpenDeleteWindow: React.Dispatch<React.SetStateAction<boolean>>
   }
+
+  selectedComponentObject: {
+    selectedComponent: Component | null,
+    setSelectedComponent: React.Dispatch<React.SetStateAction<Component | null>>
+  }
 }
 
 const defaultState: AppContextType = {
@@ -194,6 +199,11 @@ const defaultState: AppContextType = {
   openDeleteWindowObject: {
     openDeleteWindow: false,
     setOpenDeleteWindow: () => {}
+  },
+
+  selectedComponentObject: {
+    selectedComponent: null,
+    setSelectedComponent: () => {}
   }
 }
 
@@ -258,6 +268,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   });
   const [openDropDown, setOpenDropDown] = useState(false);
   const [openDeleteWindow, setOpenDeleteWindow] = useState(false);
+  const [selectedComponent, setSelectedComponent] = useState<Component | null>(null);
 
   // Darkmode
   useEffect(() => {
@@ -320,7 +331,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         selectedProjectObject: { selectedProject, setSelectedProject },
         dropDownPositionsObject: { dropDownPositions, setDropDownPositions },
         openDropDownObject: { openDropDown, setOpenDropDown },
-        openDeleteWindowObject: { openDeleteWindow, setOpenDeleteWindow }
+        openDeleteWindowObject: { openDeleteWindow, setOpenDeleteWindow },
+        selectedComponentObject: { selectedComponent, setSelectedComponent }
       }}
     >
       {children}

@@ -1,10 +1,51 @@
 import { useAppContext } from '@/app/ContextApi'
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';
+import toast from 'react-hot-toast';
+import { Component, Project } from '@/app/allData';
+
 
 const ConfirmationDeleteWindow = () => {
 
-  const { openDeleteWindowObject: {openDeleteWindow, setOpenDeleteWindow }} = useAppContext();
+  const { 
+    openDeleteWindowObject: {openDeleteWindow, setOpenDeleteWindow },
+    selectedComponentObject: {selectedComponent},
+    allProjectsObject: {allProjects, setAllProjects},
+    selectedProjectObject: {selectedProject, setSelectedProject},
+  } = useAppContext();
+
+  const deleteComponentFunction = () => {
+    try {
+      if (selectedProject) {                                                    // Primero, verifica si hay un proyecto seleccionado 
+        const updatedSelectedProject = {                                        // Si existe, crea una copia actualizada del proyecto seleccionado                 
+          ...selectedProject,
+          components: selectedProject.components.filter(                        // donde se elimina el componente seleccionado 
+            (component: Component) => component._id !== selectedComponent?._id
+          ),
+        };
+        setSelectedProject(updatedSelectedProject);                             // Luego se actualiza el estado del proyecto seleccionado  
+      }
+
+      const updatedAllProjects = allProjects.map((project: Project) => {        // A continuación, actualiza la lista de todos los proyectos
+        if (project._id === selectedProject?._id) {
+          return {
+            ...project,
+            components: project.components.filter(
+              (component: Component) => component._id !== selectedComponent?._id  // donde se elimina el componente seleccionado para borrar
+            )
+          }
+        }
+        return project;
+      })
+
+      setAllProjects(updatedAllProjects);                                      // Finalmente, se actualiza la lista de todos los proyectos
+      setOpenDeleteWindow(false);                                              // Y Se cierra la ventana de confirmación              
+      toast.success("Component deleted successfully");
+    } catch (error) {
+      toast.error("Error deleting component");
+    }
+   
+  }
 
   return (
     <div
@@ -40,7 +81,8 @@ const ConfirmationDeleteWindow = () => {
           Cancel
         </button>
         <button
-         className='px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600'
+          onClick={deleteComponentFunction}
+          className='px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600'
         >
           Delete Component
         </button>
