@@ -3,6 +3,9 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { useAppContext } from '@/app/ContextApi';
 import { useEffect, useRef } from 'react';
+import { Component } from '@/app/allData';
+import { v4 as uuidv4 } from 'uuid';
+import toast from 'react-hot-toast';
 
 const DropDown = () => {
 
@@ -10,7 +13,9 @@ const DropDown = () => {
     dropDownPositionsObject: { dropDownPositions, setDropDownPositions },
     openDropDownObject: { openDropDown, setOpenDropDown },
     openDeleteWindowObject: { openDeleteWindow, setOpenDeleteWindow },
+    selectedProjectObject: { selectedProject, setSelectedProject },
     selectedComponentObject: { selectedComponent, setSelectedComponent },
+    allProjectsObject: { allProjects, setAllProjects },
   } = useAppContext();
   
   const dropDownRef = useRef<HTMLDivElement>(null);
@@ -19,11 +24,12 @@ const DropDown = () => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
         dropDownRef.current &&
-        !dropDownRef.current.contains(event.target as Node) && 
-        openDeleteWindow
+        !dropDownRef.current.contains(event.target as Node) 
       ) {
         setOpenDropDown(false);
-        setSelectedComponent(null);
+        if(openDeleteWindow){
+          setSelectedComponent(null);
+        }
       }
     }
 
@@ -53,6 +59,51 @@ const DropDown = () => {
   const deleteComponentFunction = () => {
     setOpenDeleteWindow(true);
     setOpenDropDown(false);
+  };
+
+  const duplicateComponentFunction = () => {
+    if(selectedComponent && selectedProject){
+      try {
+        //Step 1: Create a new component object with a new id a new name on the selected component
+        const newComponent: Component = {
+          ...selectedComponent,
+          _id: uuidv4(),
+          name: `${selectedComponent.name} Copy`,
+          createdAt: new Date().toISOString(),
+        }
+
+        // 2º Step: Add the new component to the selected project
+        const updateSelectedProject = {
+          ...selectedProject,
+          components: [...selectedProject.components, newComponent],
+        }
+
+        // 3º Step: Sort the components by createdAt
+        updateSelectedProject.components.sort((a, b) => {
+          return (
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          )
+        })
+
+        // 4º Step: Update the selected project with the new component
+        setSelectedProject(updateSelectedProject);
+
+        // 5º Step: Add a copy of the selected component in the allProjects state
+        const updateAllProjects = allProjects.map((project) => {
+          if(project._id === selectedProject._id){
+            return updateSelectedProject
+          }
+          return project;
+        })
+
+        setAllProjects(updateAllProjects);
+        toast.success("Component has been duplicated successfully");
+      } catch (error) {
+        toast.error("Failed to duplicate the component");
+      }
+    }
+
+    setOpenDropDown(false);
   }
 
   return (
@@ -75,7 +126,10 @@ const DropDown = () => {
       </div>
 
       {/* Duplicate Icon */}
-      <div className='flex gap-1 items-center text-slate-600 cursor-pointer hover:text-sky-500'>
+      <div 
+        onClick={duplicateComponentFunction}
+        className='flex gap-1 items-center text-slate-600 cursor-pointer hover:text-sky-500'
+      >
         <ContentCopyIcon 
           sx={{ fontSize: 21 }}
           className='text-[21px]'
