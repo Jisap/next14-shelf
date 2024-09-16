@@ -295,7 +295,14 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   useEffect(() => {
     const fetchAllProjects = () => {
       setTimeout(() => {
-        setAllProjects(allProjectsData); 
+        allProjectsData.forEach((project) => {  // Sort the components by createdAt
+          project.components.sort((a, b) => {
+            return (
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            )
+          })
+        })
+        setAllProjects(allProjectsData);  // Update the state with the sorted data
         setIsLoading(false);
       }, 3000);
     }
