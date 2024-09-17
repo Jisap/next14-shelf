@@ -15,6 +15,7 @@ import ComponentPage from './ComponentPage'
 import DropDown from './Components/DropDown'
 import ConfirmationDeleteWindow from './Components/ComponentsPage/DeleteWindow'
 
+
 interface SelectedIcon {
   icon: React.ReactNode;
   name: string;
@@ -65,6 +66,7 @@ const dashboard = () => {
 
       {openDropDown && <DropDown />}
       <ConfirmationDeleteWindow />
+
     </div>
   )
 }

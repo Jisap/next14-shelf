@@ -12,6 +12,7 @@ const TopBar = () => {
     showComponentPageObject : { setShowComponentPage },
     showSideBarObject: { setShowSideBar, showSideBar },
     selectedProjectObject: { selectedProject, setSelectedProject },
+    openComponentEditorObject: { setOpenComponentEditor },
   } = useAppContext();
 
   return (
@@ -58,7 +59,10 @@ const TopBar = () => {
       {/* Add Component Button */}
       <div className="flex gap-2 items-center">
         {selectedProject !== undefined && selectedProject !== null && selectedProject.components?.length > 0 && (
-          <button className="bg-sky-500 text-[12px] h-[33px] text-white px-3 rounded-md">
+          <button 
+            onClick={() => setOpenComponentEditor(true)}
+            className="bg-sky-500 text-[12px] h-[33px] text-white px-3 rounded-md"
+          >
             <AddOutlinedIcon 
               sx={{ fontSize: 16 }}
               className=""

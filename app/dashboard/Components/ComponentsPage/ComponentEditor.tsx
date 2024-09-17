@@ -1,3 +1,5 @@
+"use client"
+
 import { useEffect, useRef, useState } from "react"
 import CloseIcon from '@mui/icons-material/Close';
 import { LiveProvider, LiveError, LivePreview } from "react-live";
@@ -11,6 +13,7 @@ import babelPlugin from "prettier/plugins/babel";
 import estreetPlugin from "prettier/plugins/estree";
 import "ace-builds/src-noconflict/mode-jsx";
 import "ace-builds/src-noconflict/theme-tomorrow";
+import "ace-builds/src-noconflict/theme-dreamweaver"
 import "ace-builds/src-noconflict/ext-language_tools";
 import Checkbox from '@mui/material/Checkbox';
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -22,8 +25,8 @@ export const ComponentEditor = () => {
     <div>
       <>
         <h1>Direct SVG Example</h1>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
         </svg>
       </>
     </div>   
@@ -74,10 +77,10 @@ export const ComponentEditor = () => {
   return (
     <div
       style={{ display: openComponentEditor ? "flex" : "none" }}
-      className="w-[96%] h-[735px] max-sm:h-[90%] max-sm:flex-col border-slate-100 flex-row overflow-hidden bg-white absolute lef-1/2 top-2 rounded-2xl shadow-md  -translate-x-1/2"
+      className="w-[96%] h-[735px] max-sm:h-[90%] max-sm:flex-col border-slate-100 flex-row overflow-hidden bg-white absolute lef-0 top-1/2 rounded-2xl shadow-md -translate-x-0 -translate-y-1/2" 
     >
       {/* Left Part */}
-      <div className="w-1/2 masa-sm:w-full h-full">
+      <div className="w-1/2 max-sm:w-full h-full">
         {/* Header */}
         <div className="flex justify-between items-center p-7 px-8">
           <div className="flex items-center gap-2">
@@ -145,7 +148,7 @@ export const ComponentEditor = () => {
             <AceEditor
               ref={aceEditorRef}
               mode="jsx"
-              theme="Dreamweaver"
+              theme="dreamweaver"
               onChange={handleChange}
               name="jsxEditor"
               value={code}

@@ -1,11 +1,10 @@
-import React from 'react'
+
 import { useAppContext } from '../ContextApi'
 import TopBar from './Components/ComponentsPage/TopBar'
 import SoftLayer from './Components/SoftLayer'
 import { AllComponents } from './Components/ComponentsPage/AllComponents'
 import EmptyProjectsPlaceHolder from './Components/ComponentsPage/EmptyProjectsPlaceHolder'
-import DropDown from './Components/DropDown'
-import ConfirmationDeleteWindow from './Components/ComponentsPage/DeleteWindow'
+import { ComponentEditor } from './Components/ComponentsPage/ComponentEditor'
 
 
 
@@ -15,8 +14,8 @@ const ComponentPage = () => {
     showSearchBarObject: { showSearchBar},
     isMobileViewObject: { isMobileView },
     showComponentPageObject: { showComponentPage },
-    selectedProjectObject: { selectedProject },
-    
+    selectedProjectObject: { selectedProject },  
+    openComponentEditorObject: { openComponentEditor },
   } = useAppContext()
 
   return (
@@ -24,8 +23,9 @@ const ComponentPage = () => {
       {showSearchBar && isMobileView && showComponentPage && <SoftLayer />}
       <TopBar />
       {selectedProject?.components.length === 0 && <EmptyProjectsPlaceHolder /> }
-      <AllComponents />
-    </div>
+      <AllComponents />     
+      <ComponentEditor />
+    </div>  
   )
 }
 
