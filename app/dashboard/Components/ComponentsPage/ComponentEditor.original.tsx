@@ -77,87 +77,108 @@ export const ComponentEditor = () => {
   return (
     <div
       style={{ display: openComponentEditor ? "flex" : "none" }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4"
+      className="w-[96%] h-[735px] max-sm:h-[90%] max-sm:flex-col border-slate-100 flex-row overflow-hidden bg-white absolute lef-0 top-1/2 rounded-2xl shadow-md -translate-x-0 -translate-y-1/2" 
     >
-      <div className="bg-white w-full max-w-6xl h-[90vh] rounded-2xl shadow-md flex flex-col overflow-hidden">
+      {/* Left Part */}
+      <div className="w-1/2 max-sm:w-full h-full">
         {/* Header */}
-        <div className="flex justify-between items-center p-4 border-b">
+        <div className="flex justify-between items-center p-7 px-8">
           <div className="flex items-center gap-2">
+            {/* Category Icon */}
             <div className="w-[30px] h-[30px] bg-sky-200 rounded-full flex items-center justify-center">
-              <FormatShapesIcon sx={{ fontSize: 17 }} className="text-sky-400" />
+              <FormatShapesIcon
+                sx={{ fontSize: 17 }}
+                className="text-sky-400 text-[17px]"
+              />
             </div>
+            {/* Category Header */}
             <span className="font-semibold">Component Editor</span>
           </div>
           <CloseIcon
             onClick={() => setOpenComponentEditor(false)}
             sx={{ fontSize: 16 }}
-            className="text-slate-400 cursor-pointer"
+            className="text-slate-400 text-[18px] cursor-pointer"
           />
         </div>
 
-        {/* Main content */}
-        <div className="flex flex-1 overflow-hidden">
-          {/* Left Part */}
-          <div className="w-1/2 flex flex-col p-4 overflow-auto">
-            {/* Component Name Input */}
-            <div className="mb-4">
-              <div className="flex items-center gap-2 mb-2">
-                <TextFieldsIcon className="text-[15px]" />
-                <span className="text-sm">Component Name</span>
-                <Checkbox icon={<FavoriteBorderIcon sx={{ fontSize: 19 }} />} />
-              </div>
-              <input
-                placeholder="Enter Component Name"
-                className="p-2 text-sm w-full rounded-md border outline-none"
+
+        {/* Input Name */}
+        <div className="flex flex-col gap-2 pt-14 px-8">
+          {/* Input Label */}
+          <div className="flex gap-3">
+            <span className="flex gap-1 items-center text-[13px]">
+              <TextFieldsIcon className="text-[15px]" />
+              <span>Component Name</span>
+            </span>
+            <div>
+              <Checkbox
+                icon={<FavoriteBorderIcon sx={{ fontSize: 19 }} />}
               />
             </div>
-
-            {/* JSX Code Editor */}
-            <div className="flex-1 flex flex-col">
-              <div className="flex justify-between items-center mb-2">
-                <span className="flex items-center gap-1 text-sm">
-                  <CodeIcon className="text-[15px]" />
-                  <span>JSX Code</span>
-                </span>
-                <button
-                  onClick={saveComponent}
-                  className="bg-sky-500 hover:bg-sky-600 text-white text-xs p-2 rounded-md transition-all"
-                >
-                  <Save sx={{ fontSize: 17 }} />
-                </button>
-              </div>
-              <div className="flex-1 border rounded-md overflow-hidden">
-                <AceEditor
-                  ref={aceEditorRef}
-                  mode="jsx"
-                  theme="dreamweaver"
-                  onChange={handleChange}
-                  name="jsxEditor"
-                  value={code}
-                  editorProps={{ $blockScrolling: true }}
-                  setOptions={{
-                    enableBasicAutocompletion: true,
-                    enableLiveAutocompletion: true,
-                    enableSnippets: true,
-                    showLineNumbers: true,
-                    tabSize: 2,
-                  }}
-                  fontSize={14}
-                  width="100%"
-                  height="100%"
-                />
-              </div>
-            </div>
           </div>
 
-          {/* Right Part */}
-          <div className="w-1/2 border-l p-4 overflow-auto">
-            <LiveProvider code={code} noInline={false}>
-              <LiveError className="rounded-lg border-gray-200 p-4 text-red-600 mb-4" />
-              <LivePreview className="rounded-lg border-gray-200 p-4" />
-            </LiveProvider>
+          {/* Input  */}
+          <div className="flex gap-3">
+            <input
+              placeholder="Enter Component Name"
+              className="p-[10px] text-[12px] w-full rounded-md  border outline-none"
+            />
           </div>
         </div>
+
+        {/* Input Code */}
+        <div className="flex flex-col gap-2 pt-6 px-8">
+          <div className="flex justify-between">
+            {/* Input Label */}
+            <span className="flex gap-1 items-center text-[13px]">
+              <CodeIcon className="text-[15px] font-bold" />
+              <span>JSX Code</span>
+            </span>
+
+            <button
+              onClick={saveComponent}
+              className="bg-sky-500 hover:bg-sky-600 text-white text-[12px] p-2 rounded-md transition-all"
+            >
+              <Save sx={{ fontSize: 17 }} />
+            </button>
+          </div>
+
+          <div className="border border-slate-200 rounded-md relative mt-1">
+            {/* Copy Button */}
+            <AceEditor
+              ref={aceEditorRef}
+              mode="jsx"
+              theme="dreamweaver"
+              onChange={handleChange}
+              name="jsxEditor"
+              value={code}
+              editorProps={{ $blockScrolling: true }}
+              setOptions={{
+                enableBasicAutocompletion: true,
+                enableLiveAutocompletion: true,
+                enableSnippets: true,
+                showLineNumbers: true,
+                tabSize: 2,
+              }}
+              fontSize={14}
+              width="100%"
+              height="440px"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Right Part */}
+      <div className="w-1/2 max-sm:w-full max-sm:border-t border-1 max-sm:mt-5 border-slate-100 h-full">
+        <LiveProvider
+          code={code}
+          noInline={false}
+        >
+          <div>
+            <LiveError className="rounded-lg border-gray-200 p-4 text-red-600" />
+            <LivePreview className="rounded-lg border-gray-200 p-4" />
+          </div>
+        </LiveProvider>
       </div>
     </div>
   )
