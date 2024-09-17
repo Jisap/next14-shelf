@@ -79,7 +79,7 @@ export const ComponentEditor = () => {
       style={{ display: openComponentEditor ? "flex" : "none" }}
       className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4"
     >
-      <div className="bg-white w-full max-w-6xl h-[90vh] rounded-2xl shadow-md flex flex-col overflow-hidden">
+      <div className="bg-white w-[95vw] h-[95vh] rounded-2xl shadow-md flex flex-col overflow-hidden">
         {/* Header */}
         <div className="flex justify-between items-center p-4 border-b">
           <div className="flex items-center gap-2">
