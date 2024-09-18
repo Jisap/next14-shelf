@@ -35,6 +35,7 @@ export const ComponentEditor = () => {
   const aceEditorRef = useRef<AceEditor | null>(null);
 
   const { openComponentEditorObject: { openComponentEditor, setOpenComponentEditor } } = useAppContext();
+  console.log('openComponentEditor:', openComponentEditor);
 
   const formatCode = async () => {
     if (aceEditorRef.current) {                                 // Comprueba si existe una referencia válida al componente del editor Ace

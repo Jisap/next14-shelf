@@ -3,9 +3,17 @@ import { TextToIcon } from '@/utils/textToIcon';
 import AddIcon from '@mui/icons-material/Add';
 import React from 'react'
 
-const EmptyProjectsPlaceHolder = () => {
+const EmptyComponentPlaceHolder = () => {
   
-  const{selectedProjectObject: { selectedProject }} = useAppContext();
+  const{
+    selectedProjectObject: { selectedProject },
+    openComponentEditorObject: { openComponentEditor, setOpenComponentEditor },
+  } = useAppContext();
+
+  const handleAddComponent = () => {
+    console.log('Add component button clicked');
+    setOpenComponentEditor(true);
+  };
   
   return (
     <div className='p-1 gap-5 flex flex-col justify-center h-[500px] mt-[68px] mb-[34px] items-center'>
@@ -29,6 +37,7 @@ const EmptyProjectsPlaceHolder = () => {
       </div>
       <button
         className='flex gap-1 items-center bg-sky-500 p-2 rounded-md text-white text-center text-[12px] px-3 pr-5'
+        onClick={handleAddComponent}
       >
         <AddIcon />
         <span className='text-sm'>Add New Component</span>
@@ -37,4 +46,4 @@ const EmptyProjectsPlaceHolder = () => {
   )
 }
 
-export default EmptyProjectsPlaceHolder
+export default EmptyComponentPlaceHolder

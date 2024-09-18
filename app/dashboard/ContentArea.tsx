@@ -7,6 +7,7 @@ import SoftLayer from './Components/SoftLayer'
 import StatsBar from './Components/StatsBar'
 import AllProjects from './Components/AllProjects'
 import FavoriteComponents from './Components/FavoriteComponents'
+import { ComponentEditor } from './Components/ComponentsPage/ComponentEditor'
 
 const ContentArea = () => {
 
