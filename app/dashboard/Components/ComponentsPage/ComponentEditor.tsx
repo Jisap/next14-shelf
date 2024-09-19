@@ -213,7 +213,7 @@ export const ComponentEditor = () => {
     }else{
       resetEditor();
     }
-  }, [])
+  }, [openComponentEditor, selectedComponent])
 
   const resetEditor = () => {
     setCode("");
