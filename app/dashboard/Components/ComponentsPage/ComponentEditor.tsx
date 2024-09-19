@@ -83,10 +83,7 @@ export const ComponentEditor = () => {
       style={{ display: openComponentEditor ? "flex" : "none" }}
       className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4"
     >
-      <div 
-        //className="bg-white w-[95vw] h-[95vh] rounded-2xl shadow-md flex flex-col overflow-hidden"
-        className="bg-white w-full h-full sm:w-[95vw] sm:h-[95vh] rounded-2xl shadow-md flex flex-col overflow-hidden"
-      >
+      <div className="bg-white w-full h-full sm:w-[95vw] sm:h-[95vh] rounded-2xl shadow-md flex flex-col overflow-hidden">
         {/* Header */}
         <div className="flex justify-between items-center p-4 border-b">
           <div className="flex items-center gap-2">
@@ -103,15 +100,9 @@ export const ComponentEditor = () => {
         </div>
 
         {/* Main content */}
-        <div 
-          //className="flex flex-1 overflow-hidden"
-          className="flex flex-1 overflow-hidden flex-col sm:flex-row"
-        >
+        <div className="flex flex-1 overflow-hidden flex-col sm:flex-row">
           {/* Left Part */}
-          <div 
-            //className="w-1/2 flex flex-col p-4 overflow-auto"
-            className="w-full sm:w-1/2 flex flex-col p-4 overflow-auto h-1/2"  
-          >
+          <div className="w-full sm:w-1/2 flex flex-col p-4 overflow-auto h-1/2"  >
             {/* Component Name Input */}
             <div className="mb-4">
               <div className="flex items-center gap-2 mb-2">
@@ -165,10 +156,7 @@ export const ComponentEditor = () => {
           </div>
 
           {/* Right Part */}
-          <div 
-            //className="w-1/2 border-l p-4 overflow-auto"
-            className="w-full sm:w-1/2 border-l p-4 overflow-auto"
-          >
+          <div className="w-full sm:w-1/2 border-l p-4 overflow-auto">
             <LiveProvider code={code} noInline={false}>
               <LiveError className="rounded-lg border-gray-200 p-4 text-red-600 mb-4" />
               <LivePreview className="rounded-lg border-gray-200 p-4" />
