@@ -48,7 +48,7 @@ export const ComponentEditor = () => {
   const formatCode = async (codeToFormat: string) => {
     if (aceEditorRef.current) {                                 // Comprueba si existe una referencia válida al componente del editor Ace
       try {
-        const formatted = await prettier.format(code, {         // Se utiliza Prettier para formatear el código almacenado en la variable code
+        const formatted = await prettier.format(codeToFormat, { // Se utiliza Prettier para formatear el código proporcionado en el input
           parser: "babel",
           plugins: [babelPlugin, estreetPlugin],
           singleQuote: true,
@@ -99,8 +99,8 @@ export const ComponentEditor = () => {
       return;
     }
 
-    if(!selectedComponent){
-      const newComponent: Component = {
+    if (!selectedComponent) {                                           // Si no existe un componente seleccionado 
+      const newComponent: Component = {                                 // significa que se esta creando un nuevo componente.             
         _id: uuidv4(),
         name: inputName,
         code: code,
@@ -109,21 +109,21 @@ export const ComponentEditor = () => {
         projectName: selectedProject.name,
       }
 
-      // Check if the component name already exists in the current project
+      
       if(
-        selectedProject.components.some(
+        selectedProject.components.some(                                // Check if the component name already exists in the current project               
           (component) => 
-            component.name.toLowerCase() === inputName.toLowerCase()
+            component.name.toLowerCase() === inputName.toLowerCase()    // and if it does, return an error message
         )
       ){
         toast.error("Component name already exists in this project");
         return;
       }
 
-      addNewComponent(newComponent);
-      setSelectedComponent(newComponent);
+      addNewComponent(newComponent);                                     // If the component name is unique, add the new component to the project
+      setSelectedComponent(newComponent);                                // Dicho newComponent se establece como el componente seleccionado
       toast.success("Component has been added successfully");
-      formatCode(newComponent.code);
+      formatCode(newComponent.code);                                     // Formatea el codigo del nuevo componente
     }else{
       // Updating an existing component
       const updateComponent: Component = {
