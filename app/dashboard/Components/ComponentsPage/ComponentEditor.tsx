@@ -19,28 +19,29 @@ import Checkbox from '@mui/material/Checkbox';
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useAppContext } from "@/app/ContextApi";
 import { Save } from "@mui/icons-material";
+import toast from "react-hot-toast";
+import { Component } from "@/app/allData";
+import { v4 as uuidv4 } from 'uuid';
 
 export const ComponentEditor = () => {
-  const [code, setCode] = useState(`
-    <div>
-      <>
-        <h1>Direct SVG Example</h1>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
-        </svg>
-      </>
-    </div>   
-  `);
+  const [code, setCode] = useState(``);
+  const [inputName, setInputName] = useState<string>("");
+  const [copySuccess, setCopySuccess] = useState(false);
 
+  const inputRef = useRef<HTMLInputElement>(null);
   const aceEditorRef = useRef<AceEditor | null>(null);
+  const editorInstanceRef = useRef<any>(null);
 
   const { 
     openComponentEditorObject: { openComponentEditor, setOpenComponentEditor },
-    isMobileViewObject: { isMobileView }
+    allProjectsObject: { allProjects, setAllProjects },
+    selectedProjectObject: { selectedProject, setSelectedProject },
+    selectedComponentObject: { selectedComponent, setSelectedComponent },
   } = useAppContext();
+
   
 
-  const formatCode = async () => {
+  const formatCode = async (codeToFormat: string) => {
     if (aceEditorRef.current) {                                 // Comprueba si existe una referencia válida al componente del editor Ace
       try {
         const formatted = await prettier.format(code, {         // Se utiliza Prettier para formatear el código almacenado en la variable code
@@ -69,13 +70,154 @@ export const ComponentEditor = () => {
   }
 
   const saveComponent = () => {
-    formatCode();
+    // Check if the project name is not empty
+    if(inputName.trim() === ""){
+      toast.error("Please enter a name a component name");
+      inputRef.current?.focus();
+      return;
+    }
+
+    //Check id code is not empty
+    if(code.trim() === ""){
+      toast.error("Please enter a code");
+      aceEditorRef.current?.editor.focus();
+      return;
+    }
+
+    if(code.trim() === ""){
+      toast.error("Please enter a code");
+      aceEditorRef.current?.editor.focus();
+      return;
+    }
+
+    if(!selectedProject){
+      toast.error("No project selected");
+      return;
+    }
+
+    if(!selectedComponent){
+      const newComponent: Component = {
+        _id: uuidv4(),
+        name: inputName,
+        code: code,
+        isFavorite: false,
+        createdAt: new Date().toISOString(),
+        projectName: selectedProject.name,
+      }
+
+      // Check if the component name already exists in the current project
+      if(
+        selectedProject.components.some(
+          (component) => 
+            component.name.toLowerCase() === inputName.toLowerCase()
+        )
+      ){
+        toast.error("Component name already exists in this project");
+        return;
+      }
+
+      addNewComponent(newComponent);
+      setSelectedComponent(newComponent);
+      toast.success("Component has been added successfully");
+      formatCode(newComponent.code);
+    }else{
+      // Updating an existing component
+      const updateComponent: Component = {
+        ...selectedComponent,
+        name: inputName,
+        code: code,
+      }
+
+      // Check if the new name conflicts with other components (excluding the current one)
+      if(
+        selectedProject.components.some(
+          (component) => 
+            component._id !== selectedComponent._id &&
+            component.name.toLowerCase() === inputName.toLowerCase()
+        )
+      ){
+        toast.error("Component name already exists in this project");
+        return;
+      }
+     
+      updateExistingComponent(updateComponent);
+      setSelectedComponent(updateComponent);
+      toast.success("Component has been updated successfully");
+    }
+  }
+
+  const addNewComponent = (newComponent: Component) => {
+    if(selectedProject && allProjects){
+      const updateProject = {
+        ...selectedProject,
+        components: [...selectedProject.components, newComponent],
+      }
+
+      const updateAllProjects = allProjects.map((project) => 
+        project._id === selectedProject._id ? updateProject : project
+      );
+
+      setSelectedProject(updateProject);
+      setAllProjects(updateAllProjects);
+    } 
+  }
+  
+  const updateExistingComponent = (updatedComponent: Component) => {
+    if(selectedProject && allProjects){
+      const updatedComponents = selectedProject.components.map((component) => 
+        component._id === updatedComponent._id ? updatedComponent : component
+      );
+    
+      const updatedProject = {
+        ...selectedProject,
+        components: updatedComponents,
+      };
+
+      const updatedAllProjects = allProjects.map((project) => 
+        project._id === selectedProject._id ? updatedProject : project
+      );
+
+      setSelectedProject(updatedProject);
+      setAllProjects(updatedAllProjects);
+    }
+  }
+
+  const copyTheCode = () => {
+    // Copy the code to the clipboard
+    setCopySuccess(true)
+    toast.success("Code has been copied to the clipboard");
+    setTimeout(() => {
+      navigator.clipboard.writeText(code);
+      setCopySuccess(false);
+    }, 1400);
   }
 
 
   useEffect(() => {
-    formatCode();
+    if(openComponentEditor){
+      inputRef.current?.focus();
+      if(!selectedComponent){
+        resetEditor()
+      }else{
+        setInputName(selectedComponent.name);
+        setCode(selectedComponent.code);
+        if(editorInstanceRef.current){
+          editorInstanceRef.current.setValue( selectedComponent.code, -1 );
+          formatCode(selectedComponent.code);
+        }
+      }
+    }else{
+      resetEditor();
+    }
   }, [])
+
+  const resetEditor = () => {
+    setCode("");
+    setInputName("");
+    if(editorInstanceRef.current){
+      editorInstanceRef.current.setValue("", -1);
+    }
+  }
 
 
   return (
