@@ -22,6 +22,10 @@ import { Save } from "@mui/icons-material";
 import toast from "react-hot-toast";
 import { Component } from "@/app/allData";
 import { v4 as uuidv4 } from 'uuid';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { IconButton } from "@mui/material";
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import DoneIcon from '@mui/icons-material/Done';
 
 export const ComponentEditor = () => {
   const [code, setCode] = useState(``);
@@ -235,7 +239,11 @@ export const ComponentEditor = () => {
             <span className="font-semibold">Component Editor</span>
           </div>
           <CloseIcon
-            onClick={() => setOpenComponentEditor(false)}
+            onClick={() => {
+              setOpenComponentEditor(false)
+              setSelectedComponent(null);
+              resetEditor();
+            }}
             sx={{ fontSize: 16 }}
             className="text-slate-400 cursor-pointer"
           />
@@ -250,9 +258,20 @@ export const ComponentEditor = () => {
               <div className="flex items-center gap-2 mb-2">
                 <TextFieldsIcon className="text-[15px]" />
                 <span className="text-sm">Component Name</span>
-                <Checkbox icon={<FavoriteBorderIcon sx={{ fontSize: 19 }} />} />
+                <Checkbox 
+                  icon={<FavoriteBorderIcon sx={{ fontSize: 19 }} />} 
+                  checkedIcon={
+                    <FavoriteIcon 
+                      sx={{ fontSize: 19 }} 
+                      className="text-red-500"  
+                    />
+                  }  
+                />
               </div>
               <input
+                ref={inputRef}
+                value={inputName}
+                onChange={(e) => setInputName(e.target.value)}
                 placeholder="Enter Component Name"
                 className="p-2 text-sm w-full rounded-md border outline-none"
               />
@@ -265,17 +284,29 @@ export const ComponentEditor = () => {
                   <CodeIcon className="text-[15px]" />
                   <span>JSX Code</span>
                 </span>
+                <div className="flex gap-2 items-center">
+                <IconButton onClick={copyTheCode}>
+                  {!copySuccess ? (
+                    <ContentCopyIcon sx={{ fontSize: 17}} />
+                  ) : (
+                    <DoneIcon sx={{ fontSize: 17}} />
+                  )}
+                </IconButton>
                 <button
                   onClick={saveComponent}
                   className="bg-sky-500 hover:bg-sky-600 text-white text-xs p-2 rounded-md transition-all"
                 >
                   <Save sx={{ fontSize: 17 }} />
                 </button>
+                </div>
               </div>
 
               <div className="flex-1 border rounded-md overflow-hidden h-full">
                 <AceEditor
                   ref={aceEditorRef}
+                  onLoad={(editorInstance) => {
+                    editorInstanceRef.current = editorInstance;
+                  }}
                   mode="jsx"
                   theme="dreamweaver"
                   onChange={handleChange}
