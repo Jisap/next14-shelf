@@ -16,6 +16,7 @@ const DropDown = () => {
     selectedProjectObject: { selectedProject, setSelectedProject },
     selectedComponentObject: { selectedComponent, setSelectedComponent },
     allProjectsObject: { allProjects, setAllProjects },
+    openComponentEditorObject: { openComponentEditor, setOpenComponentEditor },
   } = useAppContext();
   
   const dropDownRef = useRef<HTMLDivElement>(null);
@@ -55,6 +56,15 @@ const DropDown = () => {
       window.removeEventListener('wheel', handleWheel);
     }
   },[setOpenDropDown]);
+
+  // Make sure that the selected component is null when the dropdonw is closed and component editor is closed
+  useEffect(() => {
+    if(openDropDown === false){
+      if(!openComponentEditor){
+        setSelectedComponent(null);
+      }
+    }
+  },[openDropDown])
 
   const deleteComponentFunction = () => {
     setOpenDeleteWindow(true);
@@ -117,7 +127,10 @@ const DropDown = () => {
       className="bg-white z-50 px-5 border border-slate-50 fixed py-4 w-[160px] selec-none shadow-md rounded-lg flex flex-col gap-5"
     >
       {/* Edit Icon */}
-      <div className='flex gap-1 items-center text-slate-600 cursor-pointer hover:text-sky-500'>
+      <div 
+        className='flex gap-1 items-center text-slate-600 cursor-pointer hover:text-sky-500'
+        onClick={() => setOpenComponentEditor(true)} 
+      >
         <EditOutlinedIcon 
           sx={{ fontSize: 21 }}
           className='text-[21px]'
