@@ -11,7 +11,6 @@ const EmptyComponentPlaceHolder = () => {
   } = useAppContext();
 
   const handleAddComponent = () => {
-    console.log('Add component button clicked');
     setOpenComponentEditor(true);
   };
   
