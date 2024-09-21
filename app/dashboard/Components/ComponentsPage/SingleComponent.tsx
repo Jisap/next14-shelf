@@ -57,10 +57,10 @@ const SingleComponent = ({ component }: { component: Component}) => {
 
   const [isFavorite, setFavorite] = useState(component.isFavorite);
 
-  useEffect(() => { //  Busca el componente actualizado en el proyecto seleccionado y, si lo encuentra, sincroniza el valor de isFavorite con los cambios más recientes en allProjects.
-    const updatedComponent = selectedProject?.components.find(comp => comp._id === component._id);
+  useEffect(() => { 
+    const updatedComponent = selectedProject?.components.find(comp => comp._id === component._id); // Busca el componente actualizado en el proyecto seleccionado
     if (updatedComponent) {
-      setFavorite(updatedComponent.isFavorite);
+      setFavorite(updatedComponent.isFavorite);                                                    // Y si lo encuentra, sincroniza el valor de isFavorite con los cambios más recientes en allProjects.                            
     }
   }, [allProjects, selectedProject, component._id]);
 
