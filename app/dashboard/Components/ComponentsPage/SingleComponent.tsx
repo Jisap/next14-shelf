@@ -1,5 +1,5 @@
 import Checkbox from '@mui/material/Checkbox';
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import PreviewIcon from '@mui/icons-material/Preview';
 import CodeIcon from '@mui/icons-material/Code';
 import { IconButton } from "@mui/material";
@@ -22,6 +22,7 @@ const SingleComponent = ({ component }: { component: Component}) => {
     openDropDownObject: { openDropDown, setOpenDropDown },
     dropDownPositionsObject: { dropDownPositions, setDropDownPositions },
     selectedComponentObject: { selectedComponent, setSelectedComponent },
+    openComponentEditorObject: { openComponentEditor, setOpenComponentEditor },
   } = useAppContext();
 
   const iconRef = useRef<HTMLDivElement>(null);
@@ -55,6 +56,13 @@ const SingleComponent = ({ component }: { component: Component}) => {
   }
 
   const [isFavorite, setFavorite] = useState(component.isFavorite);
+
+  useEffect(() => { //  Busca el componente actualizado en el proyecto seleccionado y, si lo encuentra, sincroniza el valor de isFavorite con los cambios más recientes en allProjects.
+    const updatedComponent = selectedProject?.components.find(comp => comp._id === component._id);
+    if (updatedComponent) {
+      setFavorite(updatedComponent.isFavorite);
+    }
+  }, [allProjects, selectedProject, component._id]);
 
   const updateFavoriteState = () => {
     const newAllProjects = allProjects.map((project: Project) => {              // Mapeamos (creamos copia) allProjects y para cada proyecto
@@ -111,12 +119,20 @@ const SingleComponent = ({ component }: { component: Component}) => {
     //Get the top and the left position of the icon
   }
 
+  const openTheComponentEditor = () => {
+    setSelectedComponent(component);
+    setOpenComponentEditor(true);
+  }
+
   return (
     <div className="bg-white w-full rounded-lg p-8 pt-8 pb-10 mb-3">
       {/* Compponent title  and checkbox to favorite*/}
       <div className="flex justify-between items-center">
         <div className="flex gap-2 items-center">
-          <span className="font-bold text-[19px]">
+          <span 
+            onClick={openTheComponentEditor}
+            className="font-bold text-[19px] cursor-pointer"
+          >
             {component.name}
           </span>
           <Checkbox

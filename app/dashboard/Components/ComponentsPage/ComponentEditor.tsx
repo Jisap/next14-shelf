@@ -43,7 +43,7 @@ export const ComponentEditor = () => {
     selectedComponentObject: { selectedComponent, setSelectedComponent },
   } = useAppContext();
 
-  
+
 
   const formatCode = async (codeToFormat: string) => {
     if (aceEditorRef.current) {                                 // Comprueba si existe una referencia válida al componente del editor Ace
@@ -204,7 +204,7 @@ export const ComponentEditor = () => {
     ){ 
       const updatedComponent = {                                                  // Se actualiza el componente seleccionado con su estado de favorito
         ...selectedComponent,
-        isFavorite: !selectedComponent.isFavorite,
+        isFavorite: !selectedComponent.isFavorite, 
       };
 
       const updatedComponents = selectedProject.components.map((component) =>     // Se busca el componente dentro del array de componentes del proyecto seleccionado
@@ -223,8 +223,9 @@ export const ComponentEditor = () => {
       setSelectedComponent(updatedComponent);                                      // Se actualiza el estado de componente seleccionado
       setSelectedProject(updatedSelectedProject);                                  // Se actualiza el estado del proyecto seleccionado
       setAllProjects(updateAllProjects);                                           // Se actualiza el estado de todos los proyectos
+    }else{
+      console.error("Selected component, project, or all projects is null");
     }
-    
   }
 
 
@@ -297,7 +298,9 @@ export const ComponentEditor = () => {
                       sx={{ fontSize: 19 }} 
                       className="text-red-500"  
                     />
-                  }  
+                  }
+                  checked={selectedComponent?.isFavorite || false}  // Asegura que el estado refleje el estado actual del componente seleccionado
+                  onChange={() => { updateTheFavoriteState() }} 
                 />
               </div>
               <input

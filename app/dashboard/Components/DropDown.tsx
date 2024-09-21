@@ -60,8 +60,10 @@ const DropDown = () => {
   // Make sure that the selected component is null when the dropdonw is closed and component editor is closed
   useEffect(() => {
     if(openDropDown === false){
-      if(!openComponentEditor){
-        setSelectedComponent(null);
+      if(!openDeleteWindow){
+        if(!openComponentEditor){
+          setSelectedComponent(null);
+        }
       }
     }
   },[openDropDown])
