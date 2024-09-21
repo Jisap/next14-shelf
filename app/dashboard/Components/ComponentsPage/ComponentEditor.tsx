@@ -196,6 +196,37 @@ export const ComponentEditor = () => {
     }, 1400);
   }
 
+  const updateTheFavoriteState = () => {
+    if(
+      selectedComponent !== null &&
+      allProjects !== null &&
+      selectedProject !== null
+    ){ 
+      const updatedComponent = {                                                  // Se actualiza el componente seleccionado con su estado de favorito
+        ...selectedComponent,
+        isFavorite: !selectedComponent.isFavorite,
+      };
+
+      const updatedComponents = selectedProject.components.map((component) =>     // Se busca el componente dentro del array de componentes del proyecto seleccionado
+        component._id === selectedComponent._id ? updatedComponent : component    // y se actualiza su estado de favorito
+      );
+
+      const updatedSelectedProject = {                                            // Se actualiza el proyecto seleccionado con el nuevo array de componentes
+        ...selectedProject,
+        components: updatedComponents,
+      };
+
+      const updateAllProjects = allProjects.map((project) =>                      // Se actualiza el array de proyectos con el nuevo proyecto seleccionado
+        project._id === selectedProject._id ? updatedSelectedProject : project
+      );
+
+      setSelectedComponent(updatedComponent);                                      // Se actualiza el estado de componente seleccionado
+      setSelectedProject(updatedSelectedProject);                                  // Se actualiza el estado del proyecto seleccionado
+      setAllProjects(updateAllProjects);                                           // Se actualiza el estado de todos los proyectos
+    }
+    
+  }
+
 
   useEffect(() => {
     if(openComponentEditor){
@@ -222,6 +253,7 @@ export const ComponentEditor = () => {
       editorInstanceRef.current.setValue("", -1);
     }
   }
+
 
 
   return (
