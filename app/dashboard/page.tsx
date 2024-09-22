@@ -14,6 +14,7 @@ import { Toaster } from 'react-hot-toast'
 import ComponentPage from './ComponentPage'
 import DropDown from './Components/DropDown'
 import ConfirmationDeleteWindow from './Components/ComponentsPage/DeleteWindow'
+import { ComponentEditor } from './Components/ComponentsPage/ComponentEditor'
 
 
 interface SelectedIcon {
@@ -27,7 +28,8 @@ const dashboard = () => {
     openProjectWindowObject: { openProjectWindow },
     showComponentPageObject: { showComponentPage },
     openDeleteWindowObject: { openDeleteWindow },
-    openDropDownObject: { openDropDown }
+    openDropDownObject: { openDropDown },
+    openComponentEditorObject: { openComponentEditor },
   } = useAppContext()
 
   const [selectedIcon, setSelectedIcon] = React.useState<SelectedIcon>({ // Estado de selectedIcon
@@ -67,6 +69,7 @@ const dashboard = () => {
       {openDropDown && <DropDown />}
       <ConfirmationDeleteWindow />
 
+      {openComponentEditor && <ComponentEditor />} 
     </div>
   )
 }

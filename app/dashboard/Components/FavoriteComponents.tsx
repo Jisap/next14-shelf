@@ -4,12 +4,14 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useAppContext } from '@/app/ContextApi';
 import { CircularProgress } from '@mui/material';
 
+
 const FavoriteComponents = () => {
 
   const { 
     allFavoriteComponentsObject: { allFavoriteComponents },
-    isLoadingObject: { isLoading, setIsLoading}
+    isLoadingObject: { isLoading, setIsLoading},
   } = useAppContext();
+
 
   return (
 
