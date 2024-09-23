@@ -123,6 +123,11 @@ interface AppContextType {    // Define la estructura del contexto que será com
     openComponentEditor: boolean,
     setOpenComponentEditor: React.Dispatch<React.SetStateAction<boolean>>
   }
+
+  openAllProjectsWindowObject:{
+    openAllProjectsWindow: boolean,
+    setOpenAllProjectsWindow: React.Dispatch<React.SetStateAction<boolean>>
+  }
 }
 
 const defaultState: AppContextType = {
@@ -214,7 +219,12 @@ const defaultState: AppContextType = {
   openComponentEditorObject: {
     openComponentEditor: false,
     setOpenComponentEditor: () => {}
-  }
+  },
+
+  openAllProjectsWindowObject: {
+    openAllProjectsWindow: false,
+    setOpenAllProjectsWindow: () => {}    
+  },
 }
 
 export const AppContext = createContext<AppContextType>(defaultState);              // Creación del contexto
@@ -280,6 +290,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [openDeleteWindow, setOpenDeleteWindow] = useState(false);
   const [selectedComponent, setSelectedComponent] = useState<Component | null>(null);
   const [openComponentEditor, setOpenComponentEditor] = useState(false);
+  const [openAllProjectsWindow, setOpenAllProjectsWindow] = useState(false);
 
 
   // Darkmode
@@ -352,7 +363,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         openDropDownObject: { openDropDown, setOpenDropDown },
         openDeleteWindowObject: { openDeleteWindow, setOpenDeleteWindow },
         selectedComponentObject: { selectedComponent, setSelectedComponent },
-        openComponentEditorObject: { openComponentEditor, setOpenComponentEditor }
+        openComponentEditorObject: { openComponentEditor, setOpenComponentEditor },
+        openAllProjectsWindowObject: { openAllProjectsWindow, setOpenAllProjectsWindow }
       }}
     >
       {children}
