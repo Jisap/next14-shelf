@@ -251,8 +251,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
  
 
   const [openDarkModeMenu, setOpenDarkModeMenu] = useState(false)                   // Estado del boolean
-  const [darkModeMenu, setDarkModeMenu] = useState<DarkModeMenu[]>(() => {          // Estado del DarkModeMenu[]  
-    
+  const [darkModeMenu, setDarkModeMenu] = useState<DarkModeMenu[]>(() => {          // Estado del DarkModeMenu[]     
     const savedDarkMode = localStorage.getItem("isDarkMode");                       // 1º se intenta obtener de ls
     const isDarkMode = savedDarkMode ? JSON.parse(savedDarkMode) : false;           // si existe se aplica, sino = false
     
@@ -340,7 +339,13 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       );
       setAllFavoriteComponents(favoriteComponents)
     }
-  },[allProjects])
+  },[allProjects]);
+
+  useEffect(() => {
+    if(menuItems[1].isSelected){
+      setOpenAllProjectsWindow(true)
+    }
+  },[menuItems])
 
   return (
     <AppContext.Provider 
