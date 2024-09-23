@@ -69,6 +69,7 @@ const dashboard = () => {
       {!showComponentPage ? <ContentArea /> : <ComponentPage /> }
 
       {openDropDown && <DropDown />}
+      
       <ConfirmationDeleteWindow />
 
       {openComponentEditor && <ComponentEditor />} 
