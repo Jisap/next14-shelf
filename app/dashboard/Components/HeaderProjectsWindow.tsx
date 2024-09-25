@@ -3,7 +3,7 @@ import { Close } from "@mui/icons-material";
 import CategoryIcon from '@mui/icons-material/Category';
 
 
-const Header = () => {
+const HeaderProjectWindow = () => {
 
   const {
     openAllProjectsWindowObject: { openAllProjectsWindow , setOpenAllProjectsWindow },
@@ -44,4 +44,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default HeaderProjectWindow
