@@ -11,7 +11,7 @@ const ProjectsList = ({ searchQuery }: { searchQuery: string }) => {
     allProjectsObject: { allProjects },
     isLoadingObject: { isLoading },
   } = useAppContext();
-
+console.log('allProjects', allProjects);
   const filterAllProjectsBySearchQuery = allProjects.filter((singleProject) => 
     singleProject.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -25,14 +25,14 @@ const ProjectsList = ({ searchQuery }: { searchQuery: string }) => {
         </div>
       )}
 
-      {allProjects.length === 0 && !isLoading ? (
+      {allProjects.length === 0 && !isLoading ? ( // Si no hay proyectos cargados y no se esta cargando -> Mostrar el placeholder
         <EmptyProjectsPlaceHolder />
       ) : (
         <>
-          {filterAllProjectsBySearchQuery.length > 0 ? (
+          {filterAllProjectsBySearchQuery.length > 0 ? (  // Si hay proyectos cargados  -> Mostrarlos
             <>
               {
-                filterAllProjectsBySearchQuery.map((project, index) => (
+                filterAllProjectsBySearchQuery.map((project, index) => (  // 
                   <SingleProjectWindow key={index} project={project} />
                 ))
               }

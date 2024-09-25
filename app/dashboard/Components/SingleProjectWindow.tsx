@@ -21,7 +21,7 @@ const SingleProjectWindow = ({ project }:{ project: Project }) => {
         </div>
         {/* Project Name */}
         <div className='flex flex-col'>
-          <span className='font-bold'>Buttons</span>
+          <span className='font-bold'>{project.name}</span>
           <span className='text-slate-400 text-[12px]'>
             {project.components.length} Components
           </span>
