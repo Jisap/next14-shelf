@@ -1,8 +1,10 @@
 import { Delete, DragIndicatorRounded, EditRounded } from '@mui/icons-material'
 import React from 'react'
 import CategoryIcon from '@mui/icons-material/Category';
+import { Project } from '@/app/allData';
+import { TextToIcon } from '@/utils/textToIcon';
 
-const SingleProjectWindow = () => {
+const SingleProjectWindow = ({ project }:{ project: Project }) => {
   return (
     <div className='w-full bg-white rounded-md flex gap-3 items-center justify-between p-3'>
       <div className='flex gap-3 items-center'>
@@ -10,16 +12,19 @@ const SingleProjectWindow = () => {
         {/* Project Icon */}
         <div>
           <div className='w-[30px] h-[30px] bg-sky-200 rounded-full flex items-center justify-center'>
-            <CategoryIcon 
-              sx={{ fontSize: 17 }}
-              className='text-sky-400 text-[17px]'
-            />
+            {TextToIcon({
+              text: project.icon,
+              fontSize: 17,
+              className:'text-sky-400 text-[17px]'
+            })} 
           </div>
         </div>
         {/* Project Name */}
         <div className='flex flex-col'>
           <span className='font-bold'>Buttons</span>
-          <span className='text-slate-400 text-[12px]'>10 Components</span>
+          <span className='text-slate-400 text-[12px]'>
+            {project.components.length} Components
+          </span>
         </div>
       </div>
 
