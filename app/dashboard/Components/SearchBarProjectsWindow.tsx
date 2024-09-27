@@ -62,8 +62,10 @@ const SearchBarProjectsWindow = ({
             </div>
           )}
         </div>
+        
         <button
-          className="bg-sky-500 ml-2 p-[10px] flex w-[15%] text-sm rounded-md text-white items-center justify-between"
+          onClick={() => setOpenAllProjectsWindow(true)}
+          className="bg-sky-500 ml-2 p-[10px] flex w-[15%] text-sm rounded-md text-white items-center gap-2 justify-center"
         >
           <AddOutlined sx={{ fontSize: 17 }} />
           <span className="max-md:hidden">Create New</span>

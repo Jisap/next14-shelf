@@ -51,8 +51,10 @@ const dashboard = () => {
 
     <div className='flex poppins relative'>
       <Toaster />
+      
       <AddProjectWindow  
         selectedIcon={selectedIcon}
+        setSelectedIcon={setSelectedIcon}
       />
 
       {/* Si se establece openIconWindow=true se muestra IconWindow */}
@@ -75,6 +77,7 @@ const dashboard = () => {
       {openComponentEditor && <ComponentEditor />} 
 
       <AllProjectsWindow />
+      
     </div>
   )
 }

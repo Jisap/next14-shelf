@@ -24,8 +24,7 @@ const AllProjectsWindow = () => {
       <HeaderProjectWindow />
       <SearchBarProjectsWindow searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       <SortByComponent />
-      <ProjectsList searchQuery={searchQuery} 
-      />
+      <ProjectsList searchQuery={searchQuery}/>
     </div>
   )
 }

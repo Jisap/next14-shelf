@@ -3,8 +3,20 @@ import React from 'react'
 import CategoryIcon from '@mui/icons-material/Category';
 import { Project } from '@/app/allData';
 import { TextToIcon } from '@/utils/textToIcon';
+import { useAppContext } from '@/app/ContextApi';
 
 const SingleProjectWindow = ({ project }:{ project: Project }) => {
+
+  const {
+    selectedProjectObject: { selectedProject, setSelectedProject },
+    openProjectWindowObject: { setOpenProjectWindow },
+  } = useAppContext();
+
+  const editTheProjectClicked = () => {
+    setOpenProjectWindow(true);   // Abre la ventana de AllProjectsWindow
+    setSelectedProject(project);
+  }
+
   return (
     <div className='w-full bg-white rounded-md flex gap-3 items-center justify-between p-3'>
       <div className='flex gap-3 items-center'>
@@ -31,7 +43,10 @@ const SingleProjectWindow = ({ project }:{ project: Project }) => {
       {/* Action Buttons */}
       <div className='flex gap-2 items-center'>
         {/* Edit Button */}
-        <div className='rounded-full w-7 h-7 flex items-center justify-center cursor-pointer bg-slate-200 hover:bg-slate-300'> 
+        <div 
+          onClick={editTheProjectClicked}
+          className='rounded-full w-7 h-7 flex items-center justify-center cursor-pointer bg-slate-200 hover:bg-slate-300'
+        > 
           <EditRounded 
             className='text-slate-400'
             sx={{ fontSize: 15 }}

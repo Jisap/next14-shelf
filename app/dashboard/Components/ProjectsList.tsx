@@ -11,7 +11,7 @@ const ProjectsList = ({ searchQuery }: { searchQuery: string }) => {
     allProjectsObject: { allProjects },
     isLoadingObject: { isLoading },
   } = useAppContext();
-console.log('allProjects', allProjects);
+
   const filterAllProjectsBySearchQuery = allProjects.filter((singleProject) => 
     singleProject.name.toLowerCase().includes(searchQuery.toLowerCase())
   );

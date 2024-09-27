@@ -25,6 +25,8 @@ import ViewCarouselIcon from '@mui/icons-material/ViewCarousel';
 import ViewColumnIcon from '@mui/icons-material/ViewColumn';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import GridOnIcon from '@mui/icons-material/GridOn';
+import { useAppContext } from './app/ContextApi';
+import { useEffect } from 'react';
 
 export interface IconData {
   id: number;
@@ -70,6 +72,11 @@ const AllIcons = ({
   setAllIconsState: React.Dispatch<React.SetStateAction<IconData[]>>
 }) => {
 
+  const {
+    selectedProjectObject: { selectedProject },
+    openIconWindowObject: { openIconWindow },
+  } = useAppContext();
+
   const handleClickedIcon = (singleIcon: IconData) => {                   // Recibe un icon seleccionado
     setAllIconsState((prevState) =>                                       // El estado previo del array de icons
       prevState.map((icon) => ({                                          // se mapea
@@ -78,6 +85,17 @@ const AllIcons = ({
       }))
     )
   }
+
+  useEffect(() => {
+    if(selectedProject){
+      setAllIconsState((prevState) => 
+        prevState.map((icon) => ({
+          ...icon,
+          isSelected: icon.name === selectedProject?.icon 
+        }))
+      )
+    }
+  },[openIconWindow])
  
 
   return (

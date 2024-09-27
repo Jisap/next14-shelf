@@ -10,26 +10,72 @@ import { v4 as uuidv4 } from 'uuid';
 import { Project } from '@/app/allData';
 import { useUser } from '@clerk/nextjs';
 import toast from 'react-hot-toast';
+import { TextToIcon } from '@/utils/textToIcon';
 
 const AddProjectWindow = ({
-  selectedIcon } : {
+  selectedIcon,
+  setSelectedIcon
+} : {
     selectedIcon: {
       icon:React.ReactNode;
       name: string;
-    }}) => {
+    };
+    setSelectedIcon: React.Dispatch<React.SetStateAction<{
+      icon: React.ReactNode;
+      name: string;
+    }>>;   
+}) => {
 
   const {
     isMobileViewObject: { isMobileView },
     openProjectWindowObject: { openProjectWindow, setOpenProjectWindow },
     openIconWindowObject: { setOpenIconWindow },
-    allProjectsObject: { allProjects, setAllProjects }
+    allProjectsObject: { allProjects, setAllProjects },
+    selectedProjectObject: { selectedProject, setSelectedProject }
   } = useAppContext();
 
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [projectName, setProjectName] = useState<string>("");
   const { user } = useUser();
 
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  //useEffect destinado a actualizar el estado de selectedIcon cuando se cambie el estado de openProjectWindow
+  useEffect(() => {
+    if(!selectedProject){                       // Si no hay proyecto seleccionado
+      setProjectName("");                       // Limpio el nombre del proyecto
+
+      const iconObject = {                      // Limpio el icono del proyecto
+        icon: TextToIcon({
+          text: "CodeIcon",
+          className: "text-white",
+        }),
+        name: "CodeIcon"
+      }
+
+      setSelectedIcon(iconObject);              // Establezcon el estado de selectedIcon con el icono por defecto
+    }else{
+      setProjectName(selectedProject.name);     // Si hay proyecto seleccionado, establezco el nombre del proyecto
+
+      const iconObject = {                      // Establezcon el estado de selectedIcon con el icono del proyecto seleccionado
+        icon: TextToIcon({
+          text: selectedProject.icon,
+          className: "text-white",
+        }),
+        name: selectedProject.icon
+      }
+      setSelectedIcon(iconObject);
+    }
+
+    const focusInput = () => {                  // Se establece el foco en el input correspondiente permitiendo escribir directamente
+      if(inputRef.current){
+        inputRef.current.focus();
+      }
+    }
+
+    setTimeout(focusInput, 0);
+    setErrorMessage("");
+  }, [openProjectWindow]);
 
   useEffect(() => {                 // Cada vez que se abre la ventana de añadir proyecto
     inputRef.current?.focus();      // se establece el foco en el input correspondiente permitiendo escribir directamente
@@ -37,12 +83,12 @@ const AddProjectWindow = ({
     setErrorMessage("");
   },[openProjectWindow]);
 
-  const handleInputUpdate = ( e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputUpdate = ( e: React.ChangeEvent<HTMLInputElement>) => { // Establece el nombre del proyecto
     setErrorMessage("");
     setProjectName(e.target.value);
   }
 
-  const AddNewProject = () => {
+  const AddNewProject = () => { // Función que agrega un nuevo proyecto
 
     if(projectName.trim() === ""){
       setErrorMessage("Project name cannot be empty");
@@ -75,13 +121,44 @@ const AddProjectWindow = ({
       }
   }
 
-  console.log(allProjects);
+  const editTheProject = () => {  // Función que edita el proyecto seleccionado
+
+    if(projectName.trim() === ""){                            // Si el nombre del proyecto está vacío
+      setErrorMessage("Project name cannot be empty");        // Mostramos un mensaje de error
+      inputRef.current?.focus();                              // Se establece el foco en el input
+      return;
+    }
+
+    try {
+      if(selectedProject){                                     // Si hay proyecto seleccionado
+        const updateSelectedProject: Project = {               // Se actualiza el proyecto seleccionado
+          ...selectedProject,
+          name: projectName,
+          icon: selectedIcon.name,
+        };
+
+        const updateAllProjects = allProjects.map((singleProject) => {  // Se actualizan todos los proyectos
+          return singleProject._id === selectedProject._id
+            ? updateSelectedProject
+            : singleProject;
+        })
+        setAllProjects(updateAllProjects);                      // Y se actualiza el estado de allProjects
+        toast.success("project edited successfuly");
+        setOpenProjectWindow(false);
+      }
+      
+    }catch (error) {
+      toast.error("Failed to edit project");
+      console.log(error);
+    }
+  
+  }
 
   return (
     <div 
       className={`
         ${isMobileView ? "w-[80%]" : "w-[40%]"} 
-        h-[288px] border border-slate-50 bg-white rounded-md shadow-md absolute left-1/2 top-24 -translate-x-1/2 z-50
+        h-[288px] border border-slate-50 bg-white rounded-md shadow-md absolute left-1/2 top-24 -translate-x-1/2 z-[70]
         ${openProjectWindow ? "absolute" : "hidden"}
       `}
     >
@@ -94,10 +171,16 @@ const AddProjectWindow = ({
               className='text-sky-400 text-[12px]'
             />
           </div>
-          <span className='font-semibold text-lg'>New Project</span>
+          {/* Category Header */}
+          <span className='font-semibold text-lg'>
+            {!selectedProject ? "New Project" : "Edit Project"}
+          </span>
         </div>
         <CloseIcon 
-          onClick={() => setOpenProjectWindow(false)}
+          onClick={() => {
+            setOpenProjectWindow(false)
+            setSelectedProject(null)
+          }}
           sx={{ fontSize: 16}}
           className='text-slate-400 text-[18px] cursor-pointer'
         />
@@ -139,17 +222,20 @@ const AddProjectWindow = ({
       <div className='w-full mt-12 mb-10 flex gap-3 justify-end px-7 items-center'>
         {/* cancel button */}
         <button
-          onClick={() => setOpenProjectWindow(false)} 
+          onClick={() => {
+            setOpenProjectWindow(false)
+            setSelectedProject(null)
+          }} 
           className='border border-slate-200 text-slate-400 text-[12px] p-2 px-6 rounded-md hover:border-slate-300 transition-all hover:bg-slate-50'
         >
           Cancel
         </button>
 
         <button
-          onClick={AddNewProject}
+          onClick={selectedProject ? editTheProject : AddNewProject}
           className='bg-sky-500 hover:bg-sky-600 text-white text-[12px] p-2 px-3 rounded-md transition-all'
         >
-          Add Project
+          {!selectedProject ? "Add Project" : "Edit Project"}
         </button>
       </div>
 
