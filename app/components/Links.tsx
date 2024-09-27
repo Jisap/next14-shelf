@@ -15,7 +15,7 @@ const Links = () => {
     setMenuItems(prevMenuItems =>                       // Se recibe el estado anterior de MenuItems[]
       prevMenuItems.map(item =>                         // Se mapea
         item.id === clickedItem.id                      // Si el item iterado === al clickeado
-          ? { ...item, isSelected: true }               // se establece como isSelected=true
+          ? { ...item, isSelected: true }               // se establece como isSelected=true -> en el context api setOpenAllProjectsWindow(true) -> se abre la ventana de todos los proyectos
           : { ...item, isSelected: false }              // sino como false
       )
     );

@@ -155,11 +155,20 @@ const AddProjectWindow = ({
   }
 
   return (
+    
+     openProjectWindow && (
+      <>
+        {/* Overlay */}
+        <div
+          className="fixed inset-0 bg-gray-600 opacity-50 z-[60]"
+          onClick={() => setOpenProjectWindow(false)} // Para cerrar el modal al hacer clic fuera
+        ></div>
+
     <div 
       className={`
         ${isMobileView ? "w-[80%]" : "w-[40%]"} 
         h-[288px] border border-slate-50 bg-white rounded-md shadow-md absolute left-1/2 top-24 -translate-x-1/2 z-[70]
-        ${openProjectWindow ? "absolute" : "hidden"}
+        ${openProjectWindow ? "absolute"  : "hidden"}
       `}
     >
       {/* header */}
@@ -240,6 +249,10 @@ const AddProjectWindow = ({
       </div>
 
     </div>
+
+    </>
+    )
+     
   )
 }
 

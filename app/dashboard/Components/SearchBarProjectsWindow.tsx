@@ -12,7 +12,10 @@ const SearchBarProjectsWindow = ({
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>
 }) => {
 
-  const { openAllProjectsWindowObject: { openAllProjectsWindow, setOpenAllProjectsWindow } } = useAppContext();
+  const { 
+    openAllProjectsWindowObject: { openAllProjectsWindow, setOpenAllProjectsWindow },
+    openProjectWindowObject: { openProjectWindow, setOpenProjectWindow },
+  } = useAppContext();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -64,7 +67,7 @@ const SearchBarProjectsWindow = ({
         </div>
         
         <button
-          onClick={() => setOpenAllProjectsWindow(true)}
+          onClick={() => setOpenProjectWindow(true)}
           className="bg-sky-500 ml-2 p-[10px] flex w-[15%] text-sm rounded-md text-white items-center gap-2 justify-center"
         >
           <AddOutlined sx={{ fontSize: 17 }} />

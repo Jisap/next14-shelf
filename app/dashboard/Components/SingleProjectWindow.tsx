@@ -13,7 +13,7 @@ const SingleProjectWindow = ({ project }:{ project: Project }) => {
   } = useAppContext();
 
   const editTheProjectClicked = () => {
-    setOpenProjectWindow(true);   // Abre la ventana de AllProjectsWindow
+    setOpenProjectWindow(true);   // Abre la ventana de AddProjecWindow
     setSelectedProject(project);
   }
 

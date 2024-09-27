@@ -24,7 +24,7 @@ const IconWindow = ({ onUpdateIconSelected}: { onUpdateIconSelected: (icon:IconD
       className={`
         ${isMobileView ? "w-[80%]" : "w-[40%]"}
         ${openIconWindow ? "absolute" : "hidden"}
-        h-[490px] bg-white shadow-md left-1/2 top-28 rounded-lg -translate-x-1/2 z-[60]  
+        h-[490px] bg-white shadow-md left-1/2 top-28 rounded-lg -translate-x-1/2 z-[80]  
         `}
     >
       {/* header */}

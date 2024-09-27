@@ -51,8 +51,8 @@ const dashboard = () => {
 
     <div className='flex poppins relative'>
       <Toaster />
-      
-      <AddProjectWindow  
+
+      <AddProjectWindow  // modal para editar, buscar y añadir proyectos
         selectedIcon={selectedIcon}
         setSelectedIcon={setSelectedIcon}
       />
@@ -63,7 +63,7 @@ const dashboard = () => {
       />
 
       {/* Si se establece openProjectWindow=true se muestra el softlayer y encima el <AddProjectWindow /> */}
-      {openProjectWindow  || openDeleteWindow  || openAllProjectsWindow && <SoftLayer />}
+      {openProjectWindow  || openDeleteWindow  || openAllProjectsWindow  && <SoftLayer />}
 
       <Sidebar />
 
