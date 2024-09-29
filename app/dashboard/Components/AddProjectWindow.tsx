@@ -88,7 +88,7 @@ const AddProjectWindow = ({
     setProjectName(e.target.value);
   }
 
-  const AddNewProject = () => { // Función que agrega un nuevo proyecto
+  const AddNewProject = () => {   // Función que agrega un nuevo proyecto
 
     if(projectName.trim() === ""){
       setErrorMessage("Project name cannot be empty");
@@ -154,6 +154,7 @@ const AddProjectWindow = ({
   
   }
 
+ 
   return (
     
      openProjectWindow && (
@@ -164,91 +165,91 @@ const AddProjectWindow = ({
           onClick={() => setOpenProjectWindow(false)} // Para cerrar el modal al hacer clic fuera
         ></div>
 
-    <div 
-      className={`
-        ${isMobileView ? "w-[80%]" : "w-[40%]"} 
-        h-[288px] border border-slate-50 bg-white rounded-md shadow-md absolute left-1/2 top-24 -translate-x-1/2 z-[70]
-        ${openProjectWindow ? "absolute"  : "hidden"}
-      `}
-    >
-      {/* header */}
-      <div className='flex justify-between items-center pt-7 px-7'>
-        <div className='flex items-center gap-2'>
-          <div className='w-[30px] h-[30px] bg-sky-200 rounded-full flex items-center justify-center'>
-            <CategoryIcon 
-              sx={{ fontSize: 17}}
-              className='text-sky-400 text-[12px]'
+        <div 
+          className={`
+            ${isMobileView ? "w-[80%]" : "w-[40%]"} 
+            h-[288px] border border-slate-50 bg-white rounded-md shadow-md absolute left-1/2 top-24 -translate-x-1/2 z-[70]
+            ${openProjectWindow ? "absolute"  : "hidden"}
+          `}
+        >
+          {/* header */}
+          <div className='flex justify-between items-center pt-7 px-7'>
+            <div className='flex items-center gap-2'>
+              <div className='w-[30px] h-[30px] bg-sky-200 rounded-full flex items-center justify-center'>
+                <CategoryIcon 
+                  sx={{ fontSize: 17}}
+                  className='text-sky-400 text-[12px]'
+                />
+              </div>
+              {/* Category Header */}
+              <span className='font-semibold text-lg'>
+                {!selectedProject ? "New Project" : "Edit Project"}
+              </span>
+            </div>
+            <CloseIcon 
+              onClick={() => {
+                setOpenProjectWindow(false)
+                setSelectedProject(null)
+              }}
+              sx={{ fontSize: 16}}
+              className='text-slate-400 text-[18px] cursor-pointer'
             />
           </div>
-          {/* Category Header */}
-          <span className='font-semibold text-lg'>
-            {!selectedProject ? "New Project" : "Edit Project"}
-          </span>
-        </div>
-        <CloseIcon 
-          onClick={() => {
-            setOpenProjectWindow(false)
-            setSelectedProject(null)
-          }}
-          sx={{ fontSize: 16}}
-          className='text-slate-400 text-[18px] cursor-pointer'
-        />
-      </div>
 
-      {/* body */}
-      <div className='flex flex-col gap-2 mt-11 px-7'>
-        <span className='text-[13px] font-medium'>Project Name</span>
-        <div className='flex gap-3'>
-          {/* Input */}
-          <input 
-            ref={inputRef}
-            value={projectName}
-            onChange={handleInputUpdate} //Establece el projectName
-            placeholder="Enter Project Name..."
-            className='p-[10px] text-[12px] w-full rounded-md border outline-none'
-          />
-          {/* error message */}
-          <div className={`flex items-center gap-2 mt-2 ${errorMessage ? "" : "hidden"}`}>
-            <ErrorOutline 
-              sx={{ fontSize: 14 }}
-              className='text-red-500'
-            />
-            <span className='text-[12px] text-red-500 mt-[2px]'>
-              {errorMessage}
-            </span>
+          {/* body */}
+          <div className='flex flex-col gap-2 mt-11 px-7'>
+            <span className='text-[13px] font-medium'>Project Name</span>
+            <div className='flex gap-3'>
+              {/* Input */}
+              <input 
+                ref={inputRef}
+                value={projectName}
+                onChange={handleInputUpdate} //Establece el projectName
+                placeholder="Enter Project Name..."
+                className='p-[10px] text-[12px] w-full rounded-md border outline-none'
+              />
+              {/* error message */}
+              <div className={`flex items-center gap-2 mt-2 ${errorMessage ? "" : "hidden"}`}>
+                <ErrorOutline 
+                  sx={{ fontSize: 14 }}
+                  className='text-red-500'
+                />
+                <span className='text-[12px] text-red-500 mt-[2px]'>
+                  {errorMessage}
+                </span>
+              </div>
+              {/* icon */}
+              <div 
+                className='w-12 h-10 text-white flex items-center justify-center bg-sky-500 rounded-lg cursor-pointer'
+                onClick={() => setOpenIconWindow(true)} 
+              >
+                {selectedIcon?.icon}
+              </div>
+            </div>
           </div>
-          {/* icon */}
-          <div 
-            className='w-12 h-10 text-white flex items-center justify-center bg-sky-500 rounded-lg cursor-pointer'
-            onClick={() => setOpenIconWindow(true)} 
-          >
-            {selectedIcon?.icon}
+
+          {/* footer */}
+          <div className='w-full mt-12 mb-10 flex gap-3 justify-end px-7 items-center'>
+            {/* cancel button */}
+            <button
+              onClick={() => {
+                setOpenProjectWindow(false)
+                setSelectedProject(null)
+              }} 
+              className='border border-slate-200 text-slate-400 text-[12px] p-2 px-6 rounded-md hover:border-slate-300 transition-all hover:bg-slate-50'
+            >
+              Cancel
+            </button>
+
+            <button
+              onClick={selectedProject ? editTheProject : AddNewProject}
+              className='bg-sky-500 hover:bg-sky-600 text-white text-[12px] p-2 px-3 rounded-md transition-all'
+            >
+              {!selectedProject ? "Add Project" : "Edit Project"}
+            </button>
           </div>
+
         </div>
-      </div>
-
-      {/* footer */}
-      <div className='w-full mt-12 mb-10 flex gap-3 justify-end px-7 items-center'>
-        {/* cancel button */}
-        <button
-          onClick={() => {
-            setOpenProjectWindow(false)
-            setSelectedProject(null)
-          }} 
-          className='border border-slate-200 text-slate-400 text-[12px] p-2 px-6 rounded-md hover:border-slate-300 transition-all hover:bg-slate-50'
-        >
-          Cancel
-        </button>
-
-        <button
-          onClick={selectedProject ? editTheProject : AddNewProject}
-          className='bg-sky-500 hover:bg-sky-600 text-white text-[12px] p-2 px-3 rounded-md transition-all'
-        >
-          {!selectedProject ? "Add Project" : "Edit Project"}
-        </button>
-      </div>
-
-    </div>
 
     </>
     )

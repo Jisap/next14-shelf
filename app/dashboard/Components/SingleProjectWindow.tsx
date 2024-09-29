@@ -10,11 +10,18 @@ const SingleProjectWindow = ({ project }:{ project: Project }) => {
   const {
     selectedProjectObject: { selectedProject, setSelectedProject },
     openProjectWindowObject: { setOpenProjectWindow },
+    showComponentPageObject: { setShowComponentPage },
   } = useAppContext();
 
   const editTheProjectClicked = () => {
     setOpenProjectWindow(true);   // Abre la ventana de AddProjecWindow
     setSelectedProject(project);
+  }
+
+  const openTheProject = () => {  // Función que abre el proyecto seleccionado
+    setSelectedProject(project)   // update the selectedProject
+    setOpenProjectWindow(false)   // Cerramos la ventana de AddProjecWindow
+    setShowComponentPage(true)    // Abrimos la ventana de ComponentPage
   }
 
   return (
@@ -33,7 +40,12 @@ const SingleProjectWindow = ({ project }:{ project: Project }) => {
         </div>
         {/* Project Name */}
         <div className='flex flex-col'>
-          <span className='font-bold'>{project.name}</span>
+          <span 
+            className='font-bold cursor-pointer'
+            onClick={openTheProject}  
+          >
+            {project.name}
+          </span>
           <span className='text-slate-400 text-[12px]'>
             {project.components.length} Components
           </span>

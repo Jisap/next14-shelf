@@ -67,7 +67,7 @@ const dashboard = () => {
 
       <Sidebar />
 
-      {/*  */}
+      {/*   */}
       {!showComponentPage ? <ContentArea /> : <ComponentPage /> }
 
       {openDropDown && <DropDown />}

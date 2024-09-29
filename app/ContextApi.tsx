@@ -342,6 +342,11 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   },[allProjects]);
 
   useEffect(() => {
+    if(menuItems[0].isSelected){                                        // Si el item[0] (Home) es seleccionado 
+      setSelectedProject(null)                                          // se establece selectedProject a null
+      setShowComponentPage(false)                                       // y se cierra la ventana de ComponentPage
+    }
+
     if(menuItems[1].isSelected){                                        //Si el item[1] (projects) es seleccionado se abre el allProjectsWindow
       setOpenAllProjectsWindow(true)
       setOpenProjectWindow(false)                                       // y se cierra el modal de añadir proyecto
