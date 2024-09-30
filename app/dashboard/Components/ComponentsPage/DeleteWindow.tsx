@@ -12,6 +12,7 @@ const ConfirmationDeleteWindow = () => {
     selectedComponentObject: {selectedComponent},
     allProjectsObject: {allProjects, setAllProjects},
     selectedProjectObject: {selectedProject, setSelectedProject},
+    openAllProjectsWindowObject: {openAllProjectsWindow, setOpenAllProjectsWindow},
   } = useAppContext();
 
   const deleteComponentFunction = () => {
@@ -43,14 +44,26 @@ const ConfirmationDeleteWindow = () => {
       toast.success("Component deleted successfully");
     } catch (error) {
       toast.error("Error deleting component");
+    } 
+  }
+
+  const deleteProjectFunction = () => {
+    try {
+      const updatedAllProjects = allProjects.filter(                         // Primero, se crea una copia actualizada de la lista de todos los proyectos
+        (project: Project) => project._id !== selectedProject?._id           // donde se elimina el proyecto seleccionado
+      );
+      setAllProjects(updatedAllProjects);                                    // Luego se actualiza la lista de todos los proyectos
+      setOpenDeleteWindow(false);                                            // Y se cierra la ventana de confirmación
+      toast.success("Project deleted successfully")                                            
+    } catch (error) {
+      toast.error("Error deleting project")
     }
-   
   }
 
   return (
     <div
       style={{ visibility: openDeleteWindow ? 'visible' : 'hidden' }}
-      className='w-[40%] max-sm:w-[90%] absolute p-8 px-9 border border-slate-100 bg-white shadow-md top-1/2 left-1/2  -translate-x-1/2 -translate-y-1/2'
+      className='w-[40%] max-sm:w-[90%] absolute p-8 px-9 border border-slate-100 bg-white shadow-md top-1/2 left-1/2  -translate-x-1/2 -translate-y-1/2 z-[80]'
     >
       {/* Header Icon */}
       <div className='flex justify-between items-start'>
@@ -67,9 +80,18 @@ const ConfirmationDeleteWindow = () => {
       {/* Message */}
       <div className='flex flex-col mt-7'>
         {/* Main Message */}
-        <span className='font-bold'>Permanently delete this component ?</span>
+        <span className='font-bold'>
+          Permanently delete this{" "}
+          {openAllProjectsWindow ? "project" : "component"} ?
+        </span>
         {/* Second Message */}
-        <span className='text-slate-400 text-[13px] mt-2'>Are you sure you want to permanently delete this component ?</span>
+        <span className='text-slate-400 text-[13px] mt-2'>
+          Are you sure you want to permanently delete this{" "}
+          {openAllProjectsWindow ? "project" : "component"} ?
+        </span>
+        <span className='text-red-500 font-semibold mt-4 text-[13px]'>
+          This section cannot be undone
+        </span>
       </div>
 
       {/* Buttons */}
@@ -81,10 +103,14 @@ const ConfirmationDeleteWindow = () => {
           Cancel
         </button>
         <button
-          onClick={deleteComponentFunction}
+          onClick={
+            openAllProjectsWindow 
+              ? deleteProjectFunction
+              : deleteComponentFunction
+          }
           className='px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600'
         >
-          Delete Component
+          Delete Component {openAllProjectsWindow ? "project" : "component"}
         </button>
       </div>
     </div>

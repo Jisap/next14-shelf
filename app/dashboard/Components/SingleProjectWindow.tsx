@@ -11,6 +11,9 @@ const SingleProjectWindow = ({ project }:{ project: Project }) => {
     selectedProjectObject: { selectedProject, setSelectedProject },
     openProjectWindowObject: { setOpenProjectWindow },
     showComponentPageObject: { setShowComponentPage },
+    openAllProjectsWindowObject: { setOpenAllProjectsWindow },
+    menuItemsObject: { menuItems, setMenuItems },
+    openDeleteWindowObject: { openDeleteWindow,setOpenDeleteWindow },
   } = useAppContext();
 
   const editTheProjectClicked = () => {
@@ -23,6 +26,12 @@ const SingleProjectWindow = ({ project }:{ project: Project }) => {
     setOpenProjectWindow(false)   // Cerramos la ventana de AddProjecWindow
     setShowComponentPage(true)    // Abrimos la ventana de ComponentPage
   }
+
+  const openTheDeleteWindow = () => {  // Función que abre la ventana de eliminar proyecto
+    setSelectedProject(project)     // update the selectedProject
+    setOpenDeleteWindow(true)       // Abrimos la ventana de eliminar proyecto
+  }
+
 
   return (
     <div className='w-full bg-white rounded-md flex gap-3 items-center justify-between p-3'>
@@ -66,7 +75,10 @@ const SingleProjectWindow = ({ project }:{ project: Project }) => {
         </div>
         {/* Delete Button */}
         <div>
-          <div className='rounded-full w-7 h-7 flex items-center justify-center cursor-pointer bg-slate-200 hover:bg-slate-300'>
+          <div 
+            onClick={openTheDeleteWindow}
+            className='rounded-full w-7 h-7 flex items-center justify-center cursor-pointer bg-slate-200 hover:bg-slate-300'
+          >
             <Delete 
               className='text-slate-400'
               sx={{ fontSize: 15 }}
