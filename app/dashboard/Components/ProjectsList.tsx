@@ -10,9 +10,11 @@ const ProjectsList = ({ searchQuery }: { searchQuery: string }) => {
   const {
     allProjectsObject: { allProjects },
     isLoadingObject: { isLoading },
+    sortedProjectsObject: { sortedProjects },
   } = useAppContext();
 
-  const filterAllProjectsBySearchQuery = allProjects.filter((singleProject) => 
+
+  const filterAllProjectsBySearchQuery = sortedProjects.filter((singleProject) => 
     singleProject.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 

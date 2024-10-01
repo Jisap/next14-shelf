@@ -29,6 +29,17 @@ export interface DropDownPosition { // Define la estructura del objeto dropDownP
   top: number;
 }
 
+interface SortingOptionItem {
+  label: string;
+  value: string;
+  selected: boolean;
+}
+
+interface SortingOptionCategory {
+  category: string;
+  options: SortingOptionItem[];
+}
+
 interface AppContextType {    // Define la estructura del contexto que será compartido.
   menuItemsObject: {
     menuItems: MenuItem[];
@@ -139,6 +150,16 @@ interface AppContextType {    // Define la estructura del contexto que será com
     sortingDropDownPositions: DropDownPosition,
     setSortingDropDownPositions: React.Dispatch<React.SetStateAction<DropDownPosition>>
   }
+
+  sortedProjectsObject: {
+    sortedProjects: Project[],
+    setSortedProjects: React.Dispatch<React.SetStateAction<Project[]>>
+  }
+
+  sortingOptionsObject: {
+    sortingOptions: SortingOptionCategory[],
+    setSortingOptions: React.Dispatch<React.SetStateAction<SortingOptionCategory[]>>
+  }
 }
 
 const defaultState: AppContextType = {
@@ -245,6 +266,16 @@ const defaultState: AppContextType = {
   sortingDropDownPositionsObject: {
     sortingDropDownPositions: { left: 0, top: 0},
     setSortingDropDownPositions: () => {}
+  },
+
+  sortedProjectsObject: {
+    sortedProjects: [],
+    setSortedProjects: () => {}
+  },
+
+  sortingOptionsObject: {
+    sortingOptions: [],
+    setSortingOptions: () => {}
   }
 }
 
@@ -317,6 +348,24 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     top: 0,
   });
 
+  const [sortedProjects, setSortedProjects] = useState<Project[]>([]);  // Proyectos ordenados
+  const [sortingOptions, setSortingOptions] = useState([                // Criterios de ordenamiento
+    {
+      category: "Order",
+      options: [
+        { label: "A-Z", value: "asc" , selected: true },
+        { label: "Z-A", value: "desc", selected: false },
+      ],
+    },
+    {
+      category: "Date",
+      options: [
+        { label: "Newest", value: "newest", selected: true },
+        { label: "Oldest", value: "oldest", selected: false },
+      ],
+    },
+  ])
+
   // Darkmode
   useEffect(() => {
     const isDarkMode = darkModeMenu[1].isSelected;
@@ -350,6 +399,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
           })
         })
         setAllProjects(allProjectsData);  // Update the state with the sorted data
+        setSortedProjects(allProjectsData);
         setIsLoading(false);
       }, 3000);
     }
@@ -402,7 +452,9 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         openComponentEditorObject: { openComponentEditor, setOpenComponentEditor },
         openAllProjectsWindowObject: { openAllProjectsWindow, setOpenAllProjectsWindow },
         openSortingDropdownObject: { openSortingDropdown, setOpenSortingDropdown },
-        sortingDropDownPositionsObject: { sortingDropDownPositions, setSortingDropDownPositions }
+        sortingDropDownPositionsObject: { sortingDropDownPositions, setSortingDropDownPositions },
+        sortedProjectsObject: { sortedProjects, setSortedProjects },
+        sortingOptionsObject: { sortingOptions, setSortingOptions }
       }}
     >
       {children}
