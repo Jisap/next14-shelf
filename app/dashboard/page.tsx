@@ -16,6 +16,7 @@ import DropDown from './Components/DropDown'
 import ConfirmationDeleteWindow from './Components/ComponentsPage/DeleteWindow'
 import { ComponentEditor } from './Components/ComponentsPage/ComponentEditor'
 import AllProjectsWindow from './Components/AllProjectsWindow'
+import { SortingDropdown } from './Components/SortingDropdown'
 
 
 interface SelectedIcon {
@@ -77,6 +78,8 @@ const dashboard = () => {
       {openComponentEditor && <ComponentEditor />} 
 
       <AllProjectsWindow />
+
+      <SortingDropdown />
       
     </div>
   )
