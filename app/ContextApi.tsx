@@ -7,6 +7,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { allProjectsData, Component, Project } from "./allData";
+import { SortingDropdown } from './dashboard/Components/SortingDropdown';
 
 
 export interface MenuItem {   //  Define la estructura de un elemento del menú. 
@@ -133,6 +134,11 @@ interface AppContextType {    // Define la estructura del contexto que será com
     openSortingDropdown: boolean,
     setOpenSortingDropdown: React.Dispatch<React.SetStateAction<boolean>>
   }
+
+  sortingDropDownPositionsObject:{
+    sortingDropDownPositions: DropDownPosition,
+    setSortingDropDownPositions: React.Dispatch<React.SetStateAction<DropDownPosition>>
+  }
 }
 
 const defaultState: AppContextType = {
@@ -234,6 +240,11 @@ const defaultState: AppContextType = {
   openSortingDropdownObject:{
     openSortingDropdown: false,
     setOpenSortingDropdown: () => {}
+  },
+
+  sortingDropDownPositionsObject: {
+    sortingDropDownPositions: { left: 0, top: 0},
+    setSortingDropDownPositions: () => {}
   }
 }
 
@@ -301,6 +312,10 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [openComponentEditor, setOpenComponentEditor] = useState(false);
   const [openAllProjectsWindow, setOpenAllProjectsWindow] = useState(false);
   const [openSortingDropdown, setOpenSortingDropdown] = useState(false);
+  const [sortingDropDownPositions, setSortingDropDownPositions] = useState({
+    left: 0,
+    top: 0,
+  });
 
   // Darkmode
   useEffect(() => {
@@ -386,7 +401,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         selectedComponentObject: { selectedComponent, setSelectedComponent },
         openComponentEditorObject: { openComponentEditor, setOpenComponentEditor },
         openAllProjectsWindowObject: { openAllProjectsWindow, setOpenAllProjectsWindow },
-        openSortingDropdownObject: { openSortingDropdown, setOpenSortingDropdown }
+        openSortingDropdownObject: { openSortingDropdown, setOpenSortingDropdown },
+        sortingDropDownPositionsObject: { sortingDropDownPositions, setSortingDropDownPositions }
       }}
     >
       {children}

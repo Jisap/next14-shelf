@@ -1,15 +1,27 @@
 import { useAppContext } from '@/app/ContextApi'
-import { KeyboardArrowDown } from '@mui/icons-material'
-import React from 'react'
+import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material'
+import React, { useRef } from 'react'
+
 
 const SortByComponent = () => {
 
   const {
     allProjectsObject: { allProjects },
-    openSortingDropdownObject: { setOpenSortingDropdown },
+    openSortingDropdownObject: { openSortingDropdown, setOpenSortingDropdown },
+    sortingDropDownPositionsObject: { sortingDropDownPositions, setSortingDropDownPositions }, 
   } = useAppContext();
 
-  const openSortingDropdownHandler = () => {
+  const nameRef = useRef<HTMLDivElement>(null);
+
+  const openSortingDropDownFunction = () => {
+    if(nameRef.current){
+      const rect = nameRef.current.getBoundingClientRect();
+      const top = rect.top;
+      const left = rect.left;
+
+      setSortingDropDownPositions({top, left})
+    }
+
     setOpenSortingDropdown(true)
   }
 
@@ -24,11 +36,17 @@ const SortByComponent = () => {
       <div className='flex gap-2 items-center'>
         <span className='text-slate-400'>Sort by</span>
         <div
-          onClick={openSortingDropdownHandler}
+          ref={nameRef}
+          onClick={openSortingDropDownFunction}
           className='text-sky-500 flex gap-1 items-center'
         >
           <span>Name</span>
-          <KeyboardArrowDown className="text-[13px]" />
+          {openSortingDropdown ? (
+            <KeyboardArrowUp className="text-[13px]" />
+          ) : (
+            <KeyboardArrowDown className="text-[13px]" />
+
+          )}
         </div>
       </div>
     </div>
