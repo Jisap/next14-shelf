@@ -36,7 +36,7 @@ export const SortingDropdown = () => {
     <div
       ref={DropDownRef}
       style={{display: openSortingDropdown ? 'block' : 'none'}}
-      className="bg-white text-sm top-[170px] right-14 z-[60] px-4 border border-slate-50 fixed py-6 w-[160px] shadow-md rounded-lg gap-10 flex flex-col select-none"
+      className="bg-white text-sm top-[310px] right-[8rem] z-[60] px-4 border border-slate-50 fixed py-6 w-[160px] shadow-md rounded-lg gap-10 flex flex-col select-none"
     >
       {/* Order */}
       <div className="flex flex-col gap-1 text-slate-600 cursor-pointer">
