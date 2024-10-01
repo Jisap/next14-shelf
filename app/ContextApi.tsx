@@ -128,6 +128,11 @@ interface AppContextType {    // Define la estructura del contexto que será com
     openAllProjectsWindow: boolean,
     setOpenAllProjectsWindow: React.Dispatch<React.SetStateAction<boolean>>
   }
+
+  openSortingDropdownObject: {
+    openSortingDropdown: boolean,
+    setOpenSortingDropdown: React.Dispatch<React.SetStateAction<boolean>>
+  }
 }
 
 const defaultState: AppContextType = {
@@ -225,6 +230,11 @@ const defaultState: AppContextType = {
     openAllProjectsWindow: false,
     setOpenAllProjectsWindow: () => {}    
   },
+
+  openSortingDropdownObject:{
+    openSortingDropdown: false,
+    setOpenSortingDropdown: () => {}
+  }
 }
 
 export const AppContext = createContext<AppContextType>(defaultState);              // Creación del contexto
@@ -290,7 +300,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [selectedComponent, setSelectedComponent] = useState<Component | null>(null);
   const [openComponentEditor, setOpenComponentEditor] = useState(false);
   const [openAllProjectsWindow, setOpenAllProjectsWindow] = useState(false);
-
+  const [openSortingDropdown, setOpenSortingDropdown] = useState(false);
 
   // Darkmode
   useEffect(() => {
@@ -375,7 +385,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         openDeleteWindowObject: { openDeleteWindow, setOpenDeleteWindow },
         selectedComponentObject: { selectedComponent, setSelectedComponent },
         openComponentEditorObject: { openComponentEditor, setOpenComponentEditor },
-        openAllProjectsWindowObject: { openAllProjectsWindow, setOpenAllProjectsWindow }
+        openAllProjectsWindowObject: { openAllProjectsWindow, setOpenAllProjectsWindow },
+        openSortingDropdownObject: { openSortingDropdown, setOpenSortingDropdown }
       }}
     >
       {children}
