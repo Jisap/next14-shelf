@@ -6,7 +6,7 @@ import ProjectsList from "./ProjectsList";
 import { useState } from "react";
 
 
-
+// AllProjectsWindow -> SortByComponent abre -> SortingDropdown establece opciones de ordenamiento y sortedProjects -> ProjectsList
 
 const AllProjectsWindow = () => {
 
@@ -23,7 +23,7 @@ const AllProjectsWindow = () => {
     >
       <HeaderProjectWindow />
       <SearchBarProjectsWindow searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-      <SortByComponent />
+      <SortByComponent /> 
       <ProjectsList searchQuery={searchQuery}/>
     </div>
   )

@@ -9,6 +9,7 @@ const SortByComponent = () => {
     allProjectsObject: { allProjects },
     openSortingDropdownObject: { openSortingDropdown, setOpenSortingDropdown },
     sortingDropDownPositionsObject: { sortingDropDownPositions, setSortingDropDownPositions }, 
+    sortingOptionsObject: { sortingOptions },
   } = useAppContext();
 
   const nameRef = useRef<HTMLDivElement>(null);
@@ -25,6 +26,10 @@ const SortByComponent = () => {
     setOpenSortingDropdown(true)
   }
 
+  const selectedName = sortingOptions.find(
+    (category) => category.options.some((option) => option.selected) // Find the selected option in the sortingOptions array
+  )
+
   return (
     <div className='mt-11 mb-[13px] flex gap-2 items-center justify-between text-[13px]'>
       <div className='flex gap-1'>
@@ -40,7 +45,7 @@ const SortByComponent = () => {
           onClick={openSortingDropDownFunction}
           className='text-sky-500 flex gap-1 items-center'
         >
-          <span>Name</span>
+          <span>{selectedName?.category}</span>
           {openSortingDropdown ? (
             <KeyboardArrowUp className="text-[13px]" />
           ) : (

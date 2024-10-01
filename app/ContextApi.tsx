@@ -414,6 +414,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       );
       setAllFavoriteComponents(favoriteComponents)
     }
+    setSortedProjects(allProjects); // Update sortedProjects when allProjects change
   },[allProjects]);
 
   useEffect(() => {
