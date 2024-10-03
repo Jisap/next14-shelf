@@ -3,7 +3,7 @@ import { useAppContext } from "@/app/ContextApi"
 import { useEffect, useRef, useState } from "react";
 
 
-export const SortingDropdown = () => {
+export const SortingDropdown = () => { // Componente que muestra el dropdown de ordenamiento
 
   const { 
     openSortingDropdownObject: { openSortingDropdown, setOpenSortingDropdown },
@@ -14,25 +14,26 @@ export const SortingDropdown = () => {
   } = useAppContext();
 
   const DropDownRef = useRef<HTMLDivElement>(null);
-
-  const handleOptionClick = (categoryIndex: number, optionIndex: number) => {
-    setSortingOptions((prevOptions) => {
-      const newOptions = prevOptions.map((category, cIndex) => ({
-        ...category,
-        options: category.options.map((option, oIndex) => ({
+                          // categoría seleccionada // option seleccionada
+  const handleOptionClick = (categoryIndex: number, optionIndex: number) => { // Función que se ejecuta cuando se hace clic en una opción del dropdown
+    
+    setSortingOptions((prevOptions) => {                                      // Actualizador de estado                                     
+      const newOptions = prevOptions.map((category, cIndex) => ({             // Mapeo de las categorias 
+        ...category,                                                          
+        options: category.options.map((option, oIndex) => ({                  // Mapeo de las opciones
           ...option,
-          selected: cIndex === categoryIndex && oIndex === optionIndex
+          selected: cIndex === categoryIndex && oIndex === optionIndex        // Si categoryIndex y optionIndex son iguales a la categoría y opción seleccionadas, se establece selected a true. Esto actualiza el estado de selección
         }))
       }))
 
-      const selectedOption = newOptions
+      const selectedOption = newOptions                                       // Se aplana la lista de opciones y se busca aquella que está seleccionada  
         .flatMap((c) => c.options)
         .find((o) => o.selected)
 
       console.log(selectedOption);
 
       if(selectedOption){
-        const sorted = sortProjects(allProjects, selectedOption.value)
+        const sorted = sortProjects(allProjects, selectedOption.value)        // Se ordena los proyectos según el tipo de ordenamiento seleccionado
         setSortedProjects(sorted)
       }
 
@@ -98,7 +99,7 @@ export const SortingDropdown = () => {
 
   // Update sortedProjects when sortingOptions change
   useEffect(() => {
-    const selectedOption = sortingOptions                             // Se obtiene el objeto seleccionado que define el tipo de ordenamiento
+    const selectedOption = sortingOptions                             // Se obtienen las opciones seleccionadas que definen el tipo de ordenamiento
       .flatMap((c) => c.options)        
       .find((o) => o.selected);          
 
@@ -106,7 +107,7 @@ export const SortingDropdown = () => {
       const sorted = sortProjects(allProjects, selectedOption.value); // Se ordena los proyectos según el tipo de ordenamiento seleccionado
       setSortedProjects(sorted);                                      // Se actualiza el estado de sortedProjects con los proyectos ordenados -> ProjectList
     }
-  }, [allProjects, sortingOptions, setSortedProjects]); 
+  }, [allProjects, sortingOptions, setSortedProjects]);               // Se actualiza el estado de sortedProjects cuando cambien las opciones de ordenamiento
 
   return (
     <div
@@ -132,7 +133,7 @@ export const SortingDropdown = () => {
             {category.options.map((option, optionIndex) => (
               <div 
                 key={optionIndex}
-                onClick={() => handleOptionClick(categoryIndex, optionIndex)}  
+                onClick={() => handleOptionClick(categoryIndex, optionIndex)} // Estas son las categorias y opciones seleccionadas 
               >
                 <span className={`${option.selected ? "text-sky-500" : ""}`}>
                   {option.label}

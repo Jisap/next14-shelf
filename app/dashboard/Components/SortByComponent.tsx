@@ -9,7 +9,7 @@ const SortByComponent = () => {
     allProjectsObject: { allProjects },
     openSortingDropdownObject: { openSortingDropdown, setOpenSortingDropdown },
     sortingDropDownPositionsObject: { sortingDropDownPositions, setSortingDropDownPositions }, 
-    sortingOptionsObject: { sortingOptions },
+    sortingOptionsObject: { sortingOptions }, // Criterios de ordenamiento
   } = useAppContext();
 
   const nameRef = useRef<HTMLDivElement>(null);
@@ -20,10 +20,10 @@ const SortByComponent = () => {
       const top = rect.top;
       const left = rect.left;
 
-      setSortingDropDownPositions({top, left})
+      setSortingDropDownPositions({top, left}) // Situa el dropdown en la posición correcta
     }
 
-    setOpenSortingDropdown(true)
+    setOpenSortingDropdown(true) // Abre el dropdown
   }
 
   const selectedName = sortingOptions.find(
