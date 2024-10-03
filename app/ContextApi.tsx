@@ -349,22 +349,28 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   });
 
   const [sortedProjects, setSortedProjects] = useState<Project[]>([]);  // Proyectos ordenados
-  const [sortingOptions, setSortingOptions] = useState([                // Criterios de ordenamiento
-    {
-      category: "Order",
-      options: [
-        { label: "A-Z", value: "asc" , selected: true },
-        { label: "Z-A", value: "desc", selected: false },
-      ],
-    },
-    {
-      category: "Date",
-      options: [
-        { label: "Newest", value: "newest", selected: true },
-        { label: "Oldest", value: "oldest", selected: false },
-      ],
-    },
-  ])
+
+  const [sortingOptions, setSortingOptions] = useState(() => {
+    const savedState = localStorage.getItem("sortingOptions"); 
+    return savedState
+      ? JSON.parse(savedState)
+      : [
+          {
+            category: "Order",
+            options: [
+              { label: "A-Z", value: "asc" , selected: true },
+              { label: "Z-A", value: "desc", selected: false },
+            ],
+          },
+          {
+            category: "Date",
+            options: [
+              { label: "Newest", value: "newest", selected: true },
+              { label: "Oldest", value: "oldest", selected: false },
+            ],
+          },
+        ]
+  })            
 
   // Darkmode
   useEffect(() => {

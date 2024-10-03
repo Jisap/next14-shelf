@@ -17,7 +17,7 @@ export const SortingDropdown = () => { // Componente que muestra el dropdown de 
                           // categoría seleccionada // option seleccionada
   const handleOptionClick = (categoryIndex: number, optionIndex: number) => { // Función que se ejecuta cuando se hace clic en una opción del dropdown
     
-    setSortingOptions((prevOptions) => {                                      // Actualizador de estado                                     
+    setSortingOptions((prevOptions) => {                                      // Actualizador de estado de sortingOptions                                    
       const newOptions = prevOptions.map((category, cIndex) => ({             // Mapeo de las categorias 
         ...category,                                                          
         options: category.options.map((option, oIndex) => ({                  // Mapeo de las opciones
@@ -30,12 +30,12 @@ export const SortingDropdown = () => { // Componente que muestra el dropdown de 
         .flatMap((c) => c.options)
         .find((o) => o.selected)
 
-      console.log(selectedOption);
-
       if(selectedOption){
         const sorted = sortProjects(allProjects, selectedOption.value)        // Se ordena los proyectos según el tipo de ordenamiento seleccionado
-        setSortedProjects(sorted)
+        setSortedProjects(sorted)                                             // Se actualiza el estado de sortedProjects con los proyectos ordenados -> ProjectList
       }
+
+      localStorage.setItem("sortingOptions", JSON.stringify(newOptions))       // Se almacena el estado de sortingOptions en localStorage
 
       return newOptions;
     })
@@ -108,6 +108,10 @@ export const SortingDropdown = () => { // Componente que muestra el dropdown de 
       setSortedProjects(sorted);                                      // Se actualiza el estado de sortedProjects con los proyectos ordenados -> ProjectList
     }
   }, [allProjects, sortingOptions, setSortedProjects]);               // Se actualiza el estado de sortedProjects cuando cambien las opciones de ordenamiento
+
+  useEffect(() => {
+    localStorage.setItem("sortingOptions", JSON.stringify(sortingOptions)) // Se almacena el estado de sortingOptions en localStorage
+  },[sortingOptions])
 
   return (
     <div
