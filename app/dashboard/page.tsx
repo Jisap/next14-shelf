@@ -17,6 +17,7 @@ import ConfirmationDeleteWindow from './Components/ComponentsPage/DeleteWindow'
 import { ComponentEditor } from './Components/ComponentsPage/ComponentEditor'
 import AllProjectsWindow from './Components/AllProjectsWindow'
 import { SortingDropdown } from './Components/SortingDropdown'
+import AllFavoritewindow from './Components/AllFavoritewindow'
 
 
 interface SelectedIcon {
@@ -33,6 +34,7 @@ const dashboard = () => {
     openDropDownObject: { openDropDown },
     openComponentEditorObject: { openComponentEditor },
     openAllProjectsWindowObject: { openAllProjectsWindow },
+    openAllFavoriteWindowObject: { openAllFavoriteWindow },
   } = useAppContext()
 
   const [selectedIcon, setSelectedIcon] = React.useState<SelectedIcon>({ // Estado de selectedIcon
@@ -64,7 +66,7 @@ const dashboard = () => {
       />
 
       {/* Si se establece openProjectWindow=true se muestra el softlayer y encima el <AddProjectWindow /> */}
-      {openProjectWindow  || openDeleteWindow  || openAllProjectsWindow  && <SoftLayer />}
+      {openProjectWindow  || openDeleteWindow  || openAllProjectsWindow  &&  <SoftLayer />}
 
       <Sidebar />
 
@@ -80,6 +82,10 @@ const dashboard = () => {
       <AllProjectsWindow />
 
       <SortingDropdown />
+
+      <AllFavoritewindow /> 
+
+      { openAllFavoriteWindow && <SoftLayer />}
       
     </div>
   )

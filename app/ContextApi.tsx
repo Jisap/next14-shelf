@@ -160,6 +160,11 @@ interface AppContextType {    // Define la estructura del contexto que será com
     sortingOptions: SortingOptionCategory[],
     setSortingOptions: React.Dispatch<React.SetStateAction<SortingOptionCategory[]>>
   }
+
+  openAllFavoriteWindowObject: {
+    openAllFavoriteWindow: boolean,
+    setOpenAllFavoriteWindow: React.Dispatch<React.SetStateAction<boolean>>
+  }
 }
 
 const defaultState: AppContextType = {
@@ -276,6 +281,11 @@ const defaultState: AppContextType = {
   sortingOptionsObject: {
     sortingOptions: [],
     setSortingOptions: () => {}
+  },
+
+  openAllFavoriteWindowObject: {
+    openAllFavoriteWindow: false,
+    setOpenAllFavoriteWindow: () => {}
   }
 }
 
@@ -370,7 +380,9 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
             ],
           },
         ]
-  })            
+  });
+  
+  const [openAllFavoriteWindow, setOpenAllFavoriteWindow] = useState(false);
 
   // Darkmode
   useEffect(() => {
@@ -427,11 +439,18 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     if(menuItems[0].isSelected){                                        // Si el item[0] (Home) es seleccionado 
       setSelectedProject(null)                                          // se establece selectedProject a null
       setShowComponentPage(false)                                       // y se cierra la ventana de ComponentPage
+      setOpenAllProjectsWindow(false)                                   // y se cierra el modal de añadir proyecto
+      setOpenAllFavoriteWindow(false)                                   // y se cierra el modal de añadir favorito
     }
 
     if(menuItems[1].isSelected){                                        //Si el item[1] (projects) es seleccionado se abre el allProjectsWindow
       setOpenAllProjectsWindow(true)
-      setOpenProjectWindow(false)                                       // y se cierra el modal de añadir proyecto
+      setOpenAllFavoriteWindow(false)                                   // y se cierra el modal de añadir favorito
+    }
+
+    if(menuItems[2].isSelected){                                        //Si el item[2] (favorites) es seleccionado se abre el allFavoriteWindow
+      setOpenAllFavoriteWindow(true)
+      setOpenAllProjectsWindow(false)                                   // y se cierra el modal de añadir proyecto
     }
   },[menuItems])
 
@@ -461,7 +480,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         openSortingDropdownObject: { openSortingDropdown, setOpenSortingDropdown },
         sortingDropDownPositionsObject: { sortingDropDownPositions, setSortingDropDownPositions },
         sortedProjectsObject: { sortedProjects, setSortedProjects },
-        sortingOptionsObject: { sortingOptions, setSortingOptions }
+        sortingOptionsObject: { sortingOptions, setSortingOptions },
+        openAllFavoriteWindowObject: { openAllFavoriteWindow, setOpenAllFavoriteWindow }
       }}
     >
       {children}
