@@ -7,7 +7,7 @@ const SingleFavoriteComponentWindow = ({ item }: {item: Component}) => {
       <div className='flex gap-3 items-center'>
         {/* Blue circle */}
         <div>
-          <div className='rounded-full w-7 h-7 flex items-center justify-center bg-sky-500' />
+          <div className='w-[10px] h-[10px] bg-sky-500 rounded-full flex items-center justify-center' />
         </div>
         {/* Component name */}
         <div className='flex flex-col'>

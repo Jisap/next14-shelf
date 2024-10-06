@@ -14,7 +14,7 @@ const ComponentsList = () => {
   } = useAppContext()
 
   return (
-    <div className='w-full bg-white rounded-md flex gap-3 items-center justify-between p-3 px-5'>
+    <div className='w-full bg-slate-50 h-[64%] rounded-lg flex flex-col gap-3'>
       {allFavoriteComponents.map((item, index) => (
         <div key={index}>
           <SingleFavoriteComponentWindow item={ item } />
