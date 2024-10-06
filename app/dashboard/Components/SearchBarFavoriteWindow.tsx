@@ -1,7 +1,12 @@
 import { FilterListRounded, KeyboardArrowDownRounded, SearchRounded } from '@mui/icons-material'
 import React from 'react'
 
-const SearchBarFavoriteWindow = () => {
+const SearchBarFavoriteWindow = ({
+  searchQuery, setSearchQuery
+}:{
+  searchQuery: string, 
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>
+}) => {
   return (
     <div className="flex gap-5 items-center justify-between mt-12 relative">
       <div className={`h-[42px] bg-slate-50 flex items-center text-sm rounded-md pl-3 gap-1 w-[80%]`}>
