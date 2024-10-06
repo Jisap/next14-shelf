@@ -7,6 +7,7 @@ const HeaderFavoriteWindow = () => {
 
   const {
     openAllFavoriteWindowObject: { openAllFavoriteWindow, setOpenAllFavoriteWindow },
+    selectedComponentObject: { selectedComponent, setSelectedComponent },
     menuItemsObject: { menuItems, setMenuItems },
   } = useAppContext();
 
@@ -16,6 +17,7 @@ const HeaderFavoriteWindow = () => {
     })
     newMenuItem[0].isSelected = true
     setMenuItems(newMenuItem)
+    setSelectedComponent(null)
     setOpenAllFavoriteWindow(false)
   }
 
