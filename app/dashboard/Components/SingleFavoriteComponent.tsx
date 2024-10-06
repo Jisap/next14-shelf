@@ -4,6 +4,7 @@ import { Component } from '@/app/allData';
 import { formatDate } from '../../../utils/formatDate';
 import { useAppContext } from '@/app/ContextApi';
 import { openTheDeleteWindow } from '@/app/lib/openTheDeleteWindow';
+import { openComponent } from '@/app/lib/openComponent';
 
 const SingleFavoriteComponent = ({ component }: { component:Component }) => {
   
@@ -13,48 +14,40 @@ const SingleFavoriteComponent = ({ component }: { component:Component }) => {
     selectedProjectObject: { setSelectedProject },
     allProjectsObject: { allProjects },
     openDeleteWindowObject: { setOpenDeleteWindow },
+    openAllFavoriteWindowObject: { setOpenAllFavoriteWindow },
   } = useAppContext();
   
 
-  const openComponent = () => {
-    setSelectedComponent(component);
-    setOpenComponentEditor(true)
+  // const openComponent = () => {
+  //   setSelectedComponent(component);
+  //   setOpenComponentEditor(true)
     
-    const project = allProjects.find(                                           // Get the project and set it in the selectedProject state                      
-      (project) =>
-        project.name.toLowerCase() === component.projectName.toLowerCase()
-    );
-
-    if (project) {
-      setSelectedProject(project);
-    } else {
-      console.log(`Project not found for component: ${component.name}`);
-    }
-
-    window.scrollTo({ top: 0, behavior: "smooth" });                             // Scroll to the top of the page or to the component editor
-  }
-
-  // const openTheDeleteWindow = () => {
-  //   const project = allProjects.find(
-  //     (project) => 
-  //       project.name.toLowerCase() === component.projectName.toLowerCase()       // Se busca el proyecto cuyo nombre coincide con el component.projectName
+  //   const project = allProjects.find(                                           // Get the project and set it in the selectedProject state                      
+  //     (project) =>
+  //       project.name.toLowerCase() === component.projectName.toLowerCase()
   //   );
 
-  //   if(project) {                                                                // Si se encuentra, se establece el proyecto seleccionado
+  //   if (project) {
   //     setSelectedProject(project);
-  //   }else{
+  //   } else {
   //     console.log(`Project not found for component: ${component.name}`);
   //   }
 
-  //   setSelectedComponent(component);                                             // Se establece el componente seleccionado
-  //   setOpenDeleteWindow(true)                                                    // Se abre la ventana de confirmación de eliminación
+  //   window.scrollTo({ top: 0, behavior: "smooth" });                             // Scroll to the top of the page or to the component editor
   // }
 
   return (
     <div className='grid grid-cols-4 gap-4 text-sm items-center rounded-lg p-2 max-sm:grid-cols-2'>
       
       <span 
-        onClick={openComponent}
+        onClick={() => openComponent({
+          component: component,
+          allProjects,
+          setSelectedComponent,
+          setSelectedProject,
+          setOpenComponentEditor,
+          setOpenAllFavoriteWindow
+        })}
         className='hover:text-sky-500 cursor-pointer'
       >
         {component.name}
@@ -69,7 +62,14 @@ const SingleFavoriteComponent = ({ component }: { component:Component }) => {
 
       <div className='flex gap-2'>
         <div 
-          onClick={openComponent}
+          onClick={() => openComponent({
+            component: component,
+            allProjects,
+            setSelectedComponent,
+            setSelectedProject,
+            setOpenComponentEditor,
+            setOpenAllFavoriteWindow
+          })}
           className='bg-sky-500 rounded-full w-7 h-7 flex items-center justify-center hover:bg-sky-600 cursor-pointer' 
         >
           <EditIcon fontSize='small' className='text-white text-[13px]' />

@@ -3,6 +3,7 @@ import { Delete, EditRounded } from '@mui/icons-material';
 import { Component, Project } from '../../allData';
 import { useAppContext } from '@/app/ContextApi';
 import { openTheDeleteWindow } from '@/app/lib/openTheDeleteWindow';
+import { openComponent } from '@/app/lib/openComponent';
 
 const SingleFavoriteComponentWindow = ({ item }: {item: Component}) => {
 
@@ -12,6 +13,7 @@ const SingleFavoriteComponentWindow = ({ item }: {item: Component}) => {
     selectedProjectObject: { selectedProject, setSelectedProject },
     openDeleteWindowObject: { setOpenDeleteWindow },
     openComponentEditorObject: { setOpenComponentEditor },
+    openAllFavoriteWindowObject: { setOpenAllFavoriteWindow },
   } = useAppContext()
 
   
@@ -25,7 +27,17 @@ const SingleFavoriteComponentWindow = ({ item }: {item: Component}) => {
         </div>
         {/* Component name */}
         <div className='flex flex-col'>
-          <span className='font-bold cursor-pointer hover:text-sky-500'>
+          <span 
+            onClick={() => openComponent({
+              component: item,
+              allProjects,
+              setSelectedComponent,
+              setSelectedProject,
+              setOpenComponentEditor,
+              setOpenAllFavoriteWindow
+            })}
+            className='font-bold cursor-pointer hover:text-sky-500'
+          >
             {item.name}
           </span>
           <div>
@@ -40,7 +52,14 @@ const SingleFavoriteComponentWindow = ({ item }: {item: Component}) => {
       <div className='flex gap-2 items-center'>
         {/* Edit Button */}
         <div
-          //onClick={editTheProjectClicked}
+          onClick={() => openComponent({
+            component: item,
+            allProjects,
+            setSelectedComponent,
+            setSelectedProject,
+            setOpenComponentEditor,
+            setOpenAllFavoriteWindow
+          })}
           className='rounded-full w-7 h-7 flex items-center justify-center cursor-pointer bg-slate-200 hover:bg-slate-300'
         >
           <EditRounded
