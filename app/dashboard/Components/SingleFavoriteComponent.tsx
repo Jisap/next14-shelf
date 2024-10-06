@@ -16,25 +16,6 @@ const SingleFavoriteComponent = ({ component }: { component:Component }) => {
     openDeleteWindowObject: { setOpenDeleteWindow },
     openAllFavoriteWindowObject: { setOpenAllFavoriteWindow },
   } = useAppContext();
-  
-
-  // const openComponent = () => {
-  //   setSelectedComponent(component);
-  //   setOpenComponentEditor(true)
-    
-  //   const project = allProjects.find(                                           // Get the project and set it in the selectedProject state                      
-  //     (project) =>
-  //       project.name.toLowerCase() === component.projectName.toLowerCase()
-  //   );
-
-  //   if (project) {
-  //     setSelectedProject(project);
-  //   } else {
-  //     console.log(`Project not found for component: ${component.name}`);
-  //   }
-
-  //   window.scrollTo({ top: 0, behavior: "smooth" });                             // Scroll to the top of the page or to the component editor
-  // }
 
   return (
     <div className='grid grid-cols-4 gap-4 text-sm items-center rounded-lg p-2 max-sm:grid-cols-2'>
