@@ -3,6 +3,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Component } from '@/app/allData';
 import { formatDate } from '../../../utils/formatDate';
 import { useAppContext } from '@/app/ContextApi';
+import { openTheDeleteWindow } from '@/app/lib/openTheDeleteWindow';
 
 const SingleFavoriteComponent = ({ component }: { component:Component }) => {
   
@@ -33,21 +34,21 @@ const SingleFavoriteComponent = ({ component }: { component:Component }) => {
     window.scrollTo({ top: 0, behavior: "smooth" });                             // Scroll to the top of the page or to the component editor
   }
 
-  const openTheDeleteWindow = () => {
-    const project = allProjects.find(
-      (project) => 
-        project.name.toLowerCase() === component.projectName.toLowerCase()       // Se busca el proyecto cuyo nombre coincide con el component.projectName
-    );
+  // const openTheDeleteWindow = () => {
+  //   const project = allProjects.find(
+  //     (project) => 
+  //       project.name.toLowerCase() === component.projectName.toLowerCase()       // Se busca el proyecto cuyo nombre coincide con el component.projectName
+  //   );
 
-    if(project) {                                                                // Si se encuentra, se establece el proyecto seleccionado
-      setSelectedProject(project);
-    }else{
-      console.log(`Project not found for component: ${component.name}`);
-    }
+  //   if(project) {                                                                // Si se encuentra, se establece el proyecto seleccionado
+  //     setSelectedProject(project);
+  //   }else{
+  //     console.log(`Project not found for component: ${component.name}`);
+  //   }
 
-    setSelectedComponent(component);                                             // Se establece el componente seleccionado
-    setOpenDeleteWindow(true)                                                    // Se abre la ventana de confirmación de eliminación
-  }
+  //   setSelectedComponent(component);                                             // Se establece el componente seleccionado
+  //   setOpenDeleteWindow(true)                                                    // Se abre la ventana de confirmación de eliminación
+  // }
 
   return (
     <div className='grid grid-cols-4 gap-4 text-sm items-center rounded-lg p-2 max-sm:grid-cols-2'>
@@ -74,7 +75,13 @@ const SingleFavoriteComponent = ({ component }: { component:Component }) => {
           <EditIcon fontSize='small' className='text-white text-[13px]' />
         </div>
         <div 
-          onClick={openTheDeleteWindow}
+          onClick={() => openTheDeleteWindow({
+            component: component,
+            allProjects,
+            setSelectedComponent,
+            setSelectedProject,
+            setOpenDeleteWindow
+          })}
           className='bg-sky-500 rounded-full w-7 h-7 flex items-center justify-center hover:bg-sky-600 cursor-pointer'
         >
           <DeleteIcon fontSize='small' className='text-white text-[13px]' />

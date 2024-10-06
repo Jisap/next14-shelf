@@ -1,8 +1,21 @@
 
 import { Delete, EditRounded } from '@mui/icons-material';
-import { Component } from '../../allData';
+import { Component, Project } from '../../allData';
+import { useAppContext } from '@/app/ContextApi';
+import { openTheDeleteWindow } from '@/app/lib/openTheDeleteWindow';
 
 const SingleFavoriteComponentWindow = ({ item }: {item: Component}) => {
+
+  const {
+    allProjectsObject: { allProjects },
+    selectedComponentObject: { setSelectedComponent },
+    selectedProjectObject: { selectedProject, setSelectedProject },
+    openDeleteWindowObject: { setOpenDeleteWindow },
+    openComponentEditorObject: { setOpenComponentEditor },
+  } = useAppContext()
+
+  
+
   return (
     <div className='w-full bg-white rounded-md flex gap-3 items-center justify-between p-3 px-5'>
       <div className='flex gap-3 items-center'>
@@ -38,7 +51,13 @@ const SingleFavoriteComponentWindow = ({ item }: {item: Component}) => {
         {/* Delete Button */}
         <div>
           <div
-            //onClick={openTheDeleteWindow}
+            onClick={() => openTheDeleteWindow({
+              component: item,
+              allProjects,
+              setSelectedComponent,
+              setSelectedProject,
+              setOpenDeleteWindow
+            })}
             className='rounded-full w-7 h-7 flex items-center justify-center cursor-pointer bg-slate-200 hover:bg-slate-300'
           >
             <Delete
