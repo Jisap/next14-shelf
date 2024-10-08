@@ -21,7 +21,7 @@ const AllFavoritewindow = () =>{
       className="w-[70%] max-sm:w-[90%] p-9 border border-slate-50 h-[82%] bg-white rounded-xl shadow-md absolute left-1/2 lg:left-[58%] top-20 -translate-x-1/2 z-50"
     >
       <HeaderFavoriteWindow />
-      <SearchBarFavoriteWindow searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <SearchBarFavoriteWindow searchInput={searchQuery} setSearchInput={setSearchQuery} />
       <ComponentsNumber />
       <ComponentsList searchInput={searchQuery}/>
     </div>

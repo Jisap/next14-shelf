@@ -165,6 +165,22 @@ interface AppContextType {    // Define la estructura del contexto que será com
     openAllFavoriteWindow: boolean,
     setOpenAllFavoriteWindow: React.Dispatch<React.SetStateAction<boolean>>
   }
+
+  openFilterDropDownObject: {
+    openFilterDropDown: boolean,
+    setOpenFilterDropDown: React.Dispatch<React.SetStateAction<boolean>>
+  }
+
+  filterDropDownPositionsObject: {
+    filterDropDownPositions: {
+      left: number,
+      top: number
+    },
+    setFilterDropDownPositions: React.Dispatch<React.SetStateAction<{
+      left: number,
+      top: number
+    }>>
+  }
 }
 
 const defaultState: AppContextType = {
@@ -286,6 +302,19 @@ const defaultState: AppContextType = {
   openAllFavoriteWindowObject: {
     openAllFavoriteWindow: false,
     setOpenAllFavoriteWindow: () => {}
+  },
+
+  openFilterDropDownObject: {
+    openFilterDropDown: false,
+    setOpenFilterDropDown: () => {}
+  },
+
+  filterDropDownPositionsObject: {
+    filterDropDownPositions: {
+      left: 0,
+      top: 0
+    },
+    setFilterDropDownPositions: () => {}
   }
 }
 
@@ -383,6 +412,11 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   });
   
   const [openAllFavoriteWindow, setOpenAllFavoriteWindow] = useState(false);
+  const [openFilterDropDown, setOpenFilterDropDown] = useState(false);
+  const [filterDropDownPositions, setFilterDropDownPositions] = useState({
+    left: 0,
+    top: 0,
+  })
 
   // Darkmode
   useEffect(() => {
@@ -481,7 +515,9 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         sortingDropDownPositionsObject: { sortingDropDownPositions, setSortingDropDownPositions },
         sortedProjectsObject: { sortedProjects, setSortedProjects },
         sortingOptionsObject: { sortingOptions, setSortingOptions },
-        openAllFavoriteWindowObject: { openAllFavoriteWindow, setOpenAllFavoriteWindow }
+        openAllFavoriteWindowObject: { openAllFavoriteWindow, setOpenAllFavoriteWindow },
+        openFilterDropDownObject: { openFilterDropDown, setOpenFilterDropDown },
+        filterDropDownPositionsObject: { filterDropDownPositions, setFilterDropDownPositions }
       }}
     >
       {children}
