@@ -96,7 +96,7 @@ const FilterDropDown = () => {
             <CloseIcon 
               onClick={handleClearSelection}
               sx={{ fontSize: 16 }}
-              className="text-sky-500 pl-1"
+              className="text-sky-500 pl-1 cursor-pointer"
             />
           </span>
         </div>
