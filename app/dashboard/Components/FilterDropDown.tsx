@@ -1,8 +1,10 @@
-import { CheckBox } from "@mui/icons-material";
+//import { CheckBox } from "@mui/icons-material";
+
+import Checkbox from '@mui/material/Checkbox';
 import CloseIcon from '@mui/icons-material/Close';
 import SearchBarFilterDropDown from "./SearchBarFilterDropDown";
 import { useAppContext } from "@/app/ContextApi";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const FilterDropDown = () => {
 
@@ -10,6 +12,7 @@ const FilterDropDown = () => {
     openFilterDropDownObject: { openFilterDropDown, setOpenFilterDropDown},
     filterDropDownPositionsObject: { filterDropDownPositions },
     isMobileViewObject: { isMobileView },
+    allProjectsObject: { allProjects },
   } = useAppContext();
 
   const filterDropDownRef = useRef<HTMLDivElement>(null);
@@ -43,17 +46,42 @@ const FilterDropDown = () => {
       window.removeEventListener("scroll", handleScroll); 
       window.removeEventListener("wheel", handleWheel);
     }
-  }, [setOpenFilterDropDown])
+  }, [setOpenFilterDropDown]);
+
+  const [selectedProjectTofilter, setSelectedProjectToFilter] = useState<string | null>(null);
+
+  const projectWithFavoriteInfo = allProjects.map(( project ) => {
+    const favoriteComponents = project.components.filter(           // Se obtienen los componentes que son favoritos
+      (component) => component.isFavorite
+    );
+    const favoriteCount = favoriteComponents.length;                // Se obtiene el numero de favoritos
+
+    return {                                                        // Se devuelve para cada proyecto el numero de components favoritos que tiene
+      ...project,
+      favoriteCount
+    }
+  })
+    .filter((project) => project.favoriteCount > 0)                 // Se filtran los proyectos que tienen componentes favoritos
+
+  const handleProjectSelect = (projectName: string) => {            // Establece el select del projecto si no estaba seleccionado previamente y viceversa
+    setSelectedProjectToFilter((prevSelected) => 
+      prevSelected === projectName ? null : projectName   
+    )
+  };
+
+  const handleClearSelection = () => {
+    setSelectedProjectToFilter(null)
+  }
 
   return (
     <div 
       ref={filterDropDownRef}
       style={{
         display: openFilterDropDown ? "flex" : "none",
-        top: filterDropDownPositions.top + 54, // 54
+        top: filterDropDownPositions.top + 54, 
         left: isMobileView
-          ? filterDropDownPositions.left - 230 // 230
-          : filterDropDownPositions.left - 98  // 98
+          ? filterDropDownPositions.left - 230 
+          : filterDropDownPositions.left - 98  
 
       }}
       className="bg-white p-3 z-[60] border-slate-50 fixed py-4 w-[310px] select-none shadow-md rounded-lg flex-col gap-5"
@@ -61,15 +89,18 @@ const FilterDropDown = () => {
       <SearchBarFilterDropDown />
       
       {/* Selected Project */}
-      <div className="flex gap-1 items-center">
-        <span className="text-[12px] rounded-lg bg-sky-100 text-sky-500 p-[6px] px-2">
-          Selected Project
-          <CloseIcon 
-            sx={{ fontSize: 16 }}
-            className="text-sky-500 pl-1"
-          />
-        </span>
-      </div>
+      {selectedProjectTofilter && (
+        <div className="flex gap-1 items-center">
+          <span className="text-[12px] rounded-lg bg-sky-100 text-sky-500 p-[6px] px-2">
+            {selectedProjectTofilter}
+            <CloseIcon 
+              onClick={handleClearSelection}
+              sx={{ fontSize: 16 }}
+              className="text-sky-500 pl-1"
+            />
+          </span>
+        </div>
+      )}
 
       {/* Divider line */}
       <hr className="border-t border-slate-200"/>
@@ -77,27 +108,24 @@ const FilterDropDown = () => {
       {/* Unique Projects */}
       <div className="flex flex-col gap-2 overflow-auto h-60 p-2 rounded-md text-slate-600 cursor-pointer bg-slate-50">
         {/* Project1 */}
-        <div className="text-[13px] bg-white rounded-lg p-[9px] px-3 flex items-center justify-between">
-          <div className="flex items-center gap-1">
-            <CheckBox 
-              sx={{ fontSize:17}}
-              className="text-sky-500"
-            />
-            <span className="text-sky-400 p-1 px-2 rounded-full">Project</span>
+        {projectWithFavoriteInfo.map((project) => (
+          <div 
+            key={project._id}
+            className="text-[13px] bg-white rounded-lg p-[9px] px-3 flex items-center justify-between"
+          >
+            <div className="flex items-center gap-1">
+              <Checkbox 
+                checked={selectedProjectTofilter === project.name}
+                onClick={() => handleProjectSelect(project.name)} // setSelectedProjectToFilter(project.name)
+                size="small"
+              />
+              <span>{project.name}</span>
+            </div>
+            <span className="text-sky-400 p-1 px-2 rounded-full">{project.favoriteCount}</span>
           </div>
-          <span>3</span>
-        </div>
+        ))}
         {/* Project 2 */}
-        <div className="text-[13px] bg-white rounded-lg p-[9px] px-3 flex items-center justify-between">
-          <div className="flex items-center gap-1">
-            <CheckBox
-              sx={{ fontSize: 17 }}
-              className="text-sky-500"
-            />
-            <span className="text-sky-400 p-1 px-2 rounded-full">Project</span>
-          </div>
-          <span>3</span>
-        </div>
+        
       </div>
     </div>
   )

@@ -36,6 +36,7 @@ const dashboard = () => {
     openComponentEditorObject: { openComponentEditor },
     openAllProjectsWindowObject: { openAllProjectsWindow },
     openAllFavoriteWindowObject: { openAllFavoriteWindow },
+    openFilterDropDownObject: { openFilterDropDown },
   } = useAppContext()
 
   const [selectedIcon, setSelectedIcon] = React.useState<SelectedIcon>({ // Estado de selectedIcon
@@ -88,6 +89,7 @@ const dashboard = () => {
 
       { openAllFavoriteWindow && <SoftLayer />}
 
+      {/* {openFilterDropDown  && <FilterDropDown />} */}
       <FilterDropDown />
       
     </div>

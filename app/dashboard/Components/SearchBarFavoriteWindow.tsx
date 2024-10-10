@@ -15,7 +15,8 @@ const SearchBarFavoriteWindow = ({
   const {
     openAllFavoriteWindowObject: { openAllFavoriteWindow },
     openFilterDropDownObject: { openFilterDropDown, setOpenFilterDropDown },
-    filterDropDownPositionsObject: { setFilterDropDownPositions }
+    filterDropDownPositionsObject: { setFilterDropDownPositions },
+    allFavoriteComponentsObject: { allFavoriteComponents, setAllFavoriteComponents}
   } = useAppContext();
 
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -63,6 +64,8 @@ const SearchBarFavoriteWindow = ({
       <button
         ref={buttonRef}
         onClick={openFilterDropDownFx}
+        style={{ opacity: allFavoriteComponents.length > 0 ? 1 : 0.5 }}
+        disabled={ allFavoriteComponents.length < 0 }
         className="bg-sky-500 ml-2 p-[10px] px-3 flex gap-2 w-[20%] text-sm rounded-md text-white items-center justify-center"
       >
         <FilterListRounded sx={{ fontSize: 17 }} />
