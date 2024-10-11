@@ -29,7 +29,7 @@ const ComponentsNumber = () => {
           <span className="text-[12px] rounded-lg bg-sky-100  text-sky-500 p-[6px] px-2">
             {selectedProjectToFilter}
             <Close 
-              onClick={() => setSelectedProjectToFilter("")}
+              onClick={() => setSelectedProjectToFilter(null)}
               sx={{ fontSize: 16 }}
               className="text-sky-500 pl-1 cursor-pointer"
             />
