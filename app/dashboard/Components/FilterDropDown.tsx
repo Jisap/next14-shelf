@@ -73,6 +73,7 @@ const FilterDropDown = () => {
     setSelectedProjectToFilter((prevSelected) => 
       prevSelected === projectName ? null : projectName   
     )
+    setOpenFilterDropDown(false)
   };
 
   const handleClearSelection = () => {
