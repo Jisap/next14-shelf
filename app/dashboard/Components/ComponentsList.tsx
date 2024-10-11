@@ -16,11 +16,20 @@ const ComponentsList = ({ searchInput }: { searchInput: string }) => {
   const { 
     allFavoriteComponentsObject: { allFavoriteComponents },
     isLoadingObject: { isLoading },
+    selectedProjectToFilterObject: { selectedProjectToFilter },
   } = useAppContext();
 
-  const filterBySearchInput = allFavoriteComponents.filter((item) => {
-    return item.name.toLowerCase().includes(searchInput.toLowerCase())
-  })
+  const filterBySearchInput = selectedProjectToFilter
+    ? allFavoriteComponents
+        .filter((item) => {
+          return item.name.toLowerCase().includes(searchInput.toLowerCase())
+        })
+        .filter((item) => {
+          return item.projectName === selectedProjectToFilter
+        })
+    : allFavoriteComponents.filter((item) => {
+        return item.name.toLowerCase().includes(searchInput.toLowerCase())
+    })
 
   return (
     <div className='w-full bg-slate-50 h-[64%] rounded-lg flex flex-col gap-3'>
