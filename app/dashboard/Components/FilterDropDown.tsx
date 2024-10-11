@@ -13,6 +13,10 @@ const FilterDropDown = () => {
     filterDropDownPositionsObject: { filterDropDownPositions },
     isMobileViewObject: { isMobileView },
     allProjectsObject: { allProjects },
+    selectedProjectToFilterObject:{
+      selectedProjectToFilter,
+      setSelectedProjectToFilter
+    }
   } = useAppContext();
 
   const[searchInput, setSearchInput] = useState("")
@@ -50,7 +54,7 @@ const FilterDropDown = () => {
     }
   }, [setOpenFilterDropDown]);
 
-  const [selectedProjectTofilter, setSelectedProjectToFilter] = useState<string | null>(null);
+  //const [selectedProjectTofilter, setSelectedProjectToFilter] = useState<string | null>(null);
 
   const projectWithFavoriteInfo = allProjects.map(( project ) => {
     const favoriteComponents = project.components.filter(           // Se obtienen los componentes que son favoritos
@@ -99,10 +103,10 @@ const FilterDropDown = () => {
       />
       
       {/* Selected Project */}
-      {selectedProjectTofilter && (
+      {selectedProjectToFilter && (
         <div className="flex gap-1 items-center">
           <span className="text-[12px] rounded-lg bg-sky-100 text-sky-500 p-[6px] px-2">
-            {selectedProjectTofilter}
+            {selectedProjectToFilter}
             <CloseIcon 
               onClick={handleClearSelection}
               sx={{ fontSize: 16 }}
@@ -133,7 +137,7 @@ const FilterDropDown = () => {
           >
             <div className="flex items-center gap-1">
               <Checkbox 
-                checked={selectedProjectTofilter === project.name}
+                checked={selectedProjectToFilter === project.name}
                 onClick={() => handleProjectSelect(project.name)} // setSelectedProjectToFilter(project.name)
                 size="small"
               />
