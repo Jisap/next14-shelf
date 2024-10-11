@@ -8,6 +8,7 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { allProjectsData, Component, Project } from "./allData";
 import { SortingDropdown } from './dashboard/Components/SortingDropdown';
+import { set } from "mongoose";
 
 
 export interface MenuItem {   //  Define la estructura de un elemento del menú. 
@@ -179,7 +180,13 @@ interface AppContextType {    // Define la estructura del contexto que será com
     setFilterDropDownPositions: React.Dispatch<React.SetStateAction<{
       left: number,
       top: number
-    }>>
+    }>>,
+
+  }
+    
+  selectedProjectToFilterObject: {
+    selectedProjectToFilter: string | null,
+    setSelectedProjectToFilter: React.Dispatch<React.SetStateAction<string | null>>
   }
 }
 
@@ -315,6 +322,11 @@ const defaultState: AppContextType = {
       top: 0
     },
     setFilterDropDownPositions: () => {}
+  },
+
+  selectedProjectToFilterObject: {
+    selectedProjectToFilter: null,
+    setSelectedProjectToFilter: () => {}
   }
 }
 
@@ -418,6 +430,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     top: 0,
   })
 
+  const [selectedProjectToFilter, setSelectedProjectToFilter] = useState<string | null>(null)
+
   // Darkmode
   useEffect(() => {
     const isDarkMode = darkModeMenu[1].isSelected;
@@ -517,7 +531,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         sortingOptionsObject: { sortingOptions, setSortingOptions },
         openAllFavoriteWindowObject: { openAllFavoriteWindow, setOpenAllFavoriteWindow },
         openFilterDropDownObject: { openFilterDropDown, setOpenFilterDropDown },
-        filterDropDownPositionsObject: { filterDropDownPositions, setFilterDropDownPositions }
+        filterDropDownPositionsObject: { filterDropDownPositions, setFilterDropDownPositions },
+        selectedProjectToFilterObject: { selectedProjectToFilter, setSelectedProjectToFilter }
       }}
     >
       {children}
