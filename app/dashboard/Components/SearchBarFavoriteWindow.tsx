@@ -30,14 +30,16 @@ const SearchBarFavoriteWindow = ({
         }
       };
 
-      // Schedule focus setting for the next render
-      setTimeout(focusInput, 0)
+      if(!openFilterDropDown){
+        // Schedule focus setting for the next render
+        setTimeout(focusInput, 0)
+      }
     }
   }, [openAllFavoriteWindow])
 
   const openFilterDropDownFx = () => {
     setOpenFilterDropDown(!openFilterDropDown)
-    console.log('openFilterDropDown', openFilterDropDown);
+    
     if (buttonRef.current) {
       const rect = buttonRef?.current.getBoundingClientRect();
       const top = rect.top;

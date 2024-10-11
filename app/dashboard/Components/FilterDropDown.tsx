@@ -15,6 +15,8 @@ const FilterDropDown = () => {
     allProjectsObject: { allProjects },
   } = useAppContext();
 
+  const[searchInput, setSearchInput] = useState("")
+
   const filterDropDownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -71,7 +73,12 @@ const FilterDropDown = () => {
 
   const handleClearSelection = () => {
     setSelectedProjectToFilter(null)
-  }
+  };
+
+  const filteredProjects = projectWithFavoriteInfo.filter((project) => { // Filtra de los proyectos marcados como favoritos con los que coincidan con la busqueda
+    return project.name.toLowerCase().includes(searchInput.toLowerCase())
+  });
+
 
   return (
     <div 
@@ -86,7 +93,10 @@ const FilterDropDown = () => {
       }}
       className="bg-white p-3 z-[60] border-slate-50 fixed py-4 w-[310px] select-none shadow-md rounded-lg flex-col gap-5"
     >
-      <SearchBarFilterDropDown />
+      <SearchBarFilterDropDown 
+        searchInput={searchInput}
+        setSearchInput={setSearchInput}
+      />
       
       {/* Selected Project */}
       {selectedProjectTofilter && (
@@ -108,7 +118,15 @@ const FilterDropDown = () => {
       {/* Unique Projects */}
       <div className="flex flex-col gap-2 overflow-auto h-60 p-2 rounded-md text-slate-600 cursor-pointer bg-slate-50">
         {/* Project1 */}
-        {projectWithFavoriteInfo.map((project) => (
+
+        {filteredProjects.length === 0 && (
+          <div className='text-[13px] text-slate-400 p-3'>
+            No projects found
+          </div>
+        )}
+
+
+        {filteredProjects.map((project) => (
           <div 
             key={project._id}
             className="text-[13px] bg-white rounded-lg p-[9px] px-3 flex items-center justify-between"
