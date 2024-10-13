@@ -19,6 +19,7 @@ import AllProjectsWindow from './Components/AllProjectsWindow'
 import { SortingDropdown } from './Components/SortingDropdown'
 import AllFavoritewindow from './Components/AllFavoritewindow'
 import FilterDropDown from './Components/FilterDropDown'
+import LiveSearchBar from './Components/LiveSearchBar'
 
 
 interface SelectedIcon {
@@ -91,6 +92,8 @@ const dashboard = () => {
 
       {/* {openFilterDropDown  && <FilterDropDown />} */}
       <FilterDropDown />
+
+      <LiveSearchBar />
       
     </div>
   )
