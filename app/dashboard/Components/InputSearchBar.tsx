@@ -6,7 +6,10 @@ import { useEffect, useRef } from "react";
 
 const InputSearchBar = () => {
 
-  const { showSearchBarObject: { setShowSearchBar }} = useAppContext();
+  const {
+    showSearchBarObject: { setShowSearchBar },
+    mainSearchQueryObject: { mainSearchQuery, setMainSearchQuery },
+  } = useAppContext();
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -22,7 +25,9 @@ const InputSearchBar = () => {
     <div className="px-2 flex justify-between items-center w-full">
       <input 
         ref={inputRef}
+        value={mainSearchQuery}
         placeholder="Search a component"
+        onChange={(e) => setMainSearchQuery(e.target.value)}
         className="w-full bg-slate-100 outline-none text-[-13px] placeholder:text-slate-400"
       />
       <CloseRoundedIcon 

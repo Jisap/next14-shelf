@@ -1,9 +1,30 @@
+import { useAppContext } from "@/app/ContextApi";
 import { CodeRounded } from "@mui/icons-material"
+import { useRef } from "react";
 
 
 const LiveSearchBar = () => {
+
+  const { 
+    openLiveSearchBarObject: { openLiveSearchBar, setOpenLiveSearchBar },
+    liveSearchPositionsObject: { liveSearchPositions, setLiveSearchPositions },
+    isMobileViewObject: { isMobileView },
+  } = useAppContext()
+
+  const liveSearchBarRef = useRef<HTMLDivElement>(null);
+
   return (
-    <div className="fixed p-5 w-[25%] flex flex-col gap-3 shadow-md border border-slate-50 bg-white rounded-lg top-14 left-96 z-50">
+    <div 
+      style={{
+        top: liveSearchPositions.top + 50,
+        left: liveSearchPositions.left,
+      }}
+      ref={liveSearchBarRef}
+      className={`
+        fixed p-5 
+        ${isMobileView ? "w-[70%]" : "w-[26%]"} 
+        w-[25%] flex flex-col gap-3 shadow-md border border-slate-50 bg-white rounded-lg top-14 left-96 z-50
+      `}>
       {/* Project Results */}
       <div>
         <span className="font-bold text-[14px] text-slate-800">
@@ -32,7 +53,7 @@ const LiveSearchBar = () => {
         <span className="font-bold text-[14px] mt-3 text-slate-800">
           Components
         </span>
-        
+
         <div className="flex mt-3 flex-col ml-1">
           {/* Single Component */}
           <div className="flex items-center gap-1 p-2 rounded-md hover:bg-slate-100 select-none cursor-pointer">

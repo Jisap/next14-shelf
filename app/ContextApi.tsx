@@ -188,6 +188,21 @@ interface AppContextType {    // Define la estructura del contexto que será com
     selectedProjectToFilter: string | null,
     setSelectedProjectToFilter: React.Dispatch<React.SetStateAction<string | null>>
   }
+
+  openLiveSearchBarObject: {
+    openLiveSearchBar: boolean,
+    setOpenLiveSearchBar: React.Dispatch<React.SetStateAction<boolean>>
+  }
+
+  mainSearchQueryObject: {
+    mainSearchQuery: string,
+    setMainSearchQuery: React.Dispatch<React.SetStateAction<string>>
+  }
+
+  liveSearchPositionsObject:{
+    liveSearchPositions: DropDownPosition,
+    setLiveSearchPositions: React.Dispatch<React.SetStateAction<DropDownPosition>>
+  }
 }
 
 const defaultState: AppContextType = {
@@ -327,6 +342,21 @@ const defaultState: AppContextType = {
   selectedProjectToFilterObject: {
     selectedProjectToFilter: null,
     setSelectedProjectToFilter: () => {}
+  },
+
+  openLiveSearchBarObject: {
+    openLiveSearchBar: false,
+    setOpenLiveSearchBar: () => {}
+  },
+
+  mainSearchQueryObject: {
+    mainSearchQuery: "",
+    setMainSearchQuery: () => {}
+  },
+
+  liveSearchPositionsObject: {
+    liveSearchPositions: { left: 0, top: 0 },
+    setLiveSearchPositions: () => {}
   }
 }
 
@@ -432,6 +462,13 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
   const [selectedProjectToFilter, setSelectedProjectToFilter] = useState<string | null>(null)
 
+  const [openLiveSearchBar, setOpenLiveSearchBar] = useState(false);
+  const [mainSearchQuery, setMainSearchQuery] = useState("");
+  const [liveSearchPositions, setLiveSearchPositions] = useState({
+    left: 0,
+    top: 0,
+  })
+
   // Darkmode
   useEffect(() => {
     const isDarkMode = darkModeMenu[1].isSelected;
@@ -532,7 +569,10 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         openAllFavoriteWindowObject: { openAllFavoriteWindow, setOpenAllFavoriteWindow },
         openFilterDropDownObject: { openFilterDropDown, setOpenFilterDropDown },
         filterDropDownPositionsObject: { filterDropDownPositions, setFilterDropDownPositions },
-        selectedProjectToFilterObject: { selectedProjectToFilter, setSelectedProjectToFilter }
+        selectedProjectToFilterObject: { selectedProjectToFilter, setSelectedProjectToFilter },
+        openLiveSearchBarObject: { openLiveSearchBar, setOpenLiveSearchBar },
+        mainSearchQueryObject: { mainSearchQuery, setMainSearchQuery },
+        liveSearchPositionsObject: { liveSearchPositions, setLiveSearchPositions }
       }}
     >
       {children}

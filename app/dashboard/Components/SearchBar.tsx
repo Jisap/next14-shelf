@@ -6,13 +6,25 @@ import { useEffect, useRef } from 'react';
 import InputSearchBar from './InputSearchBar';
 import SearchIconAndText from './SearchIconAndText';
 
+
 const SearchBar = () => {
 
-  const { showSearchBarObject: { showSearchBar, setShowSearchBar }} = useAppContext();
+  const { 
+    showSearchBarObject: { showSearchBar, setShowSearchBar },
+    openLiveSearchBarObject: { openLiveSearchBar, setOpenLiveSearchBar },
+    liveSearchPositionsObject: { liveSearchPositions, setLiveSearchPositions },
+  } = useAppContext();
 
   const searchBarRef = useRef<HTMLDivElement>(null);
 
   const handleClickedSearchBar = () => {
+    if(searchBarRef.current){
+      const rect = searchBarRef.current.getBoundingClientRect();
+      const top = rect.top;
+      const left = rect.left;
+      setLiveSearchPositions({ top, left })
+    }
+    
     if(!showSearchBar){
       setShowSearchBar(true)
     }

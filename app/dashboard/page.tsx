@@ -38,6 +38,9 @@ const dashboard = () => {
     openAllProjectsWindowObject: { openAllProjectsWindow },
     openAllFavoriteWindowObject: { openAllFavoriteWindow },
     openFilterDropDownObject: { openFilterDropDown },
+    openLiveSearchBarObject: { openLiveSearchBar },
+    mainSearchQueryObject: { mainSearchQuery },
+    showSearchBarObject: { showSearchBar },
   } = useAppContext()
 
   const [selectedIcon, setSelectedIcon] = React.useState<SelectedIcon>({ // Estado de selectedIcon
@@ -93,7 +96,7 @@ const dashboard = () => {
       {/* {openFilterDropDown  && <FilterDropDown />} */}
       <FilterDropDown />
 
-      <LiveSearchBar />
+      {showSearchBar && mainSearchQuery && <LiveSearchBar />}
       
     </div>
   )
