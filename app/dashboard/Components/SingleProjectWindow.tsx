@@ -23,8 +23,9 @@ const SingleProjectWindow = ({ project }:{ project: Project }) => {
 
   const openTheProject = () => {  // Función que abre el proyecto seleccionado
     setSelectedProject(project)   // update the selectedProject
-    setOpenProjectWindow(false)   // Cerramos la ventana de AddProjecWindow
+    setOpenProjectWindow(false)   // Cerramos la ventana de AddProjectWindow
     setShowComponentPage(true)    // Abrimos la ventana de ComponentPage
+    setOpenAllProjectsWindow(false)
   }
 
   const openTheDeleteWindow = () => {  // Función que abre la ventana de eliminar proyecto
