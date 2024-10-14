@@ -6,7 +6,7 @@ import { Project } from '../../allData';
 
 const LiveSearchBar = () => {
 
-  const { 
+  const {
     openLiveSearchBarObject: { openLiveSearchBar, setOpenLiveSearchBar },
     liveSearchPositionsObject: { liveSearchPositions, setLiveSearchPositions },
     isMobileViewObject: { isMobileView },
@@ -21,14 +21,14 @@ const LiveSearchBar = () => {
     project.name.toLowerCase().includes(mainSearchQuery.toLowerCase())
   )
 
-  const filteredComponents = allProjects.flatMap((project) => 
+  const filteredComponents = allProjects.flatMap((project) =>
     project.components).filter((component) =>
       component.name.toLowerCase().includes(mainSearchQuery.toLowerCase()
+      )
     )
-  )
 
   return (
-    <div 
+    <div
       style={{
         top: liveSearchPositions.top + 50,
         left: liveSearchPositions.left,
@@ -39,15 +39,15 @@ const LiveSearchBar = () => {
         ${isMobileView ? "w-[70%]" : "w-[26%]"} 
         w-[25%] flex flex-col gap-3 shadow-md border border-slate-50 bg-white rounded-lg top-14 left-96 z-50
       `}
-      >
-        {filteredComponents.length === 0 && filteredProjects.length === 0 && (
-          <span className="text-slate-500 text-[12px]">
-            No match results...
-          </span>
-        )}
+    >
+      {filteredComponents.length === 0 && filteredProjects.length === 0 && (
+        <span className="text-slate-500 text-[12px]">
+          No match results...
+        </span>
+      )}
 
       {/* Project Results */}
-      {filteredProjects.length > 0 &&(
+      {filteredProjects.length > 0 && (
         <div>
           <span className="font-bold text-[14px] text-slate-800">
             Projects
@@ -55,14 +55,14 @@ const LiveSearchBar = () => {
 
           <div className="flex gap-1 mt-3 flex-col ml-1">
             {/* Single Project */}
-            {filteredProjects.slice(0,3).map((project) => (
-              <div 
+            {filteredProjects.slice(0, 3).map((project) => (
+              <div
                 key={project._id}
                 className="flex items-center gap-1 p-2 rounded-md hover:bg-slate-100 select-none cursor-pointer"
               >
                 <div className="w-[21px] h-[21px] bg-sky-200 rounded-full flex items-center justify-center">
-                  <CodeRounded 
-                    sx={{ fontSize: "15px"}}
+                  <CodeRounded
+                    sx={{ fontSize: "15px" }}
                     className="text-sky-500 text-[18px]"
                   />
                 </div>
@@ -70,7 +70,7 @@ const LiveSearchBar = () => {
                   {project.name}
                 </span>
               </div>
-            ))}  
+            ))}
           </div>
 
           {/* More */}
@@ -86,28 +86,44 @@ const LiveSearchBar = () => {
       )}
 
       {/* Component Results */}
-      <div>
-        <span className="font-bold text-[14px] mt-3 text-slate-800">
-          Components
-        </span>
+      {filteredComponents.length > 0 && (
+        <div>
+          <span className="font-bold text-[14px] mt-3 text-slate-800">
+            Components
+          </span>
 
-        <div className="flex mt-3 flex-col ml-1">
-          {/* Single Component */}
-          <div className="flex items-center gap-1 p-2 rounded-md hover:bg-slate-100 select-none cursor-pointer">
-            <CodeRounded 
-              sx={{ fontSize: "15px"}}
-              className="text-slate-500 text-[18px]"
-            />
+          <div className="flex mt-3 flex-col ml-1">
+            {/* Single Components */}
+            {filteredComponents.slice(0, 3).map((component) => (
+              <div
+                key={component._id}
+                className="flex items-center gap-1 p-2 rounded-md hover:bg-slate-100 select-none cursor-pointer"
+              >
+                <CodeRounded
+                  sx={{ fontSize: "15px" }}
+                  className="text-slate-500 text-[18px]"
+                />
+                <div className="flex flex-col gap-[2px]">
+                  <span className="text-[12px]">{component.name}</span>
+                  <span className="text-[10px] text-slate-400 italic">
+                    {component.projectName}
+                  </span>
+                </div>
+              </div>
+            ))}
           </div>
-          <div className="flex flex-col gap-[2px]">
-            <span className="text-[12px]">Component Name</span>
-            <span className="text-[10px] text-slate-400 italic">
-              Project Name
-            </span>
-          </div>
-          
+
+          {/* More */}
+          {filteredComponents.slice(3).length > 0 && (
+            <div className="w-full flex items-center justify-center mt-1">
+              <div className="text-[12px] text-sky-500 hover:text-sky-700 cursor-pointer">
+                {filteredComponents.length - 3} more Project
+                {filteredComponents.length - 3 > 1 ? "s" : ""} available
+              </div>
+            </div>
+          )}
         </div>
-      </div>
+      )}
     </div>
   )
 }
