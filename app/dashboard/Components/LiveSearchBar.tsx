@@ -1,6 +1,7 @@
 import { useAppContext } from "@/app/ContextApi";
 import { CodeRounded } from "@mui/icons-material"
 import { useRef } from "react";
+import { Project } from '../../allData';
 
 
 const LiveSearchBar = () => {
@@ -69,9 +70,18 @@ const LiveSearchBar = () => {
                   {project.name}
                 </span>
               </div>
-            ))}
-            
+            ))}  
           </div>
+
+          {/* More */}
+          {filteredProjects.slice(3).length > 0 && (
+            <div className="w-full flex items-center justify-center mt-1">
+              <div className="text-[12px] text-sky-500 hover:text-sky-700 cursor-pointer">
+                {filteredProjects.length - 3} more Project
+                {filteredProjects.length - 3 > 1 ? "s" : ""} available
+              </div>
+            </div>
+          )}
         </div>
       )}
 
