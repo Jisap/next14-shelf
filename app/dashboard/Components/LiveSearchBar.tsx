@@ -48,10 +48,10 @@ const LiveSearchBar = () => {
       setShowSearchBar(false)
       //setMainSearchQuery("") // He cambiado esto para que la busqueda principal se haga también en la ventana de proyectos
     }
-    console.log('showComponentPage', showComponentPage);
   }
 
   const showMoreFunction = () => {
+    console.log('showMoreFunction clicked');
     setShowSearchBar(false);
     setOpenAllProjectsWindow(true)
   }
@@ -105,11 +105,12 @@ const LiveSearchBar = () => {
 
           {/* More */}
           {filteredProjects.slice(3).length > 0 && (
-            <div 
-              onClick={showMoreFunction}
+            <div
+              onClick={showMoreFunction} 
               className="w-full flex items-center justify-center mt-1"
             >
-              <div className="text-[12px] text-sky-500 hover:text-sky-700 cursor-pointer">
+              <div 
+                className="text-[12px] text-sky-500 hover:text-sky-700 cursor-pointer">
                 {filteredProjects.length - 3} more Project
                 {filteredProjects.length - 3 > 1 ? "s" : ""} available
               </div>
@@ -148,9 +149,12 @@ const LiveSearchBar = () => {
 
           {/* More */}
           {filteredComponents.slice(3).length > 0 && (
-            <div className="w-full flex items-center justify-center mt-1">
+            <div 
+              onClick={showMoreFunction}
+              className="w-full flex items-center justify-center mt-1"
+            >
               <div className="text-[12px] text-sky-500 hover:text-sky-700 cursor-pointer">
-                {filteredComponents.length - 3} more Project
+                {filteredComponents.length - 3} more Components
                 {filteredComponents.length - 3 > 1 ? "s" : ""} available
               </div>
             </div>

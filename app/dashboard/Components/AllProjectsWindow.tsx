@@ -12,7 +12,6 @@ const AllProjectsWindow = () => {
 
   const {
     openAllProjectsWindowObject: { openAllProjectsWindow , setOpenAllProjectsWindow },
-    mainSearchQueryObject: { mainSearchQuery, setMainSearchQuery}
   } = useAppContext();
 
 

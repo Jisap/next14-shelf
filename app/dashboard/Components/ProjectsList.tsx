@@ -5,7 +5,6 @@ import EmptyProjectsPlaceHolder from './EmptyProjectsPlaceholder'
 import SingleProjectWindow from './SingleProjectWindow'
 import NoFoundProjectsWindowSearched from './NoFoundProjectsWindowSearched'
 
-// { searchQuery }: { searchQuery: string }
 
 const ProjectsList = () => {
   const {
