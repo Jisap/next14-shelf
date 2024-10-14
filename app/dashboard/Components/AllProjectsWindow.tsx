@@ -12,9 +12,9 @@ const AllProjectsWindow = () => {
 
   const {
     openAllProjectsWindowObject: { openAllProjectsWindow , setOpenAllProjectsWindow },
+    mainSearchQueryObject: { mainSearchQuery, setMainSearchQuery}
   } = useAppContext();
 
-  const [searchQuery, setSearchQuery] = useState("");
 
   return (
     <div
@@ -22,9 +22,9 @@ const AllProjectsWindow = () => {
       className="w-[70%] max-w-sm:w-[90%] p-9 border border-slate-50 h-[82%] bg-white rounded-xl shadow-md absolute left-1/2 lg:left-[58%] top-20 -translate-x-1/2 z-50"
     >
       <HeaderProjectWindow />
-      <SearchBarProjectsWindow searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <SearchBarProjectsWindow  />
       <SortByComponent /> 
-      <ProjectsList searchQuery={searchQuery}/>
+      <ProjectsList/>
     </div>
   )
 }

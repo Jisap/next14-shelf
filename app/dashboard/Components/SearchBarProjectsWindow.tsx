@@ -3,18 +3,21 @@ import { AddOutlined, SearchRounded } from "@mui/icons-material"
 import { useEffect, useRef } from "react";
 import CloseIcon from '@mui/icons-material/Close';
 
+// {
+//   searchQuery,
+//     setSearchQuery
+// }: {
+//   searchQuery: string,
+//     setSearchQuery: React.Dispatch<React.SetStateAction<string>>
+// }
 
-const SearchBarProjectsWindow = ({
-  searchQuery,
-  setSearchQuery
-}: {
-  searchQuery: string,
-  setSearchQuery: React.Dispatch<React.SetStateAction<string>>
-}) => {
+
+const SearchBarProjectsWindow = () => {
 
   const { 
     openAllProjectsWindowObject: { openAllProjectsWindow, setOpenAllProjectsWindow },
     openProjectWindowObject: { openProjectWindow, setOpenProjectWindow },
+    mainSearchQueryObject: { mainSearchQuery, setMainSearchQuery }
   } = useAppContext();
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -32,11 +35,15 @@ const SearchBarProjectsWindow = ({
         //Schedule focus setting for the next render
         setTimeout(focusInput, 0)
       }
+
+      if(mainSearchQuery.trim().length > 0){
+        setMainSearchQuery(mainSearchQuery)
+      }
     }
-  }, [openAllProjectsWindow, searchQuery])
+  }, [openAllProjectsWindow, mainSearchQuery , openProjectWindow])
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value)
+    setMainSearchQuery(event.target.value)
   }
 
   return (
@@ -47,16 +54,16 @@ const SearchBarProjectsWindow = ({
 
           <input
             ref={inputRef}
-            value={searchQuery}
+            value={mainSearchQuery}
             onChange={handleChange}
             placeholder="Search a Project..."
             className="bg-transparent outline-none w-full font-light"
           />
 
           {/* Close Icon */}
-          {searchQuery.length > 0 && (
+          {mainSearchQuery.length > 0 && (
             <div
-              onClick={() => setSearchQuery("")}
+              onClick={() => setMainSearchQuery("")}
               className="text-slate-400 cursor-pointer absolute right-2 top-3"
             >
               <CloseIcon

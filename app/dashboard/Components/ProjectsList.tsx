@@ -5,18 +5,23 @@ import EmptyProjectsPlaceHolder from './EmptyProjectsPlaceholder'
 import SingleProjectWindow from './SingleProjectWindow'
 import NoFoundProjectsWindowSearched from './NoFoundProjectsWindowSearched'
 
-const ProjectsList = ({ searchQuery }: { searchQuery: string }) => {
+// { searchQuery }: { searchQuery: string }
 
+const ProjectsList = () => {
   const {
     allProjectsObject: { allProjects },
     isLoadingObject: { isLoading },
     sortedProjectsObject: { sortedProjects },
+    mainSearchQueryObject: {mainSearchQuery, setMainSearchQuery}
   } = useAppContext();
-
-
+  
+  console.log('mainSearchQuery', mainSearchQuery);
+  
   const filterAllProjectsBySearchQuery = sortedProjects.filter((singleProject) => 
-    singleProject.name.toLowerCase().includes(searchQuery.toLowerCase())
+    singleProject.name.toLowerCase().includes(mainSearchQuery.toLowerCase())
   );
+
+  console.log('filterAllProjectsBySearchQuery', filterAllProjectsBySearchQuery);
 
   return (
     <div className='w-full bg-slate-50 h-[64%] rounded-lg p-3 flex flex-col gap-3'>

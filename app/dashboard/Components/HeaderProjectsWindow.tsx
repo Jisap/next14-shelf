@@ -8,6 +8,7 @@ const HeaderProjectWindow = () => {
   const {
     openAllProjectsWindowObject: { openAllProjectsWindow , setOpenAllProjectsWindow },
     menuItemsObject: { menuItems, setMenuItems },
+    mainSearchQueryObject: { mainSearchQuery, setMainSearchQuery }
   } = useAppContext();
 
   const closeTheWindow = () => {
@@ -17,6 +18,7 @@ const HeaderProjectWindow = () => {
         isSelected: prevMenuItem.id === menuItems[0].id   // Se cambia el valor de isSelected del primer elemento de menuItems true y los demás false
       }))
     )
+    setMainSearchQuery("")
     setOpenAllProjectsWindow(false)
   }
 

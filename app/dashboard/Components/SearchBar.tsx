@@ -32,8 +32,12 @@ const SearchBar = () => {
 
   useEffect(() => {
 
-    const handleClickOutside = (event: MouseEvent) => {
-      if (searchBarRef.current && !searchBarRef.current.contains(event.target as Node)) { // Si el elemento clickeado no está dentro del input de busqueda
+    const handleClickOutside = (event: MouseEvent) => {             // Si el elemento clickeado no está dentro del input de busqueda
+      if (
+        searchBarRef.current && 
+        !searchBarRef.current.contains(event.target as Node) &&
+        openLiveSearchBar
+      ) { 
         setShowSearchBar(false)
       }
     }

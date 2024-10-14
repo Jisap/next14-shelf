@@ -1,3 +1,5 @@
+'use client'
+
 import { useAppContext } from "@/app/ContextApi";
 import { CodeRounded } from "@mui/icons-material"
 import { useRef } from "react";
@@ -12,7 +14,15 @@ const LiveSearchBar = () => {
     isMobileViewObject: { isMobileView },
     mainSearchQueryObject: { mainSearchQuery },
     allProjectsObject: { allProjects },
-  } = useAppContext()
+    selectedProjectObject: { setSelectedProject },
+    showComponentPageObject: { showComponentPage, setShowComponentPage },
+    showSearchBarObject: { setShowSearchBar },
+    mainSearchQueryObject: { setMainSearchQuery },
+    openAllProjectsWindowObject: { setOpenAllProjectsWindow },
+  
+  } = useAppContext();
+
+ 
 
   const liveSearchBarRef = useRef<HTMLDivElement>(null);
 
@@ -26,6 +36,25 @@ const LiveSearchBar = () => {
       component.name.toLowerCase().includes(mainSearchQuery.toLowerCase()
       )
     )
+
+  const openTheProject = (project: Project) => {
+    
+    const findProject = allProjects.find((p) => p._id === project._id)
+  
+    if(findProject){
+      setSelectedProject(findProject)
+      setOpenAllProjectsWindow(true)
+      setOpenLiveSearchBar(false)
+      setShowSearchBar(false)
+      //setMainSearchQuery("") // He cambiado esto para que la busqueda principal se haga también en la ventana de proyectos
+    }
+    console.log('showComponentPage', showComponentPage);
+  }
+
+  const showMoreFunction = () => {
+    setShowSearchBar(false);
+    setOpenAllProjectsWindow(true)
+  }
 
   return (
     <div
@@ -58,6 +87,7 @@ const LiveSearchBar = () => {
             {filteredProjects.slice(0, 3).map((project) => (
               <div
                 key={project._id}
+                onClick={() => openTheProject(project)}
                 className="flex items-center gap-1 p-2 rounded-md hover:bg-slate-100 select-none cursor-pointer"
               >
                 <div className="w-[21px] h-[21px] bg-sky-200 rounded-full flex items-center justify-center">
@@ -75,7 +105,10 @@ const LiveSearchBar = () => {
 
           {/* More */}
           {filteredProjects.slice(3).length > 0 && (
-            <div className="w-full flex items-center justify-center mt-1">
+            <div 
+              onClick={showMoreFunction}
+              className="w-full flex items-center justify-center mt-1"
+            >
               <div className="text-[12px] text-sky-500 hover:text-sky-700 cursor-pointer">
                 {filteredProjects.length - 3} more Project
                 {filteredProjects.length - 3 > 1 ? "s" : ""} available
