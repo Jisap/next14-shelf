@@ -23,7 +23,7 @@ const ProjectsList = () => {
   console.log('filterAllProjectsBySearchQuery', filterAllProjectsBySearchQuery);
 
   return (
-    <div className='w-full bg-slate-50 h-[64%] rounded-lg p-3 flex flex-col gap-3'>
+    <div className='w-full bg-slate-50 h-[64%] rounded-lg p-3 flex flex-col gap-3 overflow-y-auto'>
       {isLoading && (
         <div className='flex flex-col gap-3 justify-center items-center w-full mt-28'>
           <CircularProgress value={100} />

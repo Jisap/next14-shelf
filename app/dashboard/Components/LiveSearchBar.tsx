@@ -4,6 +4,7 @@ import { useAppContext } from "@/app/ContextApi";
 import { CodeRounded } from "@mui/icons-material"
 import { useRef } from "react";
 import { Project } from '../../allData';
+import { openComponent } from "@/app/lib/openComponent";
 
 
 const LiveSearchBar = () => {
@@ -19,6 +20,9 @@ const LiveSearchBar = () => {
     showSearchBarObject: { setShowSearchBar },
     mainSearchQueryObject: { setMainSearchQuery },
     openAllProjectsWindowObject: { setOpenAllProjectsWindow },
+    selectedComponentObject: { setSelectedComponent },
+    openComponentEditorObject: { setOpenComponentEditor },
+    openAllFavoriteWindowObject: { setOpenAllFavoriteWindow },
   
   } = useAppContext();
 
@@ -50,10 +54,14 @@ const LiveSearchBar = () => {
     }
   }
 
-  const showMoreFunction = () => {
-    console.log('showMoreFunction clicked');
+  const showMoreProjectsFunction = () => {
     setShowSearchBar(false);
     setOpenAllProjectsWindow(true)
+  }
+
+  const showMoreFavoriteFunction = () => {
+    setShowSearchBar(false);
+    setOpenAllFavoriteWindow(true)
   }
 
   return (
@@ -106,7 +114,7 @@ const LiveSearchBar = () => {
           {/* More */}
           {filteredProjects.slice(3).length > 0 && (
             <div
-              onClick={showMoreFunction} 
+              onClick={showMoreProjectsFunction} 
               className="w-full flex items-center justify-center mt-1"
             >
               <div 
@@ -137,7 +145,17 @@ const LiveSearchBar = () => {
                   sx={{ fontSize: "15px" }}
                   className="text-slate-500 text-[18px]"
                 />
-                <div className="flex flex-col gap-[2px]">
+                <div 
+                  className="flex flex-col gap-[2px]"
+                  onClick={() => openComponent({
+                    component: component,
+                    allProjects,
+                    setSelectedComponent,
+                    setSelectedProject,
+                    setOpenComponentEditor,
+                    setOpenAllFavoriteWindow
+                  })}  
+                >
                   <span className="text-[12px]">{component.name}</span>
                   <span className="text-[10px] text-slate-400 italic">
                     {component.projectName}
@@ -150,7 +168,7 @@ const LiveSearchBar = () => {
           {/* More */}
           {filteredComponents.slice(3).length > 0 && (
             <div 
-              onClick={showMoreFunction}
+              onClick={showMoreFavoriteFunction}
               className="w-full flex items-center justify-center mt-1"
             >
               <div className="text-[12px] text-sky-500 hover:text-sky-700 cursor-pointer">

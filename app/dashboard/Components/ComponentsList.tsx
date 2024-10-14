@@ -32,7 +32,7 @@ const ComponentsList = ({ searchInput }: { searchInput: string }) => {
     })
 
   return (
-    <div className='w-full bg-slate-50 h-[64%] rounded-lg flex flex-col gap-3'>
+    <div className='w-full bg-slate-50 h-[64%] rounded-lg flex flex-col gap-3 overflow-y-auto'>
       
       {isLoading && (
         <div className='flex flex-col gap-3 justify-center items-center w-full mt-28'>
