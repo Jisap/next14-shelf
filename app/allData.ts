@@ -77,7 +77,7 @@ export const allProjectsData: Project[] = [
       {
         _id: uuidv4(),
         name: "Button 1",
-        projectName: "Button red",
+        projectName: "Buttons",
         code: `
           <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
             Click me
@@ -88,7 +88,7 @@ export const allProjectsData: Project[] = [
       {
         _id: uuidv4(),
         name: "Button 2",
-        projectName: "Button blue",
+        projectName: "Buttons",
         code: `
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Click me
@@ -99,7 +99,7 @@ export const allProjectsData: Project[] = [
       {
         _id: uuidv4(),
         name: "Button 3",
-        projectName: "Button3",
+        projectName: "Buttons",
         code: `
           <button className="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded">
             Click me
@@ -110,7 +110,7 @@ export const allProjectsData: Project[] = [
       {
         _id: uuidv4(),
         name: "Button 4",
-        projectName: "Button4",
+        projectName: "Buttons",
         code: `
           <button className="bg-yellow-500 hover:bg-yellow-700 text-black font-bold py-2 px-4 rounded">
             Click me
@@ -121,7 +121,7 @@ export const allProjectsData: Project[] = [
       {
         _id: uuidv4(),
         name: "Button 5",
-        projectName: "Button5",
+        projectName: "Buttons",
         code: `
           <button className="bg-violet-500 hover:bg-violet-700 text-white font-bold py-2 px-4 rounded">
             Click me
@@ -189,7 +189,7 @@ export const allProjectsData: Project[] = [
       {
         _id: uuidv4(),
         name: "Forms 1",
-        projectName: "Forms",
+        projectName: "Forms III",
         code: `
           <div className="p-4 bg-blue-100 rounded-lg">
             <h1 className="text-2xl font-bold text-blue-700">Hello, Tailwind!</h1>
@@ -202,7 +202,7 @@ export const allProjectsData: Project[] = [
       {
         _id: uuidv4(),
         name: "Forms 2",
-        projectName: "Forms",
+        projectName: "Forms III",
         code: `
           <div className="p-4 bg-blue-100 rounded-lg">
             <h1 className="text-2xl font-bold text-blue-700">Hello, Tailwind!</h1>
@@ -215,7 +215,7 @@ export const allProjectsData: Project[] = [
       {
         _id: uuidv4(),
         name: "Forms 3",
-        projectName: "Forms",
+        projectName: "Forms III",
         code: `
           <div className="p-4 bg-blue-100 rounded-lg">
             <h1 className="text-2xl font-bold text-blue-700">Hello, Tailwind!</h1>
@@ -237,7 +237,7 @@ export const allProjectsData: Project[] = [
       {
         _id: uuidv4(),
         name: "Forms 1",
-        projectName: "Forms",
+        projectName: "Forms IV",
         code: `
           <div className="p-4 bg-blue-100 rounded-lg">
             <h1 className="text-2xl font-bold text-blue-700">Hello, Tailwind!</h1>
@@ -250,7 +250,7 @@ export const allProjectsData: Project[] = [
       {
         _id: uuidv4(),
         name: "Forms 2",
-        projectName: "Forms",
+        projectName: "Forms IV",
         code: `
           <div className="p-4 bg-blue-100 rounded-lg">
             <h1 className="text-2xl font-bold text-blue-700">Hello, Tailwind!</h1>
@@ -263,7 +263,7 @@ export const allProjectsData: Project[] = [
       {
         _id: uuidv4(),
         name: "Forms 3",
-        projectName: "Forms",
+        projectName: "Forms IV",
         code: `
           <div className="p-4 bg-blue-100 rounded-lg">
             <h1 className="text-2xl font-bold text-blue-700">Hello, Tailwind!</h1>

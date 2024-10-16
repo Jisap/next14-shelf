@@ -1,4 +1,6 @@
 import { Component, Project } from "../allData";
+import { useAppContext } from "../ContextApi";
+import { set } from 'mongoose';
 
 interface openComponentProps {
   component: Component;
@@ -9,6 +11,8 @@ interface openComponentProps {
   setOpenAllFavoriteWindow: (openAllFavoriteWindow: boolean) => void;
 }
 
+
+
 export const openComponent = ({
   component,
   allProjects,
@@ -17,6 +21,8 @@ export const openComponent = ({
   setOpenComponentEditor,
   setOpenAllFavoriteWindow
 }: openComponentProps) => {
+
+  //const { showSearchBarObject : { setShowSearchBar }} = useAppContext();
 
   setSelectedComponent(component);
   setOpenComponentEditor(true)
@@ -29,6 +35,7 @@ export const openComponent = ({
   if (project) {
     setSelectedProject(project);
     setOpenAllFavoriteWindow(false)
+    //setShowSearchBar(false)
   } else {
     console.log(`Project not found for component: ${component.name}`);
   }

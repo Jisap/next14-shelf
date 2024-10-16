@@ -3,7 +3,7 @@
 import { useAppContext } from "@/app/ContextApi";
 import { CodeRounded } from "@mui/icons-material"
 import { useRef } from "react";
-import { Project } from '../../allData';
+import { Component, Project } from '../../allData';
 import { openComponent } from "@/app/lib/openComponent";
 
 
@@ -63,6 +63,21 @@ const LiveSearchBar = () => {
   const showMoreComponentsFunction = () => {
     setShowSearchBar(false);
     setOpenAllProjectsWindow(true)
+  }
+
+  const openClickedComponent = (component:Component) => {
+    const findProject = allProjects.find(
+      (project) => project.name === component.projectName
+    );
+
+    console.log("component from clicked", component);
+    console.log("findProject", findProject);
+
+    setSelectedProject(findProject!)
+    setOpenLiveSearchBar(false)
+    setShowSearchBar(false)
+    setShowComponentPage(true)
+    setMainSearchQuery(component.name)
   }
 
   return (
@@ -139,6 +154,7 @@ const LiveSearchBar = () => {
             {/* Single Components */}
             {filteredComponents.slice(0, 3).map((component) => (
               <div
+                onClick={() => openClickedComponent(component)}
                 key={component._id}
                 className="flex items-center gap-1 p-2 rounded-md hover:bg-slate-100 select-none cursor-pointer"
               >
@@ -148,14 +164,18 @@ const LiveSearchBar = () => {
                 />
                 <div 
                   className="flex flex-col gap-[2px]"
-                  onClick={() => openComponent({
-                    component: component,
-                    allProjects,
-                    setSelectedComponent,
-                    setSelectedProject,
-                    setOpenComponentEditor,
-                    setOpenAllFavoriteWindow
-                  })}  
+                  // Si se quisiera implementar la edición directamente desde aquí
+                  // onClick={() => {
+                  //   openComponent({
+                  //     component: component,
+                  //     allProjects,
+                  //     setSelectedComponent,
+                  //     setSelectedProject,
+                  //     setOpenComponentEditor,
+                  //     setOpenAllFavoriteWindow
+                  //   });
+                  //   setShowSearchBar(false);
+                  // }}
                 >
                   <span className="text-[12px]">{component.name}</span>
                   <span className="text-[10px] text-slate-400 italic">
