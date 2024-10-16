@@ -33,7 +33,7 @@ const TopBar = ({searchInput , setSearchInput}: TopBarProps) => {
     if(showComponentPage && mainSearchQuery !== searchInput){ // Si estamos en componentPage y mainSearchQuery !== searchInput
       setSearchInput(mainSearchQuery)                         // searchInput = mainSearchQuery
     }
-  })
+  },[showComponentPage])
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {  // Actualiza tanto searchInput como mainSearchQuery cuando el usuario escribe en el campo de búsqueda.
     const newValue = e.target.value;
