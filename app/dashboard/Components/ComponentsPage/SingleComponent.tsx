@@ -14,6 +14,7 @@ import { useAppContext } from "@/app/ContextApi";
 
 
 
+
 const SingleComponent = ({ component }: { component: Component}) => {
 
   const { 
@@ -124,6 +125,13 @@ const SingleComponent = ({ component }: { component: Component}) => {
     setOpenComponentEditor(true);
   }
 
+  const truncateString = (str: string, num: number) => {
+    if (str.length <= num) {
+      return str
+    }
+    return str.slice(0, num)  + "..."
+  }
+
   return (
     <div className="bg-white w-full rounded-lg p-8 pt-8 pb-10 mb-3">
       {/* Compponent title  and checkbox to favorite*/}
@@ -192,7 +200,7 @@ const SingleComponent = ({ component }: { component: Component}) => {
             wrapLines={true}
             wrapLongLines={true}
           >
-            {component.code}
+            {truncateString(component.code, 600)}
           </SyntaxHighlighter>
         </div>
       )}
