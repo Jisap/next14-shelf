@@ -9,6 +9,7 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { allProjectsData, Component, Project } from "./allData";
 import { SortingDropdown } from './dashboard/Components/SortingDropdown';
 import { set } from "mongoose";
+import { useUser } from "@clerk/nextjs";
 
 
 export interface MenuItem {   //  Define la estructura de un elemento del menú. 
@@ -428,6 +429,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     left: 0,
     top: 0,
   });
+  const {user, isLoaded, isSignedIn} = useUser();
 
   const [sortedProjects, setSortedProjects] = useState<Project[]>([]);  // Proyectos ordenados
 
@@ -491,23 +493,55 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   });
 
   // Simulate the fetch using setTimeout
+  // useEffect(() => {
+  //   const fetchAllProjects = () => {
+  //     setTimeout(() => {
+  //       allProjectsData.forEach((project) => {  // Sort the components by createdAt
+  //         project.components.sort((a, b) => {
+  //           return (
+  //             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  //           )
+  //         })
+  //       })
+  //       setAllProjects(allProjectsData);  // Update the state with the sorted data
+  //       setSortedProjects(allProjectsData);
+  //       setIsLoading(false);
+  //     }, 3000);
+  //   }
+  //   fetchAllProjects();
+  // },[]);
+
   useEffect(() => {
-    const fetchAllProjects = () => {
-      setTimeout(() => {
-        allProjectsData.forEach((project) => {  // Sort the components by createdAt
-          project.components.sort((a, b) => {
-            return (
-              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-            )
-          })
-        })
-        setAllProjects(allProjectsData);  // Update the state with the sorted data
-        setSortedProjects(allProjectsData);
+    async function fetchAllProjects() {
+      try {
+        const response = await fetch(`/api/projects?clerkUserId=${user?.id}`);
+        if(!response.ok){
+          throw new Error("Failed to fetch projects");
+        }
+        const data : {projects:Project[]} = await response.json();
+        if(data.projects){
+          data.projects.forEach((project) => {
+            project.components.sort((a, b) => {
+              return (
+                new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+              );
+            });
+          });
+          // update the all projects
+          setAllProjects(data.projects);
+          setSortedProjects(data.projects);
+        }
+      } catch (error) {
+        console.log(error);
+      }finally{
         setIsLoading(false);
-      }, 3000);
+      }
     }
-    fetchAllProjects();
-  },[]);
+
+    if(isLoaded && isSignedIn){
+      fetchAllProjects()
+    }
+  },[user, isLoaded, isSignedIn])
 
   // Update favorite components when allProjects change
   useEffect(() => {
