@@ -88,7 +88,7 @@ const AddProjectWindow = ({
     setProjectName(e.target.value);
   }
 
-  const AddNewProject = () => {   // Función que agrega un nuevo proyecto
+  const AddNewProject = async() => {   // Función que agrega un nuevo proyecto
 
     if(projectName.trim() === ""){
       setErrorMessage("Project name cannot be empty");
@@ -113,39 +113,92 @@ const AddProjectWindow = ({
       }
 
       try {
-        setAllProjects([...allProjects, newProject]);
+        const response = await fetch("/api/projects", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newProject),
+        });
+        
+        if(!response.ok){
+          throw new Error("Failed to add project");
+        }
+
+        const addedProject = await response.json();
+
+
+        setAllProjects([...allProjects, addedProject.project]);
         toast.success("project added successfuly");
         setOpenProjectWindow(false);
       } catch (error) {
+        console.error("Error adding project", error);
         toast.error("Failed to add project");
       }
   }
 
-  const editTheProject = () => {  // Función que edita el proyecto seleccionado
+  const editTheProject = async() => {  // Función que edita el proyecto seleccionado
 
-    if(projectName.trim() === ""){                            // Si el nombre del proyecto está vacío
-      setErrorMessage("Project name cannot be empty");        // Mostramos un mensaje de error
-      inputRef.current?.focus();                              // Se establece el foco en el input
+    if(projectName.trim() === ""){                                  // Si el nombre del proyecto está vacío
+      setErrorMessage("Project name cannot be empty");              // Mostramos un mensaje de error
+      inputRef.current?.focus();                                    // Se establece el foco en el input
+      return;
+    }
+
+    if(!selectedProject){                                           // Si no hay proyecto seleccionado mensaje de error
+      toast.error("No project selected for editing");
       return;
     }
 
     try {
-      if(selectedProject){                                     // Si hay proyecto seleccionado
-        const updateSelectedProject: Project = {               // Se actualiza el proyecto seleccionado
-          ...selectedProject,
-          name: projectName,
-          icon: selectedIcon.name,
-        };
+      const response = await fetch(
+        `/api/projects?projectId=${selectedProject._id}`,           // Petición de actualización al servidor
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: projectName,
+            icon: selectedIcon.name,
+            clerkUserId: selectedProject.clerkUserId,
+          }),
+        }
+      );
 
-        const updateAllProjects = allProjects.map((singleProject) => {  // Se actualizan todos los proyectos
-          return singleProject._id === selectedProject._id
-            ? updateSelectedProject
-            : singleProject;
-        })
-        setAllProjects(updateAllProjects);                      // Y se actualiza el estado de allProjects
-        toast.success("project edited successfuly");
-        setOpenProjectWindow(false);
+      if(!response.ok){                                             // Si la respuesta no es ok mensaje de error                        
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to update project");
       }
+
+      const updatedProject = await response.json();                 // Se obtiene el proyecto actualizado del servidor
+
+      // if(selectedProject){                                       // Si hay proyecto seleccionado
+      //   const updateSelectedProject: Project = {                 // Se actualiza el proyecto seleccionado
+      //     ...selectedProject,
+      //     name: projectName,
+      //     icon: selectedIcon.name,
+      //   };
+
+      //   const updateAllProjects = allProjects.map((singleProject) => {  // Se actualizan todos los proyectos
+      //     return singleProject._id === selectedProject._id
+      //       ? updateSelectedProject
+      //       : singleProject;
+      //   })
+      //   setAllProjects(updateAllProjects);                        // Y se actualiza el estado de allProjects
+      //   toast.success("project edited successfuly");
+      //   setOpenProjectWindow(false);
+      // }
+
+      const updateAllProjects = allProjects.map((singleProject) => {  // Con la respuesta del servidor se actualizan todos los proyectos en local
+           return singleProject._id === selectedProject._id
+             ? updatedProject.project
+             : singleProject;
+      })
+         setAllProjects(updateAllProjects);                          // Y se actualiza el estado de allProjects
+         toast.success("project edited successfuly");
+         setOpenProjectWindow(false);
+         setSelectedProject(null)
       
     }catch (error) {
       toast.error("Failed to edit project");
