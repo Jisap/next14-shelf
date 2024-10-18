@@ -11,6 +11,8 @@ import { atelierSulphurpoolLight } from 'react-syntax-highlighter/dist/esm/style
 import { Component, Project } from "@/app/allData";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useAppContext } from "@/app/ContextApi";
+import { ContentCopy, DoneAll } from '@mui/icons-material';
+import toast from 'react-hot-toast';
 
 
 
@@ -45,6 +47,8 @@ const SingleComponent = ({ component }: { component: Component}) => {
       isSelected: false,
     }
   ]);
+
+  const [copySuccess, setCopySuccess] = useState(false);
 
   const changeTabState = (index: number) => {         // Cambia el estado de isSelected de un item de tabMenu
     setTabMenu((prevTabMenu) => {                     
@@ -132,6 +136,16 @@ const SingleComponent = ({ component }: { component: Component}) => {
     return str.slice(0, num)  + "..."
   }
 
+  const copyTheCode = (code:string) => {
+    // Copy the code to the clipboard
+    setCopySuccess(true)
+    toast.success("Code has been copied to the clipboard");
+    setTimeout(() => {
+      navigator.clipboard.writeText(code);
+      setCopySuccess(false);
+    }, 1400);
+  }
+
   return (
     <div className="bg-white w-full rounded-lg p-8 pt-8 pb-10 mb-3">
       {/* Compponent title  and checkbox to favorite*/}
@@ -193,7 +207,19 @@ const SingleComponent = ({ component }: { component: Component}) => {
           </LiveProvider>
         </div>
       ):(
-        <div className="border rounded-md mt-6 w-full">
+        <div className="border rounded-md mt-6 w-full relative">
+          <div className='absolute top-4 right-4 z-50 rounded-full bg-slate-200'>
+            <IconButton
+              onClick={() => copyTheCode(component.code)}
+            >
+              {!copySuccess ? (
+                <ContentCopy sx={{ fontSize: 16 }} />
+              ):(
+                <DoneAll sx={{ fontsize: 16 }} />
+              )}
+            </IconButton>
+
+          </div>
           <SyntaxHighlighter
             language={"javascript"}
             style={atelierSulphurpoolLight}
