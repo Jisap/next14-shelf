@@ -47,9 +47,25 @@ const ConfirmationDeleteWindow = () => {
     } 
   }
 
-  const deleteProjectFunction = () => {
+  const deleteProjectFunction = async() => {
+
+    if(!selectedProject?._id){
+      toast.error("No project selected for deletion");
+      return;
+    }
+
     try {
-      const updatedAllProjects = allProjects.filter(                         // Primero, se crea una copia actualizada de la lista de todos los proyectos
+      const response = await fetch(
+        `/api/projects?projectId=${selectedProject._id}`,                   // Se envía una solicitud de borrado al servidor
+        {method: "DELETE"}
+      );
+
+      if(!response.ok){                                                     // Si la solicitud no es exitosa mensaje de error
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to delete project"); 
+      }
+
+      const updatedAllProjects = allProjects.filter(                         // Pero si la solicitud si lo es, primero, se crea una copia actualizada de la lista de todos los proyectos
         (project: Project) => project._id !== selectedProject?._id           // donde se elimina el proyecto seleccionado
       );
       setAllProjects(updatedAllProjects);                                    // Luego se actualiza la lista de todos los proyectos

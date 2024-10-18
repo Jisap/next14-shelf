@@ -46,3 +46,35 @@ export async function GET(req:any) {  // Función para obtener los projects pert
     return NextResponse.json({ error: error }, { status: 400 });
   }
 }
+
+export async function DELETE(request: Request) {
+  try {
+    const url = new URL(request.url);
+    const projectId = url.searchParams.get("projectId");
+
+    if( !projectId ) {
+      return NextResponse.json(
+        {message: "project id is required"},
+        { status: 400 }
+      );
+    }
+
+    const projectToDelete = await Project.findOneAndDelete({ _id: projectId });
+    if(!projectToDelete){
+      return NextResponse.json(
+        {message: "project not found"},
+        { status: 404 }
+      )
+    }
+
+    return NextResponse.json({ message: "project deleted successfully" });
+
+  } catch (error) {
+    console.log(error);
+    console.error("Error deleting project", error);
+    return NextResponse.json(
+      { error: error }, 
+      { status: 500 }
+    );
+  }
+}
