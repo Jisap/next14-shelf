@@ -9,18 +9,20 @@ import Project from "@/app/Models/ProjectSchema";
 export async function POST(req: Request) { 
   try {
     const { name, icon, clerkUserId, components } = await req.json();  // Obtener y preparar el payload del cuerpo de la solicitud
+    
     await connect();                                                   // Conexión a la bd
+    
     const project = new Project({                                      // Creamos un nuevo proyecto
       id: uuidv4(),
       name,
       icon,
       clerkUserId,
-      components: components.map((components:any) => ({
+      components: components.map((component:any) => ({
         _id: uuidv4(),
-        name: components.name,
+        name: component.name,
         projectName: name,
-        code: components.code,
-        isFavorite: components.isFavorite || false,
+        code: component.code,
+        isFavorite: component.isFavorite || false,
       })),
     });
 

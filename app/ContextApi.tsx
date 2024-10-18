@@ -515,10 +515,13 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     async function fetchAllProjects() {
       try {
         const response = await fetch(`/api/projects?clerkUserId=${user?.id}`);
+        
         if(!response.ok){
           throw new Error("Failed to fetch projects");
         }
+
         const data : {projects:Project[]} = await response.json();
+
         if(data.projects){
           data.projects.forEach((project) => {
             project.components.sort((a, b) => {
@@ -527,6 +530,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
               );
             });
           });
+
           // update the all projects
           setAllProjects(data.projects);
           setSortedProjects(data.projects);

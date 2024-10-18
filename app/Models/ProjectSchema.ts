@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { Component } from '../allData';
+
 
 
 const ComponentSchema = new Schema({
@@ -58,6 +58,6 @@ const ProjectSchema = new Schema({
   components: [ComponentSchema]
 })
 
-const Project = mongoose.model("Project", ProjectSchema);
+const Project = mongoose.models.Project || mongoose.model("Project", ProjectSchema);
 
 export default Project;
