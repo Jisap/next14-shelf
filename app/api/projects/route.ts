@@ -78,3 +78,42 @@ export async function DELETE(request: Request) {
     );
   }
 }
+
+export async function PUT(request: Request) {
+  try {
+    const url = new URL(request.url);
+    const projectId = url.searchParams.get("projectId");
+    const { name, icon } = await request.json();
+
+    if(!projectId){
+      return NextResponse.json(
+        {message: "Project ID is required"},
+        { status: 400 }
+      );
+    }
+
+    await connect();
+
+    const updatedProject = await Project.findByIdAndUpdate(
+      projectId,
+      { name, icon},
+      { new: true}
+    );
+
+    if(!updatedProject){
+      return NextResponse.json(
+        {message: "Project not found"},
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({ project: updatedProject});
+
+  } catch (error) {
+    console.error("Error updating project", error);
+    return NextResponse.json(
+      { error: "Failed to update project" }, 
+      { status: 500 }
+    );
+  }
+}
