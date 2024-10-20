@@ -86,7 +86,8 @@ export async function PUT(request: Request) {
     const url = new URL(request.url);
     const projectId = url.searchParams.get("projectId");
     const componentId = url.searchParams.get("componentId");
-    const { action, name, icon, component } = await request.json();
+  
+    const { action, name, icon, component, isFavorite } = await request.json();
 
     if(!projectId){
       return NextResponse.json(
@@ -120,6 +121,21 @@ export async function PUT(request: Request) {
         {_id: projectId, "components._id": componentId},             // el proyecto con el id especificado y el componente con el id especificado
         { $set: { "components.$": component}},                       // Actualizamos el componente en el proyecto
         { new: true}                                                 // Devolvemos el objeto actualizado
+      );
+
+    } else if (action === "updateFavorite") {
+      // Actualizar solo el estado de isFavorite
+      if (!componentId) {
+        return NextResponse.json(
+          { message: "Component ID is required for updating favorite state" },
+          { status: 400 }
+        );
+      }
+
+      updatedProject = await Project.findOneAndUpdate(
+        { _id: projectId, "components._id": componentId },
+        { $set: { "components.$.isFavorite": isFavorite } }, // Actualizamos solo isFavorite
+        { new: true }
       );
 
     } else if (action === "deleteComponent"){                        // Si queremos eliminar un componente del proyecto

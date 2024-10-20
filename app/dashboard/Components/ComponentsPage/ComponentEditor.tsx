@@ -269,37 +269,84 @@ export const ComponentEditor = () => {
     }, 1400);
   }
 
-  const updateTheFavoriteState = () => {
-    if(
-      selectedComponent !== null &&
-      allProjects !== null &&
-      selectedProject !== null
-    ){ 
-      const updatedComponent = {                                                  // Se actualiza el componente seleccionado con su estado de favorito
+  // const updateTheFavoriteState = () => {
+  //   if(
+  //     selectedComponent !== null &&
+  //     allProjects !== null &&
+  //     selectedProject !== null
+  //   ){ 
+  //     const updatedComponent = {                                                  // Se actualiza el componente seleccionado con su estado de favorito
+  //       ...selectedComponent,
+  //       isFavorite: !selectedComponent.isFavorite, 
+  //     };
+
+  //     const updatedComponents = selectedProject.components.map((component) =>     // Se busca el componente dentro del array de componentes del proyecto seleccionado
+  //       component._id === selectedComponent._id ? updatedComponent : component    // y se actualiza su estado de favorito
+  //     );
+
+  //     const updatedSelectedProject = {                                            // Se actualiza el proyecto seleccionado con el nuevo array de componentes
+  //       ...selectedProject,
+  //       components: updatedComponents,
+  //     };
+
+  //     const updateAllProjects = allProjects.map((project) =>                      // Se actualiza el array de proyectos con el nuevo proyecto seleccionado
+  //       project._id === selectedProject._id ? updatedSelectedProject : project
+  //     );
+
+  //     setSelectedComponent(updatedComponent);                                      // Se actualiza el estado de componente seleccionado
+  //     setSelectedProject(updatedSelectedProject);                                  // Se actualiza el estado del proyecto seleccionado
+  //     setAllProjects(updateAllProjects);                                           // Se actualiza el estado de todos los proyectos
+  //   }else{
+  //     console.error("Selected component, project, or all projects is null");
+  //   }
+  // }
+
+  const updateTheFavoriteState = async () => {
+    if (selectedComponent && selectedProject && allProjects) {
+      const updatedComponent = { // Cambia el estado de favorito del componente actual
         ...selectedComponent,
-        isFavorite: !selectedComponent.isFavorite, 
+        isFavorite: !selectedComponent.isFavorite,
       };
 
-      const updatedComponents = selectedProject.components.map((component) =>     // Se busca el componente dentro del array de componentes del proyecto seleccionado
-        component._id === selectedComponent._id ? updatedComponent : component    // y se actualiza su estado de favorito
-      );
+      try {
+        // Actualiza el estado en la base de datos
+        const response = await fetch(
+          `/api/projects?projectId=${selectedProject._id}&componentId=${updatedComponent._id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              action: "updateFavorite",
+              component: updatedComponent,
+              isFavorite: updatedComponent.isFavorite
+            }),
+          }
+        );
 
-      const updatedSelectedProject = {                                            // Se actualiza el proyecto seleccionado con el nuevo array de componentes
-        ...selectedProject,
-        components: updatedComponents,
-      };
+        if (!response.ok) {
+          throw new Error("Failed to update favorite state");
+        }
 
-      const updateAllProjects = allProjects.map((project) =>                      // Se actualiza el array de proyectos con el nuevo proyecto seleccionado
-        project._id === selectedProject._id ? updatedSelectedProject : project
-      );
+        const updatedProject = await response.json();
+        const updatedAllProjects = allProjects.map((project) =>
+          project._id === selectedProject._id ? updatedProject.project : project
+        );
 
-      setSelectedComponent(updatedComponent);                                      // Se actualiza el estado de componente seleccionado
-      setSelectedProject(updatedSelectedProject);                                  // Se actualiza el estado del proyecto seleccionado
-      setAllProjects(updateAllProjects);                                           // Se actualiza el estado de todos los proyectos
-    }else{
+        setSelectedProject(updatedProject.project);
+        setAllProjects(updatedAllProjects);
+        setSelectedComponent(updatedComponent);
+
+        toast.success("Favorite state updated successfully");
+      } catch (error) {
+        console.error("Error updating favorite state:", error);
+        toast.error("Failed to update favorite state");
+      }
+    } else {
       console.error("Selected component, project, or all projects is null");
     }
-  }
+  };
 
 
   useEffect(() => {

@@ -98,7 +98,6 @@ const SingleComponent = ({ component }: { component: Component}) => {
 
       if(updatedSelectedProject){                                              // Si el proyecto actualizado existe
         setSelectedProject(updatedSelectedProject);                            // Actualizamos el proyecto seleccionado con los nuevos datos
-        console.log("updatedSelectedProject", updatedSelectedProject);
       }
     }
     setFavorite(!isFavorite);
