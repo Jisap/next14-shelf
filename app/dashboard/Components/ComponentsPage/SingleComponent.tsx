@@ -70,6 +70,7 @@ const SingleComponent = ({ component }: { component: Component}) => {
   }, [allProjects, selectedProject, component._id]);
 
   const updateFavoriteState = () => {
+   
     const newAllProjects = allProjects.map((project: Project) => {              // Mapeamos (creamos copia) allProjects y para cada proyecto
 
       // Actualización de componentes dentro de cada proyecto:
@@ -77,26 +78,26 @@ const SingleComponent = ({ component }: { component: Component}) => {
         if (comp._id === component._id) {                                       // Si el componente es el actual seleccionado
           return {
             ...comp,
-            isFavorite: !comp.isFavorite                                         // Cambiamos el estado de isFavorite
+            isFavorite: !comp.isFavorite                                        // Cambiamos el estado de isFavorite
           }
         }
         return comp;                                                            // Si no es el componente actual, no hacemos nada                       
       });
-      
+
       // Condicional para verificar si los componentes han cambiado:
-      if(updatedComponents !== project.components) {                            // Si el estado de isFavorite cambió,   
+      if (updatedComponents !== project.components) {                           // Si el estado de isFavorite cambió,   
         return { ...project, components: updatedComponents }                    // retorna una copia del proyecto, pero actualizando su propiedad components con updatedComponents.
       }
       return project;                                                           // Si no cambió, no hacemos nada
     });
-    
+
     // Actualización del proyecto seleccionado 
-    if(selectedProject) {                                                       // Si el proyecto seleccionado existe
+    if (selectedProject) {                                                       // Si el proyecto seleccionado existe
       const updatedSelectedProject = newAllProjects.find(                       // busca el proyecto actualizado dentro de newAllProjects usando el método .find(), comparando los IDs del proyecto actual con el del seleccionado. 
-        (project: Project) => project._id === selectedProject._id               
+        (project: Project) => project._id === selectedProject._id
       );
 
-      if(updatedSelectedProject){                                              // Si el proyecto actualizado existe
+      if (updatedSelectedProject) {                                              // Si el proyecto actualizado existe
         setSelectedProject(updatedSelectedProject);                            // Actualizamos el proyecto seleccionado con los nuevos datos
       }
     }
