@@ -85,7 +85,8 @@ export async function PUT(request: Request) {
   try {
     const url = new URL(request.url);
     const projectId = url.searchParams.get("projectId");
-    const { name, icon } = await request.json();
+    const componentId = url.searchParams.get("componentId");
+    const { action, name, icon, component } = await request.json();
 
     if(!projectId){
       return NextResponse.json(
@@ -96,20 +97,52 @@ export async function PUT(request: Request) {
 
     await connect();
 
-    const updatedProject = await Project.findByIdAndUpdate(
-      projectId,
-      { name, icon},
-      { new: true}
-    );
+    let updatedProject
 
-    if(!updatedProject){
-      return NextResponse.json(
-        {message: "Project not found"},
-        { status: 404 }
+    if(action === "addComponent"){                                   // Si queremos agregar un componente al proyecto
+      updatedProject = await Project.findByIdAndUpdate(              // Buscamos en la tabla de proyectos el proyecto con el id especificado
+        projectId,
+        { $push: { components: component } },                        // Agregamos el componente al array de componentes del proyecto
+        { new: true }                                                // Devolvemos el objeto actualizado
+      ); 
+
+    } else if (action === "updatedComponent"){                       // Si queremos actualizar un componente del proyecto
+      if(!componentId){
+        return NextResponse.json(
+          {message: "Component ID is required for updating"},
+          { status: 400 }
+        );
+      }
+      
+      updatedProject = await Project.findOneAndUpdate(               // Buscamos en la tabla de proyectos 
+        {_id: projectId, "components._id": componentId},             // el proyecto con el id especificado y el componente con el id especificado
+        { $set: { "components.$": component}},                       // Actualizamos el componente en el proyecto
+        { new: true}                                                 // Devolvemos el objeto actualizado
+      );
+
+    } else if (action === "deleteComponent"){                        // Si queremos eliminar un componente del proyecto
+      if(!componentId){
+        return NextResponse.json(
+          {message: "Component ID is required for deleting"},
+          { status: 400 }
+        );
+      }
+
+      updatedProject = await Project.findByIdAndUpdate(              // Buscamos en la tabla de proyectos
+        projectId,                                                   // el proyecto con el id especificado
+        { $pull: { components: { _id: componentId } } },             // Eliminamos el componente del array de componentes del proyecto
+        { new: true }                                                // Devolvemos el objeto actualizado
+      );
+
+    }else{                                                          // Si no reconocemos la acción, actualizamos el nombre y el icono del proyecto
+      updatedProject = await Project.findByIdAndUpdate(  
+        projectId,
+        { name, icon },
+        { new: true }
       );
     }
 
-    return NextResponse.json({ project: updatedProject});
+    
 
   } catch (error) {
     console.error("Error updating project", error);
