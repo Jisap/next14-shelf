@@ -14,13 +14,11 @@ const ProjectsList = () => {
     mainSearchQueryObject: {mainSearchQuery, setMainSearchQuery}
   } = useAppContext();
   
-  console.log('mainSearchQuery', mainSearchQuery);
+
   
   const filterAllProjectsBySearchQuery = sortedProjects.filter((singleProject) => 
     singleProject.name.toLowerCase().includes(mainSearchQuery.toLowerCase())
   );
-
-  console.log('filterAllProjectsBySearchQuery', filterAllProjectsBySearchQuery);
 
   return (
     <div className='w-full bg-slate-50 h-[64%] rounded-lg p-3 flex flex-col gap-3 overflow-y-auto'>

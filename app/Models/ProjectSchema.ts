@@ -1,11 +1,12 @@
 import mongoose, { Schema } from "mongoose";
+import { v4 as uuidv4 } from 'uuid';
 
 
 
 const ComponentSchema = new Schema({
   _id: {
     type: String,
-    default: "",
+    default: () => uuidv4(),
   },
   name: {
     type: String,
@@ -35,7 +36,7 @@ const ComponentSchema = new Schema({
 const ProjectSchema = new Schema({
   _id: {
     type: String,
-    default: "",
+    default: () => uuidv4(),
   },
   clerkUserId: {
     type: String,

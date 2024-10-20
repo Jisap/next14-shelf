@@ -103,8 +103,8 @@ const AddProjectWindow = ({
         return;
       }
 
-      const newProject: Project = {
-        _id: uuidv4(),
+      const newProject = {
+        //_id: uuidv4(),
         clerkUserId: user?.id as string,
         name: projectName,
         icon: selectedIcon.name,

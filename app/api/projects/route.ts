@@ -13,12 +13,12 @@ export async function POST(req: Request) {
     await connect();                                                   // Conexión a la bd
     
     const project = new Project({                                      // Creamos un nuevo proyecto
-      id: uuidv4(),
+      //id: uuidv4(),
       name,
       icon,
       clerkUserId,
       components: components.map((component:any) => ({
-        _id: uuidv4(),
+        //_id: uuidv4(),
         name: component.name,
         projectName: name,
         code: component.code,
@@ -105,8 +105,10 @@ export async function PUT(request: Request) {
         { $push: { components: component } },                        // Agregamos el componente al array de componentes del proyecto
         { new: true }                                                // Devolvemos el objeto actualizado
       ); 
+      console.log("Updated project:", updatedProject);
 
-    } else if (action === "updatedComponent"){                       // Si queremos actualizar un componente del proyecto
+
+    } else if (action === "updateComponent"){                       // Si queremos actualizar un componente del proyecto
       if(!componentId){
         return NextResponse.json(
           {message: "Component ID is required for updating"},
@@ -140,9 +142,12 @@ export async function PUT(request: Request) {
         { name, icon },
         { new: true }
       );
-    }
+    } 
 
-    
+    return NextResponse.json(
+      { message: "Project updated successfully", project: updatedProject },
+      { status: 200 }
+    );
 
   } catch (error) {
     console.error("Error updating project", error);

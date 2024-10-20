@@ -15,33 +15,59 @@ const ConfirmationDeleteWindow = () => {
     openAllProjectsWindowObject: {openAllProjectsWindow, setOpenAllProjectsWindow},
   } = useAppContext();
 
-  const deleteComponentFunction = () => {
+  const deleteComponentFunction = async() => {
     try {
-      if (selectedProject) {                                                    // Primero, verifica si hay un proyecto seleccionado 
-        const updatedSelectedProject = {                                        // Si existe, crea una copia actualizada del proyecto seleccionado                 
-          ...selectedProject,
-          components: selectedProject.components.filter(                        // donde se elimina el componente seleccionado 
-            (component: Component) => component._id !== selectedComponent?._id
-          ),
-        };
-        setSelectedProject(updatedSelectedProject);                             // Luego se actualiza el estado del proyecto seleccionado  
+      // if (selectedProject) {                                                    // Primero, verifica si hay un proyecto seleccionado 
+      //   const updatedSelectedProject = {                                        // Si existe, crea una copia actualizada del proyecto seleccionado                 
+      //     ...selectedProject,
+      //     components: selectedProject.components.filter(                        // donde se elimina el componente seleccionado 
+      //       (component: Component) => component._id !== selectedComponent?._id
+      //     ),
+      //   };
+      //   setSelectedProject(updatedSelectedProject);                             // Luego se actualiza el estado del proyecto seleccionado  
+      // }
+
+      if(selectedProject && selectedComponent){
+        const response = await fetch(
+          `/api/projects?projectId=${selectedProject._id}&componentId=${selectedComponent._id}`,
+          { method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              action: "deleteComponent",
+            }),
+          },
+        )
+
+        if(!response.ok){
+          throw new Error("Failed to delete component")
+        }
+
+        const updatedProject = await response.json();
+
+        setSelectedProject(updatedProject.project);
+
+
+        const updatedAllProjects = allProjects.map((project: Project) => {        // A continuación, actualiza la lista de todos los proyectos
+          if (project._id === selectedProject?._id) {
+            return {
+              ...project,
+              components: project.components.filter(
+                (component: Component) => component._id !== selectedComponent?._id  // donde se elimina el componente seleccionado para borrar
+              )
+            }
+          }
+          return project;
+        })
+
+        setAllProjects(updatedAllProjects);                                      // Finalmente, se actualiza la lista de todos los proyectos
+        setOpenDeleteWindow(false);                                              // Y Se cierra la ventana de confirmación              
+        toast.success("Component deleted successfully");
+
       }
 
-      const updatedAllProjects = allProjects.map((project: Project) => {        // A continuación, actualiza la lista de todos los proyectos
-        if (project._id === selectedProject?._id) {
-          return {
-            ...project,
-            components: project.components.filter(
-              (component: Component) => component._id !== selectedComponent?._id  // donde se elimina el componente seleccionado para borrar
-            )
-          }
-        }
-        return project;
-      })
 
-      setAllProjects(updatedAllProjects);                                      // Finalmente, se actualiza la lista de todos los proyectos
-      setOpenDeleteWindow(false);                                              // Y Se cierra la ventana de confirmación              
-      toast.success("Component deleted successfully");
     } catch (error) {
       toast.error("Error deleting component");
     } 
@@ -72,7 +98,10 @@ const ConfirmationDeleteWindow = () => {
       setOpenDeleteWindow(false);                                            // Y se cierra la ventana de confirmación
       toast.success("Project deleted successfully")                                            
     } catch (error) {
-      toast.error("Error deleting project")
+      console.error("Error deleting project", error);
+      toast.error(
+        error instanceof Error ? error.message : "Something went wrong"
+      )
     }
   }
 

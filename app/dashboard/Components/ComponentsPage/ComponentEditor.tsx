@@ -150,40 +150,113 @@ export const ComponentEditor = () => {
     }
   }
 
-  const addNewComponent = (newComponent: Component) => {
-    if(selectedProject && allProjects){
-      const updateProject = {
-        ...selectedProject,
-        components: [...selectedProject.components, newComponent],
+  const addNewComponent = async(newComponent: Component) => {
+    if(!selectedProject){
+      toast.error("No project selected");
+      return;
+    }
+    
+    try {
+      const response = await fetch(
+        `/api/projects?projectId=${selectedProject._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            action: "addComponent",
+            component: newComponent,
+          }),
+        }
+      )
+
+      if(!response.ok){
+        throw new Error("Failed to add component");
       }
 
-      const updateAllProjects = allProjects.map((project) => 
-        project._id === selectedProject._id ? updateProject : project
+      const updatedProject = await response.json();                               // Respuesta del servidor con el proyecto actualizado con el nuevo componente
+      const updateAllProjects = allProjects.map((project) =>                      // Actualizamos el array de proyectos con el nuevo proyecto actualizado
+        project._id === selectedProject._id ? updatedProject.project : project
       );
-
-      setSelectedProject(updateProject);
+      setSelectedProject(updatedProject.project);
       setAllProjects(updateAllProjects);
-    } 
+      toast.success("Component has been added successfully");
+    } catch (error) {
+      console.error("Error adding component:", error);
+      toast.error("Failed to add component");
+    }
+
+    // if(selectedProject && allProjects){
+    //   const updateProject = {
+    //     ...selectedProject,
+    //     components: [...selectedProject.components, newComponent],
+    //   }
+
+    //   const updateAllProjects = allProjects.map((project) => 
+    //     project._id === selectedProject._id ? updateProject : project
+    //   );
+
+    //   setSelectedProject(updateProject);
+    //   setAllProjects(updateAllProjects);
+    // } 
   }
   
-  const updateExistingComponent = (updatedComponent: Component) => {
-    if(selectedProject && allProjects){
-      const updatedComponents = selectedProject.components.map((component) => 
-        component._id === updatedComponent._id ? updatedComponent : component
-      );
-    
-      const updatedProject = {
-        ...selectedProject,
-        components: updatedComponents,
-      };
-
-      const updatedAllProjects = allProjects.map((project) => 
-        project._id === selectedProject._id ? updatedProject : project
-      );
-
-      setSelectedProject(updatedProject);
-      setAllProjects(updatedAllProjects);
+  const updateExistingComponent = async(updatedComponent: Component) => {
+    if(!selectedProject){
+      toast.error("No project selected");
+      return;
     }
+
+    try {
+      const response = await fetch(
+        `/api/projects?projectId=${selectedProject._id}&componentId=${updatedComponent._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            action: "updateComponent",
+            component: updatedComponent,
+          }),
+        }
+      )
+
+      if (!response.ok) {
+        throw new Error("Failed to updated component");
+      }
+
+      const updatedProject = await response.json(); 
+      const updatedAllProjects = allProjects.map((project) =>
+        project._id === selectedProject._id ? updatedProject.project : project
+      );
+      setSelectedProject(updatedProject.project);
+      setAllProjects(updatedAllProjects);
+
+
+    } catch (error) {
+      console.error("Error updating component:", error);
+      toast.error("Failed to updating component");
+    }
+
+    // if(selectedProject && allProjects){
+    //   const updatedComponents = selectedProject.components.map((component) => 
+    //     component._id === updatedComponent._id ? updatedComponent : component
+    //   );
+    
+    //   const updatedProject = {
+    //     ...selectedProject,
+    //     components: updatedComponents,
+    //   };
+
+    //   const updatedAllProjects = allProjects.map((project) => 
+    //     project._id === selectedProject._id ? updatedProject : project
+    //   );
+
+    //   setSelectedProject(updatedProject);
+    //   setAllProjects(updatedAllProjects);
+    // }
   }
 
   const copyTheCode = () => {
