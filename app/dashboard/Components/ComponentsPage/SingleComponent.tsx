@@ -69,41 +69,95 @@ const SingleComponent = ({ component }: { component: Component}) => {
     }
   }, [allProjects, selectedProject, component._id]);
 
-  const updateFavoriteState = () => {
+  // const updateFavoriteState = () => {
    
-    const newAllProjects = allProjects.map((project: Project) => {              // Mapeamos (creamos copia) allProjects y para cada proyecto
+  //   const newAllProjects = allProjects.map((project: Project) => {              // Mapeamos (creamos copia) allProjects y para cada proyecto
 
-      // Actualización de componentes dentro de cada proyecto:
-      const updatedComponents = project.components.map((comp: Component) => {   // Mapeamos los componentes del proyecto
-        if (comp._id === component._id) {                                       // Si el componente es el actual seleccionado
-          return {
-            ...comp,
-            isFavorite: !comp.isFavorite                                        // Cambiamos el estado de isFavorite
+  //     // Actualización de componentes dentro de cada proyecto:
+  //     const updatedComponents = project.components.map((comp: Component) => {   // Mapeamos los componentes del proyecto
+  //       if (comp._id === component._id) {                                       // Si el componente es el actual seleccionado
+  //         return {
+  //           ...comp,
+  //           isFavorite: !comp.isFavorite                                        // Cambiamos el estado de isFavorite
+  //         }
+  //       }
+  //       return comp;                                                            // Si no es el componente actual, no hacemos nada                       
+  //     });
+
+  //     // Condicional para verificar si los componentes han cambiado:
+  //     if (updatedComponents !== project.components) {                           // Si el estado de isFavorite cambió,   
+  //       return { ...project, components: updatedComponents }                    // retorna una copia del proyecto, pero actualizando su propiedad components con updatedComponents.
+  //     }
+  //     return project;                                                           // Si no cambió, no hacemos nada
+  //   });
+
+  //   // Actualización del proyecto seleccionado 
+  //   if (selectedProject) {                                                       // Si el proyecto seleccionado existe
+  //     const updatedSelectedProject = newAllProjects.find(                       // busca el proyecto actualizado dentro de newAllProjects usando el método .find(), comparando los IDs del proyecto actual con el del seleccionado. 
+  //       (project: Project) => project._id === selectedProject._id
+  //     );
+
+  //     if (updatedSelectedProject) {                                              // Si el proyecto actualizado existe
+  //       setSelectedProject(updatedSelectedProject);                            // Actualizamos el proyecto seleccionado con los nuevos datos
+  //     }
+  //   }
+  //   setFavorite(!isFavorite);
+  //   setAllProjects(newAllProjects);                                             // Actualizamos allProjects con los nuevos datos
+  // }
+
+  const updateFavoriteState = async () => {
+    if (selectedProject && allProjects) {
+      // Encuentra el componente actual en el proyecto seleccionado
+      const updatedComponent = {
+        ...component,
+        isFavorite: !isFavorite
+      };
+
+      try {
+        // Actualiza el estado en la base de datos
+        const response = await fetch(
+          `/api/projects?projectId=${selectedProject._id}&componentId=${component._id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              action: "updateFavorite",
+              component: updatedComponent,
+              isFavorite: updatedComponent.isFavorite
+            }),
           }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to update favorite state");
         }
-        return comp;                                                            // Si no es el componente actual, no hacemos nada                       
-      });
 
-      // Condicional para verificar si los componentes han cambiado:
-      if (updatedComponents !== project.components) {                           // Si el estado de isFavorite cambió,   
-        return { ...project, components: updatedComponents }                    // retorna una copia del proyecto, pero actualizando su propiedad components con updatedComponents.
+        const { project: updatedProject } = await response.json();
+
+        // Actualiza allProjects con el proyecto actualizado
+        const newAllProjects = allProjects.map((project: Project) =>
+          project._id === selectedProject._id ? updatedProject : project
+        );
+
+        // Actualiza los estados locales
+        setFavorite(!isFavorite);
+        setSelectedProject(updatedProject);
+        setAllProjects(newAllProjects);
+
+        toast.success("Favorite state updated successfully");
+      } catch (error) {
+        console.error("Error updating favorite state:", error);
+        toast.error("Failed to update favorite state");
+        // Revierte el cambio local si la actualización en DB falla
+        setFavorite(isFavorite);
       }
-      return project;                                                           // Si no cambió, no hacemos nada
-    });
-
-    // Actualización del proyecto seleccionado 
-    if (selectedProject) {                                                       // Si el proyecto seleccionado existe
-      const updatedSelectedProject = newAllProjects.find(                       // busca el proyecto actualizado dentro de newAllProjects usando el método .find(), comparando los IDs del proyecto actual con el del seleccionado. 
-        (project: Project) => project._id === selectedProject._id
-      );
-
-      if (updatedSelectedProject) {                                              // Si el proyecto actualizado existe
-        setSelectedProject(updatedSelectedProject);                            // Actualizamos el proyecto seleccionado con los nuevos datos
-      }
+    } else {
+      console.error("Selected project or all projects is null");
+      toast.error("Cannot update favorite state: No project selected");
     }
-    setFavorite(!isFavorite);
-    setAllProjects(newAllProjects);                                             // Actualizamos allProjects con los nuevos datos
-  }
+  };
 
   const openTheDropDown = (event:React.MouseEvent) => {
     event.stopPropagation();
